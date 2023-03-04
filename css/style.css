@@ -3,51 +3,59 @@ body {
     display: box-sizing;
 }
 
+img {
+    max-width: 100%;
+    height: 100%;
+}
+/**********************************************/
 /* tableau defines the Tableau area containing grid structure: 7 columns */
+/* grid-template-column defines the 7 columns */
 #tableau {
     display: grid;
     grid-template-columns: 12vw 12vw 12vw 12vw 12vw 12vw 12vw;
     background-color:yellow;
 }
-#tabluau-5{
-    display: grid;
-    background-color:blue;
-    max-width: 100%;
-}
 
+/**********************************************/
+/* id name tableau-0 through -6 define the 7 columns inside the tableau */
+/* grid-template-rows to establish the number of cards in a column?*/
+#tableau-5{
+    display: grid;
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows */
+    /* grid-template-rows: repeat(auto-fill, 50px); */
+    background-color:blue;
+    width: 100%;
+    
+}
+/* Unsure if max-width or width is the apt declaration */
 #tableau-6 {
     display: grid;
-    grid-template-columns: 100vmin;
-    width: 100%;
     background-color:black;
-    display:absolute;
     max-width: 100%;
 
 }
 
-#tableau-6 > *img {
-    max-width:100%;
+#tableau-6 *img {
+    /* width:100%;
     height: auto;
-    /* max-height:100%; */
     background-color:red;
+    object-fit:cover; */
+
 }
 
 #tableau-6 > img:nth-child(1) {
-    width: 100%;
-    background-color:orange
+
 }
 
 #tableau-6 > img:nth-child(2) {
-    width: 100%;
-    background-color:green
+
 }
 
 #tableau-6 > img:nth-child(3) {
-    width: 100%;
-    background-color:blue
+
 }
 
 #tableau-6 > img:nth-child(4) {
-    width: 100%;
-    background-color:violet;
+    /* width: 100%;
+    background-color:violet; */
 }
