@@ -14,8 +14,8 @@ img {
 /* grid-template-column defines the 7 columns */
 #tableau {
     display: grid;
-    grid-template-columns: repeat(7, 12vw);
-    background-color:white;
+    grid-template-columns: 12vw 12vw 12vw 12vw 12vw 12vw 12vw;
+    background-color:yellow;
 }
 
 /**********************************************/
@@ -43,7 +43,6 @@ img {
 /* Unsure if max-width or width is the apt declaration */
 #tableau-6 {
     display: grid;
-    grid-template-rows: repeat(auto-fill, 3rem);
     background-color:black;
     max-width: 100%;
 
