@@ -1,0 +1,53 @@
+body {
+    background-color: white;
+    display: box-sizing;
+}
+
+/* tableau defines the Tableau area containing grid structure: 7 columns */
+#tableau {
+    display: grid;
+    grid-template-columns: 12vw 12vw 12vw 12vw 12vw 12vw 12vw;
+    background-color:yellow;
+}
+#tabluau-5{
+    display: grid;
+    background-color:blue;
+    max-width: 100%;
+}
+
+#tableau-6 {
+    display: grid;
+    grid-template-columns: 100vmin;
+    width: 100%;
+    background-color:black;
+    display:absolute;
+    max-width: 100%;
+
+}
+
+#tableau-6 > *img {
+    max-width:100%;
+    height: auto;
+    /* max-height:100%; */
+    background-color:red;
+}
+
+#tableau-6 > img:nth-child(1) {
+    width: 100%;
+    background-color:orange
+}
+
+#tableau-6 > img:nth-child(2) {
+    width: 100%;
+    background-color:green
+}
+
+#tableau-6 > img:nth-child(3) {
+    width: 100%;
+    background-color:blue
+}
+
+#tableau-6 > img:nth-child(4) {
+    width: 100%;
+    background-color:violet;
+}
