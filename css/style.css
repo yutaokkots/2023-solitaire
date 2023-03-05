@@ -31,7 +31,6 @@ img {
     /* grid-template-rows: repeat(auto-fill, 50px); */
     background-color:blue;
     width: 100%;
-    
 }
 
 #tableau-5 > * {
@@ -39,9 +38,7 @@ img {
     height: auto;
     background-color: aqua;
     object-fit:cover;
-
 }
-
 
 /* Unsure if max-width or width is the apt declaration */
 #tableau-6 {
