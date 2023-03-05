@@ -3,7 +3,10 @@ body {
     display: box-sizing;
 }
 
-/* combination of  img{max-width: 100%;} + #tableau-5{grid-template-rows: repeat(auto-fill, 50px);}*/
+/* combination of  img{max-width: 100%;} + #tableau-5{grid-template-rows: repeat(auto-fill, 3rem);}*/
+/* use #tableau-5{grid-template-rows: repeat(auto-fill, 3rem);} for expanded view?*/
+/* use #tableau-5{grid-template-rows: repeat(auto-fill, 2rem);} for minimized view? <--- instead, use 4vh? */
+
 
 img {
     max-width: 100%;
@@ -14,8 +17,8 @@ img {
 /* grid-template-column defines the 7 columns */
 #tableau {
     display: grid;
-    grid-template-columns: 12vw 12vw 12vw 12vw 12vw 12vw 12vw;
-    background-color:yellow;
+    grid-template-columns: repeat(7, 12vw);
+    background-color:white;
 }
 
 /**********************************************/
@@ -24,7 +27,7 @@ img {
 #tableau-5{
     display: grid;
     /* https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-rows */
-    grid-template-rows: repeat(auto-fill, 3rem);
+    grid-template-rows: repeat(auto-fill, 4vh);
     /* grid-template-rows: repeat(auto-fill, 50px); */
     background-color:blue;
     width: 100%;
@@ -43,6 +46,7 @@ img {
 /* Unsure if max-width or width is the apt declaration */
 #tableau-6 {
     display: grid;
+    grid-template-rows: repeat(auto-fill, 3rem);
     background-color:black;
     max-width: 100%;
 
