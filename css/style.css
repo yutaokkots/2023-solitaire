@@ -1,12 +1,30 @@
 body {
-    background-color: white;
+    background-color: darkgray;
     display: box-sizing;
+    justify-content: center;
+    font-family: 'Pacifico', Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /* combination of  img{max-width: 100%;} + #tableau-5{grid-template-rows: repeat(auto-fill, 3rem);}*/
 /* use #tableau-5{grid-template-rows: repeat(auto-fill, 3rem);} for expanded view?*/
 /* use #tableau-5{grid-template-rows: repeat(auto-fill, 2rem);} for minimized view? <--- instead, use 4vh? */
 
+/****************** header *******************/
+
+/******************  main  *******************/
+main {
+    display:grid;
+    grid-template-columns: 10vw auto 10vw;
+    grid-template-rows: 6vh 40vh auto;
+
+}
+
+#titleDiv{
+    background-color: gray;
+    text-align:center;
+    color:white;
+    font-size: 2rem;
+}
 
 img {
     max-width: 100%;
@@ -15,10 +33,13 @@ img {
 /**********************************************/
 /* tableau defines the Tableau area containing grid structure: 7 columns */
 /* grid-template-column defines the 7 columns */
+/* should receive information from main{} css */
 #tableau {
     display: grid;
-    grid-template-columns: repeat(7, 12vw);
-    background-color:white;
+    width: auto;
+    grid-template-columns: repeat(7, auto);
+    background-color: thistle;
+    grid-column-gap: 2vw;
 }
 
 /**********************************************/
