@@ -45,13 +45,18 @@ function init(){
     console.log(hello)
 }
 
-//test 
+
+
+
+
+//test ////////////////////////////////////////
 // test script
 const draggedOnTop = (evt) => {
     console.log(evt)
 }
 
-
+//// trying to understand:
+// How to self identify the card that is being dragged by the user, and the identity of the card that it is being dragged to, and run a function?
 
 let testImg_01 = document.createElement('img');
 testImg_01.src = CARD_IMAGES['H02']
