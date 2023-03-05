@@ -42,6 +42,69 @@ img {
     grid-column-gap: 2vw;
 }
 
+
+
+/**********************************************/
+/* experimentation flex */
+/* (1) - transform or translate */
+/* .class:nth-child(N) {
+    transform:x, y;
+} */
+/* (2) - margin*/
+/* .class:nth-child(N) {
+    margin-top: -10px)
+} */
+/* (3) position: relative */
+/* .class:nth-child(N) {
+    position: relative;
+    top: -100px;
+} */
+
+/* (4) position: absolute -> make sure to make parent container position:relative*/
+/* .class:nth-child(N) {
+    position: absolute;
+    top: -100px;
+} */
+
+/* (5) position: absolute -> make sure to make parent container position:relative*/
+/* .class:nth-child(N) {
+    position: absolute;
+    top: 100px;
+} */
+
+/* (6) position: absolute -> make sure to make parent container position:relative*/
+/* .class:nth-child(N) {
+    position: absolute;
+    z-index: -1; <-- order on top of another element
+    top: 100px;
+} */
+
+
+
+
+
+#tableau div {
+    display:flex;
+    flex-direction: column;
+    position:relative;
+    align-items: flex-start; 
+}
+
+#tableau div div:nth-child(n+3) {
+    margin-top: -110%;
+}
+
+/* USE THIS!! :nth-child(n+3) allows your to select all chidren after third position! */
+#tableau-1 div:nth-child(n+3){
+    margin-top: -110%;
+}
+
+
+
+
+
+
+
 /**********************************************/
 /* id name tableau-0 through -6 define the 7 columns inside the tableau */
 /* grid-template-rows to establish the number of cards in a column?*/

@@ -11,6 +11,11 @@ console.log(CARD_LIBRARY)
 
 
 /*----- app's state (variables) -----*/
+let score;
+let currentDeck;            // contains non-repeating card information after randomization //randomShuffle()
+let currentDeckObjects;     // contains each card object: {reference to DOM objects, their states of flipped over or not, }
+let 
+
 
 
 /*----- cached element references -----*/
@@ -38,12 +43,41 @@ console.log(CARD_LIBRARY)
 //
 // as with many addEventListeners, perhaps you can use event propogation to listen for dragging on the entire play area
 
+// drag and drop:
+// https://www.w3schools.com/html/tryit.asp?filename=tryhtml5_draganddrop
+
 
 /*----- functions -----*/
+function randomShuffle(){};     // randomly shuffles original list of arrays
+function flipCard(){};           // changes the variable state of each card to show face
+function checkPlacement(){};    // checks to see if dragged card is able to be placed at location
+
+function stockDeal(){};         // deal out the stock cards and reveal top three
+function stockShuffle(){};      // shuffle the waste + stock
+
+
+
+init();
+
+
 
 function init(){
     console.log(hello)
+
+    render();
 }
+
+// break up render() into smaller renderXxxx(), because it cam get bloated
+// Render function should transfer all states to user interface. 
+render(){
+    renderTableau();
+    renderFoundation();
+    renderStock();
+    renderWaste();
+};
+
+
+
 
 
 
