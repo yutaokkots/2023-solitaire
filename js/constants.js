@@ -168,6 +168,7 @@ export const CARD_LIBRARY = {
     D11: {suit:'d', color:'r', value:11, img:CARD_IMAGES['D11'], before:10, after:12},
     D12: {suit:'d', color:'r', value:12, img:CARD_IMAGES['D12'], before:11, after:13},
     D13: {suit:'d', color:'r', value:13, img:CARD_IMAGES['D13'], before:12, after:0},
+    BCK: {suit:0,   color:0,   value:0,  img:CARD_IMAGES['BAK'], before:0,  after:0}
 } 
 
 export const CARD_LIST = [

@@ -16,6 +16,10 @@ stacking cards:
 /* https://stackoverflow.com/questions/45762158/overlapping-images-in-css-grid */
 /* 2. transform: translate(-50%, -50%); */
 
+-webkit- for css:
+https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/
+https://developer.mozilla.org/en-US/docs/Web/CSS/gradient/linear-gradient
+
 /**********************************************/
 /* experimentation flex */
 /* (1) - transform or translate */

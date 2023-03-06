@@ -27,10 +27,15 @@ console.log(CARD_LIBRARY)
 let score;
 let currentDeck;            // contains non-repeating card information after randomization //randomShuffle()
 let currentDeckObjects;     // contains each card object: {reference to DOM objects, their states of flipped over or not, }
-let tableauState;           // the various decks in the tableau and what they contain
+let tableauStatus;           // the various decks in the tableau and what they contain     
+// holds master information about 
+// 1) card is face or back 
+// 2) 
 
-let startingTableau;
+// Where is the information stored? in the DOM element? or in a class instance that can be called upon for information?
 
+// if class:
+// constructor() creates information about: 
 
 
 /*----- cached element references -----*/
@@ -99,17 +104,23 @@ function init(){
 }
 
 // elementMaker creates a div element from the information provided
-const elementMaker = () => {
+const elementMaker = (cardKey) => {
     let newDiv= document.createElement('div')
-    newDiv.innerHTML = `<img src=${}>`
+    // uses constant CARD_LIBRARY to get the image source
+    let cardUrl = CARD_LIBRARY[`${cardKey}`]['img']
+    newDiv.innerHTML = `<img src=${cardUrl}>;`
+    newDiv.setAttribute("data-card", cardKey)
+    return newDiv
 }
+
+console.log(elementMaker("C08")) 
 
 const renderStock = () => {
     currentDeck = randomShuffle(CARD_LIST)
 }
 // function renderTableau(){
 //     startingTableau = {
-//         1:[ , ],
+//         1:[1, ],
 //         2:[ , ],
 //         3:[ , ],
 //         4:[ , ],
@@ -119,6 +130,21 @@ const renderStock = () => {
 //     }
     
 // }
+
+
+/* ################################################ */
+/* ############# TARGET DROP FUNCTIONS ############ */
+
+const enableDrop = (evt) => {
+    console.log(evt.style)
+    evt.preventDefault();
+};
+// const enableDrop = (evt) => {
+//     evt.preventDefault();
+// };
+
+
+
 
 
 let C02 = document.querySelector(`[data-card="C02"]`)   // select html using data-attribute, and modify css using class selector
@@ -131,7 +157,7 @@ C02.style.backgroundColor = 'green';
 function render(){
     // renderTableau();
     // renderFoundation();
-    renderStock();
+    // renderStock();
     // renderWaste();
 };
 

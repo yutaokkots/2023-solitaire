@@ -1,14 +1,19 @@
 :root {
-    --main-row-1: 7vw;
+    --main-row-1: 3vw;
 
 }
 
 body {
-    background-color: darkgray;
+    background-color: gray;
     display: box-sizing;
     justify-content: center;
     font-family: 'Pacifico', Verdana, Geneva, Tahoma, sans-serif;
     margin:0;
+}
+
+nav {
+    height:var(--main-row-1);
+    background-color: darkgray;
 }
 
 img {
@@ -29,17 +34,21 @@ main {
 
 }
 
-#titleDiv{
+#titleDiv, #titleDivMain{
     background-color: gray;
-    height:var(--main-row-1);
+
     text-align:center;
     color:white;
-    font-size: 1.4rem;
+    font-size: 2rem;
 }
 
-#titleDiv h1{
-    margin: 0;
-    height:var(--main-row-1);
+#titleDivMain h1{
+    margin: 0rem;
+
+    background: linear-gradient(180deg, white, gray 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    
     vertical-align:center;
 }
 
@@ -50,6 +59,7 @@ main {
 
 #foundation {
     display: grid;
+    border-top-left-radius: 1.5rem;
     width: auto;
     grid-template-columns: repeat(7, auto);
     background-color: rgb(69, 90, 96);
