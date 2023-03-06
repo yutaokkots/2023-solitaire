@@ -48,6 +48,10 @@ let tableauStatus;           // the various decks in the tableau and what they c
 const mainElement = document.querySelector('main')
 mainElement.addEventListener('dragstart', (evt) => {
     console.log(evt)
+    evt.dataTransfer.setData("text/plain", `${evt.target.tagName}`)
+    console.log(evt.dataTransfer)
+    console.log(evt.dataTransferItemList)
+
 })
 
 
@@ -124,21 +128,65 @@ const elementMaker = (cardKey) => {
 
 console.log(elementMaker("C08")) 
 
+currentDeck = randomShuffle(CARD_LIST)
 const renderStock = () => {
-    currentDeck = randomShuffle(CARD_LIST)
-}
-// function renderTableau(){
-//     startingTableau = {
-//         1:[1, ],
-//         2:[ , ],
-//         3:[ , ],
-//         4:[ , ],
-//         5:[ , ],
-//         6:[ , ],
-//         7:[ , ]
-//     }
     
-// }
+}
+
+// const startingTableau = {
+//         1:[],
+//         2:['BCK', ],
+//         3:['BCK','BCK', ],
+//         4:['BCK','BCK','BCK', ],
+//         5:['BCK','BCK','BCK','BCK',],
+//         6:['BCK','BCK','BCK','BCK','BCK', ],
+//         7:['BCK','BCK','BCK','BCK','BCK','BCK',]
+
+const startingTableau = {
+        1:[1],
+        2:[-1,1],
+        3:[-1,-1,1],
+        4:[-1,-1,-1,1],
+        5:[-1,-1,-1,-1,1],
+        6:[-1,-1,-1,-1,-1,1],
+        7:[-1,-1,-1,-1,-1,-1,1]
+}
+
+// let testImg_02 = document.createElement('img');
+// testImg_02.src = CARD_IMAGES['BAK']
+// let testDiv_02 = document.createElement('div'); 
+// testDiv_02.id = 'tab-6-1'
+// testDiv_02.ondrop='traggedOnTop(evt)';       // ondrop or ondragenter?
+// testDiv_02.appendChild(testImg_02)
+// let testEl_02 = document.getElementById('tableau-1')
+// testEl_02.appendChild(testDiv_02)
+
+
+function renderTableau(){
+
+    // create a new div for each column in tableau
+    for (let n=1;n<8;n++) {
+        let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
+
+        // assign the card to the div
+        startingTableau[n].forEach((card) => {
+            let nextCard = currentDeck.pop()
+            let nextImgElement = document.createElement('img')
+            if (card < 0){
+                nextImgElement.src = CARD_LIBRARY[nextCard]["imgBack"]
+            } else if (card > 0){
+                nextImgElement.src = CARD_LIBRARY[nextCard]["img"]
+            }
+            let nextDiv = document.createElement('div')
+            nextDiv.appendChild(nextImgElement)
+            nextDiv.setAttribute("data-card", `nextCard`)
+            nextTableauCol.appendChild(nextDiv);
+        })
+        
+    }
+}
+
+renderTableau()
 
 
 /* ################################################ */
@@ -161,10 +209,11 @@ const renderStock = () => {
 
 
 
-let C02 = document.querySelector(`[data-card="C02"]`)   // select html using data-attribute, and modify css using class selector
-console.log(C02)
-console.log(C02.style)
-C02.style.backgroundColor = 'green';
+// let C02 = document.querySelector(`[data-card="C02"]`)   // select html using data-attribute, and modify css using class selector
+// console.log(C02)
+// console.log(C02.style)
+// C02.style.backgroundColor = 'green';
+
 
 // break up render() into smaller renderXxxx(), because it cam get bloated
 // Render function should transfer all states to user interface. 
@@ -178,54 +227,6 @@ function render(){
 
 
 
-
-
-
-
-//test ////////////////////////////////////////
-// test script
-const draggedOnTop = (evt) => {
-    console.log(evt)
-}
-
-//// trying to understand:
-// How to self identify the card that is being dragged by the user, and the identity of the card that it is being dragged to, and run a function?
-
-let testImg_01 = document.createElement('img');
-testImg_01.src = CARD_IMAGES['H02']
-testImg_01.type = "H2"
-let testDiv_01 = document.createElement('div');
-testDiv_01.id = 'tab-5-1'
-testDiv_01.draggable='true';       // make draggable, add this attribute to div
-
-/// starting to drag the card -> change opacity, and should be able to grab the data from the object being dragged
-testDiv_01.addEventListener("dragstart", function(evt){
-    // evt.dataTransfer.setData()
-    console.log(evt)            //possible to edit or save into dataTransferItemList?
-    console.log(evt.dataTransfer.dataTransferItemList)
-    console.log(evt.dataTransfer); 
-    console.log(evt.target)
-
-    // **important -> include a function that modifies the attribute of the <img> element to include card to search: e.g. 'H2'
-    // -> https://www.w3schools.com/tags/ref_attributes.asp
-
-
-    let evtData = evt.dataTransfer          //variable evtData is the evt.dataTransfer property
-    //evtData.dataTransferItemList.add()      //adding the data of the current card
-
-    evt.target.style.opacity = "0.5";
-});
-
-/// the end of the 'drag' event -> change opacity, and should be able to compare the grabbed data with target data
-testDiv_01.addEventListener("dragend", function(evt){
-    //
-    evt.target.style.removeProperty('opacity');
-});
-
-
-testDiv_01.appendChild(testImg_01)
-let testEl_01 = document.getElementById('tableau-0')
-testEl_01.appendChild(testDiv_01)
 
 
 
