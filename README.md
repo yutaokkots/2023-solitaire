@@ -1,6 +1,6 @@
 <h1 align="center"> Tr'ondëk </h1>
 
-<h2>About
+<h2>About</h2>
 <hr>
 <div align="center"> <img src="README_files/prototype-01.png" width='500'></div>
 
@@ -49,9 +49,13 @@ Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the
             - from tableau to tableau -> the color of the suit ('b' or 'r') are alternating, && the number of the suit (dragged card must have immediate and descending order compared to dropped-on card).
             - from tableau to tableau -> if the stack contains a King, the King and its descendants can be moved to an empty tableau column 
             - from tableau to foundation -> the type of suit ('S', 'H', 'C', 'D') are the same && the dragged card must be in immediate and ascending order compared to dropped-on card.
-        (ii) the dragged card and dropped-on card must have the state of the card with face up
-  ) shuffling function  
-
+        (ii) the dragged card and dropped-on card must have the state of the card with face up  
+5. Dealing cards: 
+    a) up to three cards are displayed face-up, and playable, with the top-most card being playable (draggable and droppable). 
+    b) pressing deal button cause the playable cards to be placed into a waste area. 
+    c) three new cards are placed face-up in the stock area
+    d) once the stock area is empty, the cards in the waste area are moved to the stock area.
+6) When the waste area, stock area, and tableau contain no cards, there is a win. 
 
 <h2>License</h2>
 
