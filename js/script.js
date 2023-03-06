@@ -43,19 +43,38 @@ let tableauStatus;           // the various decks in the tableau and what they c
 /* ########### DRAG AND DROP OPERATIONS ########### */
 
 const mainElement = document.querySelector('main')
+
 mainElement.addEventListener('dragstart', (evt) => {
-    let eventAttribute = evt.target.attributes
-    console.log(evt.target.dataset.card.innerText)
-    
-    //THIS!
-    console.log(evt.target.getAttribute('data-card'))
+    // guards -> excludes non-playable cards
+    if (evt.target.getAttribute('data-card') == null || evt.target.getAttribute('data-inplay') == -1){
+        return;
+    }
 
-    console.log(evt)
-    evt.dataTransfer.setData("text/plain", `${evt.target.tagName}`)
-    console.log(evt.dataTransfer)
-    console.log(evt.dataTransferItemList)
-    console.log(evt.target.attributes)
+    console.log("dragged")
+    //THIS! reads the data-card and data-inplay values that were established when the card was created. 
+    //console.log(evt.target.getAttribute('data-card'))
+    //console.log(evt.target.getAttribute('data-inplay'))
+        
+})
 
+mainElement.addEventListener('dragover', (evt) => {
+    // guards -> everything except div elements that contain data
+    if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null ){
+        return;
+    }
+    evt.preventDefault()
+    console.log("dragging over an object")
+    //console.log(evt)
+})  
+
+mainElement.addEventListener('dragenter', (evt) => {
+    // guards -> everything except div elements that contain data
+    if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null ){
+        return;
+    }
+//guards -> everything except 
+    evt.preventDefault()
+    console.log("Can I be placed?")
 })
 
 
@@ -112,11 +131,14 @@ const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
     let newDiv= document.createElement('div')
     // uses constant CARD_LIBRARY to get the image source
     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
-    newDiv.innerHTML = `<img data-card='${cardIdentity}' src=${cardUrl}>`
-    newDiv.dataset.card = `{cardIdentity}`
+    newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
+    newDiv.draggable = 'true'; //is this needed?
+    //newDiv.dataset.card = [`{cardIdentity}`, `{cardUpOrDown}`]
+    // newDiv.dataset.inplay = 
     //newDiv.setAttribute("data-card", cardIdentity)
     return newDiv
 }
+
 
 
 const renderTableau = () => {

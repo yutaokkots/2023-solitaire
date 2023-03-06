@@ -118,3 +118,20 @@ testDiv_01.appendChild(testImg_01)
 let testEl_01 = document.getElementById('tableau-0')
 testEl_01.appendChild(testDiv_01)
 
+
+
+mainElement.addEventListener('dragstart', (evt) => {
+    let eventAttribute = evt.target.attributes
+
+    //THIS!
+    console.log(evt.target.getAttribute('data-card'))
+    console.log(evt.target.getAttribute('data-inplay'))
+
+
+    console.log(evt)
+    evt.dataTransfer.setData("text/plain", `${evt.target.tagName}`)
+    console.log(evt.dataTransfer)
+    console.log(evt.dataTransferItemList)
+    console.log(evt.target.attributes)
+
+})
