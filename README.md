@@ -64,7 +64,7 @@ Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the
     <li>pressing deal button cause the playable cards to be placed into a waste area.</li>
     <li>three new cards are placed face-up in the stock area</li>
     <li>once the stock area is empty, the cards in the waste area are moved to the stock area.</li>
-    </ol><li>
+    </ol></li>
 <li>When the waste area, stock area, and tableau contain no cards, there is a win. </li>
 </ol>
 
