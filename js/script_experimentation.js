@@ -135,3 +135,44 @@ mainElement.addEventListener('dragstart', (evt) => {
     console.log(evt.target.attributes)
 
 })
+
+
+
+mainElement.addEventListener('dragenter', (evt) => {
+    // guards -> everything except div elements that contain data
+    if (evt.target.getAttribute('data-inplay') != 1) {
+        //console.log("Not a div, or does not have data-card")
+
+        return;
+    }
+
+    console.log(evt.target.parentNode)
+//     if (evt.target.getAttribute('data-inplay') === null 
+//     && evt.target.tagName === "DIV"
+//     || evt.target.getAttribute('data-inplay') == -1
+//     || evt.target.tagName === "IMG") {
+//     //console.log("Not a div, or does not have data-card")
+//     return;
+// }
+
+//     if (evt.target.tagName !== "DIV" 
+//     && evt.target.getAttribute('data-card') !== null 
+//     && evt.target.getAttribute('data-inplay') != -1) {
+//     //console.log("Not a div, or does not have data-card")
+//     return;
+// }
+
+    // if (evt.target.tagName == "DIV" && evt.target.getAttribute('data-inplay') == 1){
+    //     console.log(evt.target.id)
+    //     console.log("dragging over an object")
+    // } else {
+    //     return;
+    // }
+
+    //evt.preventDefault()
+    //console.log(evt)
+    // console.log(evt)
+    // console.log(evt.target.id)
+    // console.log("dragging over an object")
+})  
+

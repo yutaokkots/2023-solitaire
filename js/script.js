@@ -57,25 +57,87 @@ mainElement.addEventListener('dragstart', (evt) => {
         
 })
 
-mainElement.addEventListener('dragover', (evt) => {
-    // guards -> everything except div elements that contain data
-    if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null ){
-        return;
-    }
-    evt.preventDefault()
-    console.log("dragging over an object")
-    //console.log(evt)
-})  
 
 mainElement.addEventListener('dragenter', (evt) => {
     // guards -> everything except div elements that contain data
-    if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null ){
+    if (evt.target.getAttribute('data-inplay') != 1) {
         return;
     }
-//guards -> everything except 
-    evt.preventDefault()
-    console.log("Can I be placed?")
-})
+    if (evt.target.getAttribute('data-card') == null) {
+        return;
+    }
+    // evt.target.parentNode.style.cssText = `
+    // outline: 2px solid rgb(220,236,233);
+    // outline-offset: -2px;
+    // border-radius: 0.2rem;
+    // `
+
+    evt.target.parentNode.style.outline = "1.5px solid rgb(220,236,233)";
+    evt.target.parentNode.style.offset = "2px";
+    evt.target.parentNode.style.borderRadius = "0.2rem";
+
+    console.log(evt.target.parentNode.style)
+
+})  
+
+mainElement.addEventListener('dragleave', (evt) => {
+    // guards -> everything except div elements that contain data
+    if (evt.target.getAttribute('data-inplay') != 1) {
+        return;
+    }
+    if (evt.target.getAttribute('data-card') == null) {
+        return;
+    }
+    evt.target.parentNode.style.outline = null;
+    evt.target.parentNode.style.offset = null;
+    evt.target.parentNode.style.borderRadius = null;
+
+    console.log(evt.target.parentNode.style)
+
+})  
+
+
+
+
+mainElement.addEventListener('drop', (evt) => {
+    // guards -> everything except div elements that contain data
+    console.log(evt)
+    console.log("hello drop")
+});
+
+
+mainElement.addEventListener('droptarget', (evt) => {
+    // guards -> everything except div elements that contain data
+    console.log(evt)
+    console.log("hello drop")
+});
+
+mainElement.addEventListener('dragend', (evt) => {
+    // guards -> everything except div elements that contain data
+    console.log(evt)
+    console.log("hello drop")
+});
+
+
+
+// via stackoverflow: The dragenter event happens at the moment you drag something in to the target element, and then it stops. The dragover event happens during the time you are dragging something until you drop it.
+
+// mainElement.addEventListener('dragenter', (evt) => {
+//     // guards -> everything except div elements that contain data
+//     if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null || evt.target.getAttribute('data-inplay') == -1){
+//         return;
+//     }
+
+//     //evt.preventDefault()
+//     console.log("Can I be placed?")
+// })
+
+
+// https://blog.openreplay.com/drag-and-drop-events-in-javascript/
+// Dragover: This event is fired as a draggable element moves over any valid dropzone’s surface.
+// Dragenter: This event is fired when a draggable element intersects the surface of a valid dropzone while going towards it; basically, when a draggable element enters a dropzone
+// Dragleave: This event is fired when a draggable element intersects the surface of a valid dropzone while going away from it. Basically, when a draggable element leaves a dropzone.
+// Drop: The drop event is the penultimate event fired during a complete drag-and-drop interaction cycle(Dragend is the last). However, two conditions must be met for it to fire. First, the drop event will fire only if the e.preventDefault() is called on the Dragover event. The second condition is that the drop event will only fire when a draggable element is released (dropped) over a valid dropzone.
 
 
 // possibly useful functions:
@@ -132,6 +194,9 @@ const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
     // uses constant CARD_LIBRARY to get the image source
     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
     newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
+    newDiv.dataset.card=`${cardIdentity}`
+    newDiv.dataset.inplay=`${cardUpOrDown}`
+    // data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' 
     newDiv.draggable = 'true'; //is this needed?
     //newDiv.dataset.card = [`{cardIdentity}`, `{cardUpOrDown}`]
     // newDiv.dataset.inplay = 
