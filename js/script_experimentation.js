@@ -1,5 +1,76 @@
 
 
+// How do I simplify renderTableau and elementMaker
+// Purpose of elementMaker -> This takes the information stored inside the deck of cards (an array), and pops() from the array, and takes that information to
+// create a DOM element. It basically is the function that enables rendering onto the screen (array -> visual)
+// So all draws of the card, and all dealing of the card should go through this process. 
+// e.g. Should draw from an array, and return something. 
+
+// another aspect would be to determine if the drawn card should be facing up or down. 
+// Is this a separate function? 
+// e.g. face up or face down as a parameter of a function, and add the actual image source to the div? 
+
+
+
+const dealCardFromDeck = () => {
+    let nextCard = currentDeck.pop()
+    return nextCard
+}
+
+// makeDivElementWithCard creates a div element from the information provided
+// Takes in cardIdentity information, as well as information on if that card should be up or down
+
+const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
+    let newDiv= document.createElement('div')
+    // uses constant CARD_LIBRARY to get the image source
+    // let cardUrl = CARD_LIBRARY[`${cardIdentity}`]['img']
+    let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
+    newDiv.innerHTML = `<img src=${cardUrl}>;`
+    newDiv.setAttribute("data-card", cardIdentity)
+    return newDiv
+}
+
+
+
+function renderTableau(){
+    // create a new div for each column in tableau
+    for (let n=1;n<8;n++) {
+        let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
+
+        // assign the card to the div
+        startingTableau[n].forEach((isCardUpOrDown) => {
+            let nextCard = dealCardFromDeck()
+            let nextDiv = makeDivElementWithCard (nextCard, isCardUpOrDown)
+            nextTableauCol.appendChild(nextDiv);
+        })
+    }
+}
+
+
+
+// elementMaker creates a div element from the information provided
+const elementMaker = (cardKey) => {
+    let newDiv= document.createElement('div')
+    // uses constant CARD_LIBRARY to get the image source
+    let cardUrl = CARD_LIBRARY[`${cardKey}`]['img']
+    newDiv.innerHTML = `<img src=${cardUrl}>;`
+    newDiv.setAttribute("data-card", cardKey)
+    return newDiv
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //test ////////////////////////////////////////
 // test script

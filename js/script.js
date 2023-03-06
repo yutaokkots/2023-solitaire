@@ -1,4 +1,4 @@
-import {CARD_LIST, CARD_LIBRARY, CARD_IMAGES} from "./constants.js";
+import {CARD_LIST, CARD_LIBRARY, CARD_IMAGES, startingTableau} from "./constants.js";
 console.log("initialized")
 
 
@@ -9,12 +9,7 @@ let image2 = document.querySelector("#foundation-0 img")
 console.log(image2)
 console.log(image2.contentDocument)
 
-// naturalHeight
-// : 
-// 333
-// naturalWidth
-// : 
-// 238
+
 
 /*----- constants -----*/
 console.log(CARD_IMAGES)
@@ -28,6 +23,7 @@ let score;
 let currentDeck;            // contains non-repeating card information after randomization //randomShuffle()
 let currentDeckObjects;     // contains each card object: {reference to DOM objects, their states of flipped over or not, }
 let tableauStatus;           // the various decks in the tableau and what they contain     
+
 // holds master information about 
 // 1) card is face or back 
 // 2) 
@@ -42,15 +38,23 @@ let tableauStatus;           // the various decks in the tableau and what they c
 
 
 /*----- event listeners -----*/
+
 /* ################################################ */
 /* ########### DRAG AND DROP OPERATIONS ########### */
 
 const mainElement = document.querySelector('main')
 mainElement.addEventListener('dragstart', (evt) => {
+    let eventAttribute = evt.target.attributes
+    console.log(evt.target.dataset.card.innerText)
+    
+    //THIS!
+    console.log(evt.target.getAttribute('data-card'))
+
     console.log(evt)
     evt.dataTransfer.setData("text/plain", `${evt.target.tagName}`)
     console.log(evt.dataTransfer)
     console.log(evt.dataTransferItemList)
+    console.log(evt.target.attributes)
 
 })
 
@@ -90,13 +94,12 @@ function stockShuffle(){};      // shuffle the waste + stock
 function stockDeal(){};         // deal out the stock cards and reveal top three
 
 
-init();
 
 /* ################################################ */
 /* ########### INITIALIZATION FUNCTIONS ########### */
 
 /* --- shuffle the cards --- */
-function randomShuffle(cardArr){
+const randomShuffle = (cardArr) => {
     let newDeck = [];
     for (let i = 52; i > 0; i--) {
         let n = Math.floor(Math.random() * i);
@@ -105,88 +108,75 @@ function randomShuffle(cardArr){
     return newDeck;
 };
 
-/* --- deal the cards into tableau --- */
-function dealTableau(){
+const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
+    let newDiv= document.createElement('div')
+    // uses constant CARD_LIBRARY to get the image source
+    let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
+    newDiv.innerHTML = `<img data-card='${cardIdentity}' src=${cardUrl}>`
+    newDiv.dataset.card = `{cardIdentity}`
+    //newDiv.setAttribute("data-card", cardIdentity)
+    return newDiv
+}
 
+
+const renderTableau = () => {
+    // create a new div for each column in tableau
+    for (let n=1;n<8;n++) {
+        let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
+
+        // assign the card to the div
+        startingTableau[n].forEach((isCardUpOrDown) => {
+            let nextCard = dealCardFromDeck()
+            let nextDiv = makeDivElementWithCard (nextCard, isCardUpOrDown)
+            nextTableauCol.appendChild(nextDiv);
+        })
+    }
+}
+
+/* ################################################ */
+/* ############## STANDARD FUNCTIONS ############## */
+/* ################ do not delete  ################ */
+
+const dealCardFromDeck = () => {
+    let nextCard = currentDeck.pop()
+    return nextCard
+}
+
+
+/* ################################################ */
+/* ######### INITIALIZATION AND RENDERING ######### */
+/* ################ do not delete  ################ */
+
+// break up render() into smaller renderXxxx(), because it cam get bloated
+// Render function should transfer all states to user interface. 
+
+function render(){
+    renderTableau();
+    // renderFoundation();
+    // renderStock();
+    // renderWaste();
 };
 
 
 function init(){
-    console.log('hello');
+    console.log('This is the init function');
     render();
 }
 
-// elementMaker creates a div element from the information provided
-const elementMaker = (cardKey) => {
-    let newDiv= document.createElement('div')
-    // uses constant CARD_LIBRARY to get the image source
-    let cardUrl = CARD_LIBRARY[`${cardKey}`]['img']
-    newDiv.innerHTML = `<img src=${cardUrl}>;`
-    newDiv.setAttribute("data-card", cardKey)
-    return newDiv
-}
 
-console.log(elementMaker("C08")) 
 
 currentDeck = randomShuffle(CARD_LIST)
 const renderStock = () => {
     
 }
 
-// const startingTableau = {
-//         1:[],
-//         2:['BCK', ],
-//         3:['BCK','BCK', ],
-//         4:['BCK','BCK','BCK', ],
-//         5:['BCK','BCK','BCK','BCK',],
-//         6:['BCK','BCK','BCK','BCK','BCK', ],
-//         7:['BCK','BCK','BCK','BCK','BCK','BCK',]
 
-const startingTableau = {
-        1:[1],
-        2:[-1,1],
-        3:[-1,-1,1],
-        4:[-1,-1,-1,1],
-        5:[-1,-1,-1,-1,1],
-        6:[-1,-1,-1,-1,-1,1],
-        7:[-1,-1,-1,-1,-1,-1,1]
-}
-
-// let testImg_02 = document.createElement('img');
-// testImg_02.src = CARD_IMAGES['BAK']
-// let testDiv_02 = document.createElement('div'); 
-// testDiv_02.id = 'tab-6-1'
-// testDiv_02.ondrop='traggedOnTop(evt)';       // ondrop or ondragenter?
-// testDiv_02.appendChild(testImg_02)
-// let testEl_02 = document.getElementById('tableau-1')
-// testEl_02.appendChild(testDiv_02)
+init();
 
 
-function renderTableau(){
 
-    // create a new div for each column in tableau
-    for (let n=1;n<8;n++) {
-        let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
 
-        // assign the card to the div
-        startingTableau[n].forEach((card) => {
-            let nextCard = currentDeck.pop()
-            let nextImgElement = document.createElement('img')
-            if (card < 0){
-                nextImgElement.src = CARD_LIBRARY[nextCard]["imgBack"]
-            } else if (card > 0){
-                nextImgElement.src = CARD_LIBRARY[nextCard]["img"]
-            }
-            let nextDiv = document.createElement('div')
-            nextDiv.appendChild(nextImgElement)
-            nextDiv.setAttribute("data-card", `nextCard`)
-            nextTableauCol.appendChild(nextDiv);
-        })
-        
-    }
-}
 
-renderTableau()
 
 
 /* ################################################ */
@@ -215,14 +205,6 @@ renderTableau()
 // C02.style.backgroundColor = 'green';
 
 
-// break up render() into smaller renderXxxx(), because it cam get bloated
-// Render function should transfer all states to user interface. 
-function render(){
-    // renderTableau();
-    // renderFoundation();
-    // renderStock();
-    // renderWaste();
-};
 
 
 
