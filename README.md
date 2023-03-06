@@ -11,21 +11,21 @@ The card game, Klondike, was said to have been named after the Tr'ondëk (The Kl
 Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people. 
 
 <h2>Roadmap</h2>
-- [X] Initial conceptualization 
-- [X] Wireframe & sketches
-- [X] Pseudocode
-- [ ] Working functions and DOM elements
-- [ ] First draft MVP
-- [ ] Testing and debugging
-- [ ] CSS styling
-- [ ] Final draft
-- [ ] Final deployment on Github
-- [ ] Optional additional versions:
-    - [ ] Language Support
-      - [ ] Japanese
-      - [ ] Spanish  
-    - [ ] Styling
-      - [ ] color theme styling choices
+- [X] Initial conceptualization<br>
+- [X] Wireframe & sketches<br>
+- [X] Pseudocode<br>
+- [ ] Working functions and DOM elements<br>
+- [ ] First draft MVP<br>
+- [ ] Testing and debugging<br>
+- [ ] CSS styling<br>
+- [ ] Final draft<br>
+- [ ] Final deployment on Github<br>
+- [ ] Optional additional versions:<br>
+    - [ ] Language Support<br>
+      - [ ] Japanese<br>
+      - [ ] Spanish<br>
+    - [ ] Styling<br>
+      - [ ] color theme styling choices<br>
 
 <h2>Pseudocode</h2>
 1. (Optional) Start Page -> user click on button on start page -> start page dissolves revealing game board.
