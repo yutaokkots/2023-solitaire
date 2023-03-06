@@ -55,15 +55,16 @@ Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the
             <li>from tableau to tableau -> if the stack contains a King, the King and its descendants can be moved to an empty tableau column </li>
             <li>from tableau to foundation -> the type of suit ('S', 'H', 'C', 'D') are the same && the dragged card must be in immediate and ascending order compared to dropped-on card.</li>
             </ul>
-        </ol> the dragged card and dropped-on card must have the state of the card with face up<br>  
+        <li>the dragged card and dropped-on card must have the state of the card with face up</li>
+            </ol> 
     </ol>
-<li>Dealing cards:<li>
+<li>Dealing cards:
     <ol>
     <li>up to three cards are displayed face-up, and playable, with the top-most card being playable (draggable and droppable).</li>
     <li>pressing deal button cause the playable cards to be placed into a waste area.</li>
     <li>three new cards are placed face-up in the stock area</li>
     <li>once the stock area is empty, the cards in the waste area are moved to the stock area.</li>
-    </ol>
+    </ol><li>
 <li>When the waste area, stock area, and tableau contain no cards, there is a win. </li>
 </ol>
 
