@@ -42,6 +42,15 @@ let tableauStatus;           // the various decks in the tableau and what they c
 
 
 /*----- event listeners -----*/
+/* ################################################ */
+/* ########### DRAG AND DROP OPERATIONS ########### */
+
+const mainElement = document.querySelector('main')
+mainElement.addEventListener('dragstart', (evt) => {
+    console.log(evt)
+})
+
+
 // possibly useful functions:
 // .addEventListener
 // .removeEventListener
@@ -135,13 +144,18 @@ const renderStock = () => {
 /* ################################################ */
 /* ############# TARGET DROP FUNCTIONS ############ */
 
-const enableDrop = (evt) => {
-    console.log(evt.style)
-    evt.preventDefault();
-};
+// DON'T UNDERSTAND THIS YET:
+// ondrop="" ondragleave="" ondragover="enableDrop(event)"
 // const enableDrop = (evt) => {
+//     console.log(evt.style)
 //     evt.preventDefault();
 // };
+// // const enableDrop = (evt) => {
+// //     evt.preventDefault();
+// // };
+
+// console.log(typeof Window)
+
 
 
 
