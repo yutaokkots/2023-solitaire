@@ -1,10 +1,26 @@
 import {CARD_LIST, CARD_LIBRARY, CARD_IMAGES} from "./constants.js";
 console.log("initialized")
 
+
+let image1 = document.querySelector("#discard img")
+console.log(image1.contentDocument)
+console.log(image1)
+let image2 = document.querySelector("#foundation-0 img")
+console.log(image2)
+console.log(image2.contentDocument)
+
+// naturalHeight
+// : 
+// 333
+// naturalWidth
+// : 
+// 238
+
 /*----- constants -----*/
 console.log(CARD_IMAGES)
 console.log(CARD_LIST)
 console.log(CARD_LIBRARY)
+
 
 
 /*----- app's state (variables) -----*/
@@ -82,8 +98,13 @@ function init(){
     render();
 }
 
+// elementMaker creates a div element from the information provided
+const elementMaker = () => {
+    let newDiv= document.createElement('div')
+    newDiv.innerHTML = `<img src=${}>`
+}
 
-function renderStock(){
+const renderStock = () => {
     currentDeck = randomShuffle(CARD_LIST)
 }
 // function renderTableau(){
@@ -169,20 +190,20 @@ testEl_01.appendChild(testDiv_01)
 
 
 ///// / ////
-let testImg_02 = document.createElement('img');
-testImg_02.src = CARD_IMAGES['BAK']
-let testDiv_02 = document.createElement('div');
-testDiv_02.id = 'tab-6-1'
-testDiv_02.ondrop='traggedOnTop(evt)';       // ondrop or ondragenter?
-testDiv_02.appendChild(testImg_02)
-let testEl_02 = document.getElementById('tableau-1')
-testEl_02.appendChild(testDiv_02)
+// let testImg_02 = document.createElement('img');
+// testImg_02.src = CARD_IMAGES['BAK']
+// let testDiv_02 = document.createElement('div');
+// testDiv_02.id = 'tab-6-1'
+// testDiv_02.ondrop='traggedOnTop(evt)';       // ondrop or ondragenter?
+// testDiv_02.appendChild(testImg_02)
+// let testEl_02 = document.getElementById('tableau-1')
+// testEl_02.appendChild(testDiv_02)
 
 
-console.log(testImg_01)
-console.log(testDiv_01)
-console.log(testEl_01)
+// console.log(testImg_01)
+// console.log(testDiv_01)
+// console.log(testEl_01)
 
-console.log(testImg_02)
-console.log(testDiv_02)
-console.log(testEl_02)
+// console.log(testImg_02)
+// console.log(testDiv_02)
+// console.log(testEl_02)
