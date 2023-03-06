@@ -1,20 +1,19 @@
 import {CARD_LIST, CARD_LIBRARY, CARD_IMAGES} from "./constants.js";
 console.log("initialized")
 
-
-
 /*----- constants -----*/
 console.log(CARD_IMAGES)
 console.log(CARD_LIST)
 console.log(CARD_LIBRARY)
 
 
-
 /*----- app's state (variables) -----*/
 let score;
 let currentDeck;            // contains non-repeating card information after randomization //randomShuffle()
 let currentDeckObjects;     // contains each card object: {reference to DOM objects, their states of flipped over or not, }
-let 
+let tableauState;           // the various decks in the tableau and what they contain
+
+let startingTableau;
 
 
 
@@ -48,32 +47,71 @@ let
 
 
 /*----- functions -----*/
-function randomShuffle(){};     // randomly shuffles original list of arrays
+
 function flipCard(){};           // changes the variable state of each card to show face
 function checkPlacement(){};    // checks to see if dragged card is able to be placed at location
 
-function stockDeal(){};         // deal out the stock cards and reveal top three
-function stockShuffle(){};      // shuffle the waste + stock
 
+function stockShuffle(){};      // shuffle the waste + stock
+function stockDeal(){};         // deal out the stock cards and reveal top three
 
 
 init();
 
+/* ################################################ */
+/* ########### INITIALIZATION FUNCTIONS ########### */
+
+/* --- shuffle the cards --- */
+function randomShuffle(cardArr){
+    let newDeck = [];
+    for (let i = 52; i > 0; i--) {
+        let n = Math.floor(Math.random() * i);
+        newDeck.push(...cardArr.splice(n, 1));
+    };     
+    return newDeck;
+};
+
+/* --- deal the cards into tableau --- */
+function dealTableau(){
+
+};
 
 
 function init(){
-    console.log(hello)
-
+    console.log('hello');
     render();
 }
 
+
+function renderStock(){
+    currentDeck = randomShuffle(CARD_LIST)
+}
+// function renderTableau(){
+//     startingTableau = {
+//         1:[ , ],
+//         2:[ , ],
+//         3:[ , ],
+//         4:[ , ],
+//         5:[ , ],
+//         6:[ , ],
+//         7:[ , ]
+//     }
+    
+// }
+
+
+let C02 = document.querySelector(`[data-card="C02"]`)   // select html using data-attribute, and modify css using class selector
+console.log(C02)
+console.log(C02.style)
+C02.style.backgroundColor = 'green';
+
 // break up render() into smaller renderXxxx(), because it cam get bloated
 // Render function should transfer all states to user interface. 
-render(){
-    renderTableau();
-    renderFoundation();
+function render(){
+    // renderTableau();
+    // renderFoundation();
     renderStock();
-    renderWaste();
+    // renderWaste();
 };
 
 
