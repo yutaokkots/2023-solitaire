@@ -60,7 +60,6 @@ export const CARD_IMAGES = {
     D13: 'images/single_cards/DIAMOND-13-KING.svg',
     BAK: 'images/single_cards/BACK-2.svg',
     EMP: 'images/single_cards/EMPTY.svg'
-
 }
 
 // CARD_IMAGES[S01]

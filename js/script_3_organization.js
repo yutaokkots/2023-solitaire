@@ -8,6 +8,14 @@ console.log("initialized")
 
 
 
+const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-origin, .stock-origin")
+allEmptyCardAreas.forEach((card) => {
+    let cardUrl = CARD_LIBRARY["EMP"]["img"] 
+    card.innerHTML = `<img data-card='EMP' data-inplay='1' src=${cardUrl}>`
+    card.setAttribute("data-card", "EMP")
+    card.setAttribute("data-inplay", "-1")
+
+})
 
 
 
@@ -19,11 +27,19 @@ let currentDeckObjects;         // contains each card object: {reference to DOM 
 let tableauStatus;              // the various decks in the tableau and what they contain     
 let stockCards;
 
-
 //global variable
 let currentBottomCardType;    //this variable holds the information about what card the user is currently dragging
 // holds master information about 
 // 1) card is face or back 
+// 2) 
+
+// Where is the information stored? in the DOM element? or in a class instance that can be called upon for information?
+
+// if class:
+// constructor() creates information about: 
+
+
+/*----- cached element references -----*/
 
 let allCardDivElements = {};
 
@@ -36,21 +52,6 @@ let cardObjectKeyValue = {}
 
 
 
-/*----- cached element references -----*/
-
-// Makes the card outlines placed on screen (having dashed lines) into objects
-const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-origin, .stock-origin")
-allEmptyCardAreas.forEach((card) => {
-    let cardUrl = CARD_LIBRARY["EMP"]["img"] 
-    card.innerHTML = `<img data-card='EMP' data-inplay='1' src=${cardUrl}>`
-    card.setAttribute("data-card", "EMP")
-    card.setAttribute("data-inplay", "-1")
-})
-
-
-const mainElement = document.querySelector('main')
-
-
 /*----- event listeners -----*/
 
 /* ################################################ */
@@ -60,7 +61,8 @@ const mainElement = document.querySelector('main')
 //console.log(evt.target.getAttribute('data-card'))
 //console.log(evt.target.getAttribute('data-inplay'))
 
-// creates an object out of event of initially clicking and dragging, prevents unwanted dragging in non-relevant areas
+const mainElement = document.querySelector('main')
+
 mainElement.addEventListener('dragstart', (evt) => {
     // guards -> excludes non-playable cards
     let target = evt.target;
@@ -72,7 +74,6 @@ mainElement.addEventListener('dragstart', (evt) => {
     }
 })
 
-// When something is dragged into an area, the css is modified to show an outline of the drop area, and records information about the current bottom card
 mainElement.addEventListener('dragenter', (evt) => {
     // guards -> everything except div elements that contain data
     // if (evt.target.getAttribute('data-card') == "EMP") {
@@ -86,12 +87,11 @@ mainElement.addEventListener('dragenter', (evt) => {
     }
     // add an outline to where a card can potentially be dropped
     evt.target.parentNode.classList.add("card-selection");
-
     // establish this global variable with event object
     currentBottomCardType = evt  
 })  
 
-// When the something is dragged out of area, the default activity of drag-over is prevented
+
 mainElement.addEventListener('dragleave', (evt) => {
     // guards -> everything except div elements that contain data
     if (evt.target.getAttribute('data-inplay') != 1) {
@@ -114,7 +114,7 @@ const deactivateDragOver = () => {
     })
 }
 
-//dragged objects are passed through to determine if the top card is compatible with the bottom card
+//dragged objects are passed through
 const checkDroppable = (draggedCard, bottomCard) => {
     if (draggedCard.type !== "dragenter" && bottomCard.type !== "dragenter"){
         return false;
@@ -157,7 +157,8 @@ const checkDroppable = (draggedCard, bottomCard) => {
     }
 }   
 
-// dropped card event listener, removes the css of any outlined sections to remove the outline
+
+
 mainElement.addEventListener('drop', (evt) => {
     // guards -> everything except div elements that contain data
     deactivateDragOver()
@@ -168,7 +169,10 @@ mainElement.addEventListener('drop', (evt) => {
     evt.target.parentNode.classList.remove("card-selection")
 });
 
-// At the end of where the card is dragged and released, this function calls the checkDroppable function to see drop can proceed
+
+
+
+
 mainElement.addEventListener('dragend', (evt) => {
     // guards -> everything except div elements that contain data
 
