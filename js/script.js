@@ -20,10 +20,12 @@ console.log(CARD_LIBRARY)
 
 /*----- app's state (variables) -----*/
 let score;
-let currentDeck;            // contains non-repeating card information after randomization //randomShuffle()
-let currentDeckObjects;     // contains each card object: {reference to DOM objects, their states of flipped over or not, }
-let tableauStatus;           // the various decks in the tableau and what they contain     
+let currentDeck;                // contains non-repeating card information after randomization //randomShuffle()
+let currentDeckObjects;         // contains each card object: {reference to DOM objects, their states of flipped over or not, }
+let tableauStatus;              // the various decks in the tableau and what they contain     
 
+//global variable
+let currentBottomCardType;    //this variable holds the information about what card the user is currently dragging
 // holds master information about 
 // 1) card is face or back 
 // 2) 
@@ -49,12 +51,11 @@ mainElement.addEventListener('dragstart', (evt) => {
     if (evt.target.getAttribute('data-card') == null || evt.target.getAttribute('data-inplay') == -1){
         return;
     }
-
     console.log("dragged")
     //THIS! reads the data-card and data-inplay values that were established when the card was created. 
     //console.log(evt.target.getAttribute('data-card'))
     //console.log(evt.target.getAttribute('data-inplay'))
-        
+ 
 })
 
 
@@ -66,18 +67,13 @@ mainElement.addEventListener('dragenter', (evt) => {
     if (evt.target.getAttribute('data-card') == null) {
         return;
     }
-    // evt.target.parentNode.style.cssText = `
-    // outline: 2px solid rgb(220,236,233);
-    // outline-offset: -2px;
-    // border-radius: 0.2rem;
-    // `
-
+    // add an outline to where a card can potentially be dropped
     evt.target.parentNode.style.outline = "1.5px solid rgb(220,236,233)";
-    evt.target.parentNode.style.offset = "2px";
+    evt.target.parentNode.style.outlineOffset = "-0.5px";
     evt.target.parentNode.style.borderRadius = "0.2rem";
 
-    console.log(evt.target.parentNode.style)
-
+    console.log(evt.target.getAttribute('data-card'))
+    currentBottomCardType = evt  
 })  
 
 mainElement.addEventListener('dragleave', (evt) => {
@@ -88,35 +84,80 @@ mainElement.addEventListener('dragleave', (evt) => {
     if (evt.target.getAttribute('data-card') == null) {
         return;
     }
+    // remove the outline when the drag even leaves an area
     evt.target.parentNode.style.outline = null;
     evt.target.parentNode.style.offset = null;
     evt.target.parentNode.style.borderRadius = null;
-
-    console.log(evt.target.parentNode.style)
-
 })  
 
+// call drag-over event and remove the default. This needs to occure when something is dropped
+const deactivateDragOver = () => {
+    mainElement.addEventListener('dragover', (evt) => {
+        evt.preventDefault()
+    })
+}
+
+const checkDroppable = (draggedCard, bottomCard) => {
+    let draggedCardId   = draggedCard.target.getAttribute('data-card')
+    let draggedCardColor = CARD_LIBRARY[draggedCardId]['color']
+    let draggedCardValue = CARD_LIBRARY[draggedCardId]['value']
+    let draggedCardSuit = CARD_LIBRARY[draggedCardId]['suit']
+    let draggedCardUpperAdj = CARD_LIBRARY[draggedCardId]['after']
+    let bottomCardId     = bottomCard.target.getAttribute('data-card')
+    let bottomCardColor = CARD_LIBRARY[bottomCardId]['color']
+    let bottomCardValue = CARD_LIBRARY[bottomCardId]['value']
+    let bottomCardSuit  = CARD_LIBRARY[bottomCardId]['suit']
+    // if the card is in the tableau area, descending order + alternate color
+
+    if (bottomCard.fromElement.id === "tableau") {
+        console.log('bottom card is in tableau');
+        let result = (draggedCardColor !== bottomCardColor && draggedCardUpperAdj === bottomCardValue) ? true : false
+        console.log(result)
+        return result;
+    } else if (bottomCard.fromElement.id === "foundation"){
+        console.log('bottom card is in foundation');
+    }
 
 
+    // console.log(draggedCardColor )
+    // console.log(draggedCardValue )
+    // console.log(draggedCardSuit  )
+    console.log(bottomCard    )
+    // console.log(bottomCardColor  )
+    // console.log(bottomCardValue  )
+    // console.log(bottomCardSuit   )
+  
+}
 
-mainElement.addEventListener('drop', (evt) => {
-    // guards -> everything except div elements that contain data
-    console.log(evt)
-    console.log("hello drop")
-});
+// https://discussions.apple.com/thread/4225603#:~:text=Check%20System%20Preferences%20Mouse%20pane,or%20on%20a%20Magic%20Trackpad).
 
 
-mainElement.addEventListener('droptarget', (evt) => {
-    // guards -> everything except div elements that contain data
-    console.log(evt)
-    console.log("hello drop")
-});
+// mainElement.addEventListener('dragend', (evt) => {
+//     // guards -> everything except div elements that contain data
+//     console.log(evt)
+//     console.log("hello drop")
+// });
+
 
 mainElement.addEventListener('dragend', (evt) => {
     // guards -> everything except div elements that contain data
-    console.log(evt)
     console.log("hello drop")
+    let currentDraggedCardType = evt
+    checkDroppable(currentDraggedCardType, currentBottomCardType);
+
+    // the dragged item can be determined by:
+    // evt.target.getAttribute('data-card')
+    // evt.target.getAttribute('data-inplay')
 });
+
+
+// mainElement.addEventListener('droptarget', (evt) => {
+//     // guards -> everything except div elements that contain data
+//     console.log(evt)
+//     console.log("hello drop")
+// });
+
+
 
 
 
