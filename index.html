@@ -8,8 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <script defer type="module" src="js/constants.js"></script>
-    <script defer type="module" src="js/script.js"></script>
+
     <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -40,13 +39,15 @@
         <!-- row 3 -->
         <div class="foundationDiv"></div>
         <div class="foundationDiv" id="foundation"> 
-            <div id="foundation-0"><img src="images/single_cards/SPADE-1.svg"></div>
-            <div id="foundation-1"><img src="images/single_cards/EMPTY.svg"></div>
-            <div id="foundation-2"><img src="images/single_cards/EMPTY.svg"></div>
-            <div id="foundation-3"><img src="images/single_cards/DIAMOND-1.svg"></div>
-            <div id="played"><img src="images/single_cards/EMPTY.svg"></div>
-            <div id="stock"><img src="images/single_cards/CLUB-4.svg"></div>
-            <div id="discard"><img src="images/single_cards/BACK-2.svg"></div>
+            <div class="foundation-origin"><img src="images/single_cards/EMPTY.svg"></div>
+            <div class="foundation-origin"><img src="images/single_cards/EMPTY.svg"></div>
+            <div class="foundation-origin"><img src="images/single_cards/EMPTY.svg"></div>
+            <div class="foundation-origin"><img src="images/single_cards/EMPTY.svg"></div>
+            <div class="stock-origin" id="played"><img src="images/single_cards/EMPTY.svg"></div>
+            
+            <div class="stock-origin" id="stock"><img src="images/single_cards/EMPTY.svg">
+            </div>
+            <div class="stock-origin" id="discard"><img src="images/single_cards/EMPTY.svg"></div>
         </div>
         <div class="foundationDiv"></div>
 
@@ -55,35 +56,37 @@
         <div id="tableau">
 
             <div id="tableau-0">
-                <div id='tab-0-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
             <div id="tableau-1">
-                <div id='tab-1-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
             <div id="tableau-2">
-                <div id='tab-2-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
             <div id="tableau-3">
-                <div id='tab-3-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
             <div id="tableau-4">
-                <div id='tab-4-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
             <div id="tableau-5">
-                <div id='tab-5-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
             <div id='tableau-6'>
-                <div id='tab-6-origin'><img src="images/single_cards/EMPTY.svg"></div>
+                <div class='tab-origin'><img src="images/single_cards/EMPTY.svg"></div>
             </div>
 
         </div>
         <div></div>
     </main>
+    <script type="module" src="js/constants.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>

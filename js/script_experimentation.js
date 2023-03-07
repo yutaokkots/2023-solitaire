@@ -176,3 +176,64 @@ mainElement.addEventListener('dragenter', (evt) => {
     // console.log("dragging over an object")
 })  
 
+
+
+
+// mainElement.addEventListener('droptarget', (evt) => {
+//     // guards -> everything except div elements that contain data
+//     console.log(evt)
+//     console.log("hello drop")
+// });
+
+
+
+
+
+// via stackoverflow: The dragenter event happens at the moment you drag something in to the target element, and then it stops. The dragover event happens during the time you are dragging something until you drop it.
+
+// mainElement.addEventListener('dragenter', (evt) => {
+//     // guards -> everything except div elements that contain data
+//     if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null || evt.target.getAttribute('data-inplay') == -1){
+//         return;
+//     }
+
+//     //evt.preventDefault()
+//     console.log("Can I be placed?")
+// })
+
+
+// https://blog.openreplay.com/drag-and-drop-events-in-javascript/
+// Dragover: This event is fired as a draggable element moves over any valid dropzone’s surface.
+// Dragenter: This event is fired when a draggable element intersects the surface of a valid dropzone while going towards it; basically, when a draggable element enters a dropzone
+// Dragleave: This event is fired when a draggable element intersects the surface of a valid dropzone while going away from it. Basically, when a draggable element leaves a dropzone.
+// Drop: The drop event is the penultimate event fired during a complete drag-and-drop interaction cycle(Dragend is the last). However, two conditions must be met for it to fire. First, the drop event will fire only if the e.preventDefault() is called on the Dragover event. The second condition is that the drop event will only fire when a draggable element is released (dropped) over a valid dropzone.
+
+
+// https://discussions.apple.com/thread/4225603#:~:text=Check%20System%20Preferences%20Mouse%20pane,or%20on%20a%20Magic%20Trackpad).
+
+
+
+// possibly useful functions:
+// .addEventListener
+// .removeEventListener
+
+// https://www.w3schools.com/jsref/dom_obj_event.asp
+// event handlers
+// .onclick()
+
+// dragover Event:
+// https://www.w3schools.com/jsref/event_ondragover.asp
+// <p draggable="true">This is a draggable paragraph.</p>
+//
+// ondragenter Event:
+// https://www.w3schools.com/jsref/event_ondragenter.asp
+// https://www.w3schools.com/tags/ev_ondragenter.asp#:~:text=Definition%20and%20Usage,or%20leave%20a%20drop%20target.
+// Call a function when a draggable element enters a drop target:
+// <div ondragenter="myFunction(event)"></div>
+// *** https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_ondrag_all ***
+//
+// as with many addEventListeners, perhaps you can use event propogation to listen for dragging on the entire play area
+
+// drag and drop:
+// https://www.w3schools.com/html/tryit.asp?filename=tryhtml5_draganddrop
+

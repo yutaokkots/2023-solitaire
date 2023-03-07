@@ -2,27 +2,30 @@ import {CARD_LIST, CARD_LIBRARY, CARD_IMAGES, startingTableau} from "./constants
 console.log("initialized")
 
 
-let image1 = document.querySelector("#discard img")
-console.log(image1.contentDocument)
-console.log(image1)
-let image2 = document.querySelector("#foundation-0 img")
-console.log(image2)
-console.log(image2.contentDocument)
-
-
 
 /*----- constants -----*/
-console.log(CARD_IMAGES)
-console.log(CARD_LIST)
-console.log(CARD_LIBRARY)
+// see constants.js
+
+
+
+const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-origin, .stock-origin")
+allEmptyCardAreas.forEach((card) => {
+    let cardUrl = CARD_LIBRARY["EMP"]["img"] 
+    card.innerHTML = `<img data-card='EMP' data-inplay='1' src=${cardUrl}>`
+    card.setAttribute("data-card", "EMP")
+    card.setAttribute("data-inplay", "-1")
+
+})
 
 
 
 /*----- app's state (variables) -----*/
+
 let score;
 let currentDeck;                // contains non-repeating card information after randomization //randomShuffle()
 let currentDeckObjects;         // contains each card object: {reference to DOM objects, their states of flipped over or not, }
 let tableauStatus;              // the various decks in the tableau and what they contain     
+let stockCards;
 
 //global variable
 let currentBottomCardType;    //this variable holds the information about what card the user is currently dragging
@@ -38,29 +41,43 @@ let currentBottomCardType;    //this variable holds the information about what c
 
 /*----- cached element references -----*/
 
+let allCardDivElements = {};
+
+
+let allCardRefElements = {};
+
+let cardObjectKeyValue = {}
+
+
+
 
 /*----- event listeners -----*/
 
 /* ################################################ */
 /* ########### DRAG AND DROP OPERATIONS ########### */
 
+//THIS! reads the data-card and data-inplay values that were established when the card was created. 
+//console.log(evt.target.getAttribute('data-card'))
+//console.log(evt.target.getAttribute('data-inplay'))
+
 const mainElement = document.querySelector('main')
 
 mainElement.addEventListener('dragstart', (evt) => {
     // guards -> excludes non-playable cards
-    if (evt.target.getAttribute('data-card') == null || evt.target.getAttribute('data-inplay') == -1){
+    let target = evt.target;
+    if (target.getAttribute('data-card') == null 
+        || target.getAttribute('data-inplay') == -1
+        || target.getAttribute('data-card') == 'EMP'){
+        evt.preventDefault()
         return;
     }
-    console.log("dragged")
-    //THIS! reads the data-card and data-inplay values that were established when the card was created. 
-    //console.log(evt.target.getAttribute('data-card'))
-    //console.log(evt.target.getAttribute('data-inplay'))
- 
 })
-
 
 mainElement.addEventListener('dragenter', (evt) => {
     // guards -> everything except div elements that contain data
+    // if (evt.target.getAttribute('data-card') == "EMP") {
+    // }
+
     if (evt.target.getAttribute('data-inplay') != 1) {
         return;
     }
@@ -68,27 +85,26 @@ mainElement.addEventListener('dragenter', (evt) => {
         return;
     }
     // add an outline to where a card can potentially be dropped
-    evt.target.parentNode.style.outline = "1.5px solid rgb(220,236,233)";
-    evt.target.parentNode.style.outlineOffset = "-0.5px";
-    evt.target.parentNode.style.borderRadius = "0.2rem";
-
-    console.log(evt.target.getAttribute('data-card'))
+    evt.target.parentNode.classList.add("card-selection");
+    // establish this global variable with event object
     currentBottomCardType = evt  
 })  
+
 
 mainElement.addEventListener('dragleave', (evt) => {
     // guards -> everything except div elements that contain data
     if (evt.target.getAttribute('data-inplay') != 1) {
         return;
-    }
+    };
     if (evt.target.getAttribute('data-card') == null) {
         return;
-    }
-    // remove the outline when the drag even leaves an area
-    evt.target.parentNode.style.outline = null;
-    evt.target.parentNode.style.offset = null;
-    evt.target.parentNode.style.borderRadius = null;
-})  
+    };
+    evt.target.parentNode.classList.remove("card-selection");
+});  
+
+mainElement.addEventListener('dragover', (evt) => {
+    evt.preventDefault()
+})
 
 // call drag-over event and remove the default. This needs to occure when something is dropped
 const deactivateDragOver = () => {
@@ -97,116 +113,163 @@ const deactivateDragOver = () => {
     })
 }
 
+//dragged objects are passed through
 const checkDroppable = (draggedCard, bottomCard) => {
+    if (draggedCard.type !== "dragenter" && bottomCard.type !== "dragenter"){
+        return false;
+    }
     let draggedCardId   = draggedCard.target.getAttribute('data-card')
     let draggedCardColor = CARD_LIBRARY[draggedCardId]['color']
     let draggedCardValue = CARD_LIBRARY[draggedCardId]['value']
     let draggedCardSuit = CARD_LIBRARY[draggedCardId]['suit']
     let draggedCardUpperAdj = CARD_LIBRARY[draggedCardId]['after']
+    let draggedCardLowerAdj = CARD_LIBRARY[draggedCardId]['before']
     let bottomCardId     = bottomCard.target.getAttribute('data-card')
     let bottomCardColor = CARD_LIBRARY[bottomCardId]['color']
     let bottomCardValue = CARD_LIBRARY[bottomCardId]['value']
     let bottomCardSuit  = CARD_LIBRARY[bottomCardId]['suit']
+    console.log(allCardRefElements) /////// delete
     // if the card is in the tableau area, descending order + alternate color
-
     if (bottomCard.fromElement.id === "tableau") {
-        console.log('bottom card is in tableau');
-        let result = (draggedCardColor !== bottomCardColor && draggedCardUpperAdj === bottomCardValue) ? true : false
-        console.log(result)
-        return result;
+        if (draggedCardValue == 13 && bottomCardValue == -1) {
+            // console.log(draggedCardId)      //delete later
+            // console.log(bottomCardId)       //delete later
+            return true;
+        } else {
+            let isDiffColorDecreasNum = (draggedCardColor !== bottomCardColor && draggedCardUpperAdj === bottomCardValue) ? true : false;
+            // console.log(draggedCardId)      //delete later
+            // console.log(bottomCardId)       //delete later
+            return isDiffColorDecreasNum;
+        }
     } else if (bottomCard.fromElement.id === "foundation"){
-        console.log('bottom card is in foundation');
+        // console.log('bottom card is in foundation');    //delete later
+        if (draggedCardValue == 1 && bottomCardValue == -1) {
+            // console.log(draggedCardId)      //delete later
+            // console.log(bottomCardId)       //delete later
+            return true;
+        } else {
+            let result = (draggedCardSuit === bottomCardSuit && draggedCardLowerAdj === bottomCardValue) ? true : false;
+            // console.log(draggedCardId)      //delete later
+            // console.log(bottomCardId)       //delete later
+            return result;
+        }
     }
+}   
 
 
-    // console.log(draggedCardColor )
-    // console.log(draggedCardValue )
-    // console.log(draggedCardSuit  )
-    console.log(bottomCard    )
-    // console.log(bottomCardColor  )
-    // console.log(bottomCardValue  )
-    // console.log(bottomCardSuit   )
-  
-}
 
-// https://discussions.apple.com/thread/4225603#:~:text=Check%20System%20Preferences%20Mouse%20pane,or%20on%20a%20Magic%20Trackpad).
+mainElement.addEventListener('drop', (evt) => {
+    // guards -> everything except div elements that contain data
+    deactivateDragOver()
+
+    // let currentDraggedCardType = evt
+    // console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
+
+    evt.target.parentNode.classList.remove("card-selection")
+});
 
 
-// mainElement.addEventListener('dragend', (evt) => {
-//     // guards -> everything except div elements that contain data
-//     console.log(evt)
-//     console.log("hello drop")
-// });
+
 
 
 mainElement.addEventListener('dragend', (evt) => {
     // guards -> everything except div elements that contain data
-    console.log("hello drop")
-    let currentDraggedCardType = evt
-    checkDroppable(currentDraggedCardType, currentBottomCardType);
 
-    // the dragged item can be determined by:
-    // evt.target.getAttribute('data-card')
-    // evt.target.getAttribute('data-inplay')
+    let currentDraggedCardType = evt
+    // console.log(currentDraggedCardType )
+
+    console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
+    checkDroppable(currentDraggedCardType, currentBottomCardType);
+    let topCard = currentDraggedCardType.target.getAttribute('data-card')
+    let bottomCard = currentBottomCardType.target.getAttribute('data-card')
+    // console.log(bottomCard)
+
+    if (checkDroppable(currentDraggedCardType, currentBottomCardType)) {
+        //revealCard(topCard);
+        moveCard(topCard, bottomCard);
+
+    }
+
 });
 
+// the dragged item can be determined by:
+// evt.target.getAttribute('data-card')
+// evt.target.getAttribute('data-inplay')
 
-// mainElement.addEventListener('droptarget', (evt) => {
-//     // guards -> everything except div elements that contain data
-//     console.log(evt)
-//     console.log("hello drop")
-// });
-
-
-
-
-
-// via stackoverflow: The dragenter event happens at the moment you drag something in to the target element, and then it stops. The dragover event happens during the time you are dragging something until you drop it.
-
-// mainElement.addEventListener('dragenter', (evt) => {
-//     // guards -> everything except div elements that contain data
-//     if (evt.target.tagName !== "DIV" || evt.target.getAttribute('data-card') == null || evt.target.getAttribute('data-inplay') == -1){
-//         return;
-//     }
-
-//     //evt.preventDefault()
-//     console.log("Can I be placed?")
-// })
-
-
-// https://blog.openreplay.com/drag-and-drop-events-in-javascript/
-// Dragover: This event is fired as a draggable element moves over any valid dropzone’s surface.
-// Dragenter: This event is fired when a draggable element intersects the surface of a valid dropzone while going towards it; basically, when a draggable element enters a dropzone
-// Dragleave: This event is fired when a draggable element intersects the surface of a valid dropzone while going away from it. Basically, when a draggable element leaves a dropzone.
-// Drop: The drop event is the penultimate event fired during a complete drag-and-drop interaction cycle(Dragend is the last). However, two conditions must be met for it to fire. First, the drop event will fire only if the e.preventDefault() is called on the Dragover event. The second condition is that the drop event will only fire when a draggable element is released (dropped) over a valid dropzone.
-
-
-// possibly useful functions:
-// .addEventListener
-// .removeEventListener
-
-// https://www.w3schools.com/jsref/dom_obj_event.asp
-// event handlers
-// .onclick()
-
-// dragover Event:
-// https://www.w3schools.com/jsref/event_ondragover.asp
-// <p draggable="true">This is a draggable paragraph.</p>
-//
-// ondragenter Event:
-// https://www.w3schools.com/jsref/event_ondragenter.asp
-// https://www.w3schools.com/tags/ev_ondragenter.asp#:~:text=Definition%20and%20Usage,or%20leave%20a%20drop%20target.
-// Call a function when a draggable element enters a drop target:
-// <div ondragenter="myFunction(event)"></div>
-// *** https://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_ondrag_all ***
-//
-// as with many addEventListeners, perhaps you can use event propogation to listen for dragging on the entire play area
-
-// drag and drop:
-// https://www.w3schools.com/html/tryit.asp?filename=tryhtml5_draganddrop
 
 
 /*----- functions -----*/
+
+const solitaire = [
+    [0],                    //tableau-0
+    [0, 0],
+    [0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],  //tableau-7
+    [0],                    //foundation-0 [7]
+    [0],
+    [0],
+    [0],                    //foundation-4 [10]
+    [0],                    //stock     [10]
+    [0]                     //waste     [10]
+]
+
+
+
+const updateDataObject = () => {
+    for (let keys in allCardDivElements){
+        let location = document.querySelector(`${keys}`);
+        allCardDivElements[keys].forEach((element) => {
+            location.append(element);
+        });
+    } 
+}
+
+
+// const revealCard = (topCard) => {
+
+//     console.log(allCardDivElements[topCard].parentNode.lastChild.dataset.inplay)
+// }
+
+const moveCard = (topCard, bottomCard) => {
+    console.log(topCard);
+    console.log(bottomCard);
+    for (let keys in allCardRefElements){
+        allCardRefElements[keys].forEach((x, i) => {
+            if (x === topCard && i === allCardRefElements[keys].length - 1){
+                let poppedValue = allCardRefElements[keys].pop()
+                for (let keys in allCardRefElements){
+                    allCardRefElements[keys].forEach((x, i) => {
+                        if (x === bottomCard && i === allCardRefElements[keys].length - 1){
+                            allCardRefElements[keys].push(poppedValue)
+                        }
+                    })
+                }
+            }
+        })} 
+    for (let keys in allCardRefElements){
+        allCardRefElements[keys].forEach((x, i) => {
+            if (x === bottomCard && i === allCardRefElements[keys].length - 1){
+                allCardRefElements[keys].push(poppedValue)
+            }
+        })
+    }
+
+    for (let key in cardObjectKeyValue){
+        console.log(key)
+        console.log(cardObjectKeyValue[key])
+        cardObjectKeyValue[key].
+    }
+    updateDataObject()
+    //console.log(allCardRefElements)
+    //console.log(cardObjectKeyValue )
+    //allCardDivElements[topCard].parentNode.removeChild(allCardDivElements[topCard])
+    //allCardDivElements[bottomCard].parentNode.appendChild(allCardDivElements[topCard])
+}
+
+
 
 function flipCard(){};           // changes the variable state of each card to show face
 function checkPlacement(){};    // checks to see if dragged card is able to be placed at location
@@ -230,6 +293,10 @@ const randomShuffle = (cardArr) => {
     return newDeck;
 };
 
+currentDeck = randomShuffle(CARD_LIST)
+
+
+// makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
 const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
     let newDiv= document.createElement('div')
     // uses constant CARD_LIBRARY to get the image source
@@ -237,29 +304,44 @@ const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
     newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
     newDiv.dataset.card=`${cardIdentity}`
     newDiv.dataset.inplay=`${cardUpOrDown}`
-    // data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' 
-    newDiv.draggable = 'true'; //is this needed?
-    //newDiv.dataset.card = [`{cardIdentity}`, `{cardUpOrDown}`]
-    // newDiv.dataset.inplay = 
-    //newDiv.setAttribute("data-card", cardIdentity)
+    newDiv.draggable = 'true';                  //is this needed?
     return newDiv
 }
 
 
 
+// const renderTableau = () => {
+//     // create a new div for each column in tableau
+//     for (let n=1;n<8;n++) {
+//         let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
+//         // assign the card to the div
+//         startingTableau[n].forEach((isCardUpOrDown) => {
+//             let nextCard = dealCardFromDeck()
+//             let nextDiv = makeDivElementWithCard(nextCard, isCardUpOrDown)
+//             nextTableauCol.appendChild(nextDiv);
+//             allCardDivElements[nextCard] = nextDiv;
+//         })
+//     }
+// }
+
 const renderTableau = () => {
     // create a new div for each column in tableau
     for (let n=1;n<8;n++) {
-        let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
-
-        // assign the card to the div
+        let tableauKey = `#tableau-${n-1}`
+        allCardDivElements[tableauKey] = []
+        allCardRefElements[tableauKey] = []
         startingTableau[n].forEach((isCardUpOrDown) => {
             let nextCard = dealCardFromDeck()
-            let nextDiv = makeDivElementWithCard (nextCard, isCardUpOrDown)
-            nextTableauCol.appendChild(nextDiv);
+            let nextDiv = makeDivElementWithCard(nextCard, isCardUpOrDown)
+            allCardDivElements[tableauKey].push(nextDiv)
+            allCardRefElements[tableauKey].push(nextCard)
+            cardObjectKeyValue[nextCard] = nextDiv
         })
     }
 }
+
+
+
 
 /* ################################################ */
 /* ############## STANDARD FUNCTIONS ############## */
@@ -278,83 +360,59 @@ const dealCardFromDeck = () => {
 // break up render() into smaller renderXxxx(), because it cam get bloated
 // Render function should transfer all states to user interface. 
 
-function render(){
-    renderTableau();
-    // renderFoundation();
-    // renderStock();
-    // renderWaste();
+const renderStock = () => {
+    allCardDivElements["#stock"] = []
+    allCardRefElements["#stock"] = []
+    while (currentDeck.length > 0){
+        let nextCard = dealCardFromDeck();
+        let nextDiv = makeDivElementWithCard(nextCard, -1);
+        //stockPile.appendChild(nextDiv);
+        allCardDivElements["#stock"].push(nextDiv);
+        allCardRefElements["#stock"].push(nextCard);
+        cardObjectKeyValue[nextCard] = nextDiv
+    }
+}
+
+//WORK ON THIS FOR 3/6
+
+// const renderBoard2 = () => {
+//     for (let keys in allCardRefElements){
+//         allCardRefElements[keys].forEach((element) => {
+            
+//         });
+//     } 
+// }
+
+
+const renderWaste = () => {
+    //let stockPile = document.querySelector(`#stock`)                // later remove to different function
+    allCardDivElements["#waste"] = []
+    allCardRefElements["#waste"] = []
+}
+
+
+const updateBoard = () => {
+    for (let keys in allCardDivElements){
+        let location = document.querySelector(`${keys}`);
+        allCardDivElements[keys].forEach((element) => {
+            location.append(element);
+        });
+    } 
+}
+
+
+function render(renderT, renderS, updateB, renderW){
+    setTimeout(renderT, 20);
+    setTimeout(renderS, 20);
+    setTimeout(renderW, 20);
+    setTimeout(updateB, 200);
 };
 
 
 function init(){
+    render(renderTableau, renderStock, renderWaste, updateBoard);
     console.log('This is the init function');
-    render();
 }
-
-
-
-currentDeck = randomShuffle(CARD_LIST)
-const renderStock = () => {
-    
-}
-
 
 init();
 
-
-
-
-
-
-
-/* ################################################ */
-/* ############# TARGET DROP FUNCTIONS ############ */
-
-// DON'T UNDERSTAND THIS YET:
-// ondrop="" ondragleave="" ondragover="enableDrop(event)"
-// const enableDrop = (evt) => {
-//     console.log(evt.style)
-//     evt.preventDefault();
-// };
-// // const enableDrop = (evt) => {
-// //     evt.preventDefault();
-// // };
-
-// console.log(typeof Window)
-
-
-
-
-
-
-// let C02 = document.querySelector(`[data-card="C02"]`)   // select html using data-attribute, and modify css using class selector
-// console.log(C02)
-// console.log(C02.style)
-// C02.style.backgroundColor = 'green';
-
-
-
-
-
-
-
-
-
-///// / ////
-// let testImg_02 = document.createElement('img');
-// testImg_02.src = CARD_IMAGES['BAK']
-// let testDiv_02 = document.createElement('div');
-// testDiv_02.id = 'tab-6-1'
-// testDiv_02.ondrop='traggedOnTop(evt)';       // ondrop or ondragenter?
-// testDiv_02.appendChild(testImg_02)
-// let testEl_02 = document.getElementById('tableau-1')
-// testEl_02.appendChild(testDiv_02)
-
-
-// console.log(testImg_01)
-// console.log(testDiv_01)
-// console.log(testEl_01)
-
-// console.log(testImg_02)
-// console.log(testDiv_02)
-// console.log(testEl_02)

@@ -58,7 +58,9 @@ export const CARD_IMAGES = {
     D11: 'images/single_cards/DIAMOND-11-JACK.svg',
     D12: 'images/single_cards/DIAMOND-12-QUEEN.svg',
     D13: 'images/single_cards/DIAMOND-13-KING.svg',
-    BAK: 'images/single_cards/BACK-2.svg'
+    BAK: 'images/single_cards/BACK-2.svg',
+    EMP: 'images/single_cards/EMPTY.svg'
+
 }
 
 // CARD_IMAGES[S01]
@@ -116,7 +118,7 @@ export const CARD_IMAGES = {
 
 
 export const CARD_LIBRARY = {
-    S01: {suit:'s', color:'b', value:1,  img:CARD_IMAGES['S01'], imgBack:CARD_IMAGES['BAK'], before:0,  after:2},
+    S01: {suit:'s', color:'b', value:1,  img:CARD_IMAGES['S01'], imgBack:CARD_IMAGES['BAK'], before:-1,  after:2},
     S02: {suit:'s', color:'b', value:2,  img:CARD_IMAGES['S02'], imgBack:CARD_IMAGES['BAK'], before:1,  after:3},
     S03: {suit:'s', color:'b', value:3,  img:CARD_IMAGES['S03'], imgBack:CARD_IMAGES['BAK'], before:2,  after:4},
     S04: {suit:'s', color:'b', value:4,  img:CARD_IMAGES['S04'], imgBack:CARD_IMAGES['BAK'], before:3,  after:5},
@@ -167,7 +169,8 @@ export const CARD_LIBRARY = {
     D10: {suit:'d', color:'r', value:10, img:CARD_IMAGES['D10'], imgBack:CARD_IMAGES['BAK'], before:9,  after:11},
     D11: {suit:'d', color:'r', value:11, img:CARD_IMAGES['D11'], imgBack:CARD_IMAGES['BAK'], before:10, after:12},
     D12: {suit:'d', color:'r', value:12, img:CARD_IMAGES['D12'], imgBack:CARD_IMAGES['BAK'], before:11, after:13},
-    D13: {suit:'d', color:'r', value:13, img:CARD_IMAGES['D13'], imgBack:CARD_IMAGES['BAK'], before:12, after:0},
+    D13: {suit:'d', color:'r', value:13, img:CARD_IMAGES['D13'], imgBack:CARD_IMAGES['BAK'], before:12, after:-1},
+    EMP: {suit:'0', color:'0', value:-1, img:CARD_IMAGES['EMP'], imgBack:CARD_IMAGES['EMP'], before:0, after:-1},
 } 
 
 export const CARD_LIST = [
@@ -232,4 +235,4 @@ export const startingTableau = {
     5:[-1,-1,-1,-1,1],
     6:[-1,-1,-1,-1,-1,1],
     7:[-1,-1,-1,-1,-1,-1,1]
-}
+}   
