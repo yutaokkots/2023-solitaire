@@ -10,7 +10,6 @@ console.log("initialized")
 
 
 
-
 /*----- app's state (variables) -----*/
 
 let score;
@@ -53,26 +52,40 @@ const boardArray = [
     [],                     // stock        [12] 
     []                      // waste        [13] 
 ]
-const boardArrayKey = {
-0: "tableau-0",
-1: "tableau-1",
-2: "tableau-2",
-3: "tableau-3",
-4: "tableau-4",
-5: "tableau-5",
-6: "tableau-6",
-7: "foundation-1",
-8: "foundation-2",
-9: "foundation-3",
-10:"foundation-4",
-11:"shown",
-12:"stockCards",
-13:"waste"
-}
-
-
-
-
+const boardNode = { 
+    "tableau0":[],
+    "tableau1":[],
+    "tableau2":[],
+    "tableau3":[],
+    "tableau4":[],
+    "tableau5":[],
+    "tableau6":[],
+    "foundation1":[],
+    "foundation2":[],
+    "foundation3":[],
+    "foundation4":[],
+    "played":[],
+    "stock":[],
+    "discard":[]
+    }
+    
+    const stockElement = document.querySelector('#stock')
+    
+    const tableau1Elements = document.querySelectorAll('#tableau1 div')
+    const tableau2Elements = document.querySelectorAll('#tableau2 div')
+    const tableau3Elements = document.querySelectorAll('#tableau3 div')
+    const tableau0Elements = document.querySelectorAll('#tableau0 div')
+    const tableau4Elements = document.querySelectorAll('#tableau4 div')
+    const tableau5Elements = document.querySelectorAll('#tableau5 div')
+    const tableau6Elements = document.querySelectorAll('#tableau6 div')
+    const foundation1Elements = document.querySelectorAll('#foundation1 div')
+    const foundation2Elements = document.querySelectorAll('#foundation2 div')
+    const foundation3Elements = document.querySelectorAll('#foundation3 div')
+    const foundation4Elements = document.querySelectorAll('#foundation4 div')
+    const playedElements = document.querySelectorAll('#played div')
+    const stockElements = document.querySelectorAll('#stock div')
+    const discardElements = document.querySelectorAll('#discard div')
+    
 
 
 /*----- cached element references -----*/
@@ -88,6 +101,8 @@ allEmptyCardAreas.forEach((card) => {
 
 
 const mainElement = document.querySelector('main')
+
+
 
 
 /*----- event listeners -----*/
@@ -207,6 +222,7 @@ mainElement.addEventListener('drop', (evt) => {
     evt.target.parentNode.classList.remove("card-selection")
 });
 
+
 // At the end of where the card is dragged and released, this function calls the checkDroppable function to see drop can proceed
 mainElement.addEventListener('dragend', (evt) => {
     // guards -> everything except div elements that contain data
@@ -268,7 +284,9 @@ const moveCard = (topCard, bottomCard) => {
         })
     }
 
+    console.log(boardNode.tableau2.lastChild)
     console.log(boardArray)
+    // boardNode.forEach((node) => console.log(node))
     // for (let key in cardObjectKeyValue){
     //     console.log(key)
     //     console.log(cardObjectKeyValue[key])
@@ -330,43 +348,35 @@ function resetStockFromWaste(){
 /* ################################################ */
 /* ########### INITIALIZATION FUNCTIONS ########### */
 
-/* --- shuffle the cards --- */
-const randomShuffle = (cardArr) => {
-    let initialDeck = [...cardArr];
-    let newDeck = []
-    for (let i = 52; i > 0; i--) {
-        let n = Math.floor(Math.random() * i);
-        newDeck.push(...initialDeck.splice(n, 1));
-    };     
-    return newDeck;
-};
-
-/* --- flip  the cards --- */
-const flipCard = (cardObject) => {
-    let currentState = cardObject.dataset.inplay
-    cardObject.dataset.inplay = currentState * -1
-
-}
 
 
-// re-doing function 3/7:
+// const makeCardO = (cardIdentity, cardUpOrDown) => {
+//     let newDiv= document.createElement('div')
+//     // uses constant CARD_LIBRARY to get the image source
+//     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
+//     newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
+//     newDiv.dataset.card=`${cardIdentity}`
+//     newDiv.dataset.inplay=`${cardUpOrDown}`
+//     newDiv.draggable = 'true';                  //is this needed?
+//     return newDiv
+// }
+
+// this is a copy made on 3/7
+// // makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
+// const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
+//     let newDiv= document.createElement('div')
+//     // uses constant CARD_LIBRARY to get the image source
+//     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
+//     newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
+//     newDiv.dataset.card=`${cardIdentity}`
+//     newDiv.dataset.inplay=`${cardUpOrDown}`
+//     newDiv.draggable = 'true';                  //is this needed? 
+//     return newDiv
+// }
+
+
 // makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
-const makeCardObjects = (cardDeckShuffledArray) => {
-    cardDeckShuffledArray.forEach((cardId) => {
-        let newDiv= document.createElement('div')
-        let cardUrl = CARD_LIBRARY[cardId]["imgBack"]
-        newDiv.innerHTML = `<img data-card='${cardId}' data-inplay='-1' src=${cardUrl}>`
-        newDiv.dataset.card=`${cardId}`
-        newDiv.dataset.inplay=`-1`
-        allCardObjectKeyValue[cardId] = newDiv;
-
-    })
-}
-
-
-
-
-const makeCardO = (cardIdentity, cardUpOrDown) => {
+const addCardToBoard = (cardObject, cardUpOrDown) => {
     let newDiv= document.createElement('div')
     // uses constant CARD_LIBRARY to get the image source
     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
@@ -377,18 +387,6 @@ const makeCardO = (cardIdentity, cardUpOrDown) => {
     return newDiv
 }
 
-
-// makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
-const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
-    let newDiv= document.createElement('div')
-    // uses constant CARD_LIBRARY to get the image source
-    let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
-    newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
-    newDiv.dataset.card=`${cardIdentity}`
-    newDiv.dataset.inplay=`${cardUpOrDown}`
-    newDiv.draggable = 'true';                  //is this needed?
-    return newDiv
-}
 
 
 const updateDataObject = () => {
@@ -404,7 +402,7 @@ const updateDataObject = () => {
 
 // const renderTableau = () => {
 //     // create a new div for each column in tableau
-//     for (let n=1;n<8;n++) {
+//     for (let n=0;n<8;n++) {
 //         let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
 //         // assign the card to the div
 //         startingTableau[n].forEach((isCardUpOrDown) => {
@@ -424,7 +422,7 @@ const updateDataObject = () => {
 /* ################ do not delete  ################ */
 
 const dealCardFromDeck = () => {
-    let nextCard = currentDeck.pop()
+    let nextCard = shuffledDeck.pop()
     return nextCard
 }
 
@@ -437,18 +435,9 @@ const dealCardFromDeck = () => {
 // Render function should transfer all states to user interface. 
 
 // random-shuffles initial deck 
-const renderDeck = () => {
-    currentDeck = randomShuffle(CARD_LIST)
-    makeCardObjects(currentDeck)
-}
 
-const renderStock = () => {
-    while (currentDeck.length > 0){
-        let nextCard = currentDeck.pop()
-        boardArray[12].push(nextCard)
-    }
-    console.log(boardArray)
-}
+
+
 
     // allCardDivElements["#stock"] = []
     // allCardRefElements["#stock"] = []
@@ -458,38 +447,35 @@ const renderStock = () => {
     //     //stockPile.appendChild(nextDiv);
     //     allCardDivElements["#stock"].push(nextDiv);
     //     allCardRefElements["#stock"].push(nextCard);
-    //     cardObjectKeyValue[nextCard] = nextDiv
+//        cardObjectKeyValue[nextCard] = nextDiv
         
-const renderTableau = () => {
-    // create a new div for each column in tableau
-    for (let n=0;n<7;n++) {
-        // let tableauKey = `#tableau-${n}`
+// const renderTableau = () => {
+//     // create a new div for each column in tableau
+//     for (let n=0;n<7;n++) {
+//         let tableauKey = `tableau-${n+1}`
+//         allCardDivElements[tableauKey] = []
+//         allCardRefElements[tableauKey] = []
 
-        // allCardObjectKeyValue // a 1-D key-value pair object
-        
-        // allCardDivElements[tableauKey] = []
-        // allCardRefElements[tableauKey] = []
+//         startingTableau[n+1].forEach((isCardUpOrDown) => {
 
-        startingTableau[n+1].forEach((isCardUpOrDown) => {
-
-            let card = boardArray[12].pop()
-            if (isCardUpOrDown == -1){
-                flipCard(allCardObjectKeyValue[card])
-            }
-            boardArray[n].push(card)
+//             let card = boardArray[12].pop()
+//             if (isCardUpOrDown == -1){
+//                 flipCard(allCardObjectKeyValue[card])
+//             }
+//             boardArray[n].push(card)
             
-            // let nextCard = dealCardFromDeck()
-            // let nextDiv = makeDivElementWithCard(nextCard, isCardUpOrDown)
-            // allCardDivElements[tableauKey].push(nextDiv)
-            // allCardRefElements[tableauKey].push(nextCard)
-            // cardObjectKeyValue[nextCard] = nextDiv
-            // boardArray[n-1].push(nextCard)
+//             let nextDiv = addCardToBoard(Card, isCardUpOrDown)
+//             allCardDivElements[tableauKey].push(nextDiv)
+//             //allCardRefElements[tableauKey].push(nextCard)
+//             cardObjectKeyValue[nextCard] = nextDiv
+//         })
+//     }
+// }
+    
 
-        })
-    }
-}
     
-    
+
+
 
 
 
@@ -505,24 +491,144 @@ const renderTableau = () => {
 // }
 
 
-const renderWaste = () => {
+
+/* --- shuffle the cards --- */
+const randomShuffle = (cardArr) => {
+    let initialDeck = [...cardArr];
+    let newDeck = []
+    for (let i = 52; i > 0; i--) {
+        let n = Math.floor(Math.random() * i);
+        newDeck.push(...initialDeck.splice(n, 1));
+    };     
+    return newDeck;
+};
 
 
-    //let stockPile = document.querySelector(`#stock`)                // later remove to different function
-    allCardDivElements["#waste"] = []
-    allCardRefElements["#waste"] = []
+function dealCardsFromStockNode(){
+    if (stockElements.length > 0) {
+        stockElements.forEach((card) => {
+            let discardedCard = stockElements.shift(card)
+            // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
+            stockElements.push(discardedCard )
+        })
+    }
+    if (boardArray[11].length < 3){
+        for (let i = boardArray[12].length; i > 0; i--){
+            let dealtCard = boardArray[12].pop()
+            // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
+            boardArray[11].push(dealtCard)
+                        
+        }
+    } else if (boardArray[12].length > 2){
+        let dealtCard = boardArray[11].pop()
+        // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
+        boardArray[11].push(dealtCard)
+    }
+};         // deal out the stock cards and reveal top three
+
+
+// takes a node array (e.g. from the stock pile, and just removes and distributes from that pil)
+const dealCardFromStockInit = (nodeArray) => {
+    return nodeArray.pop()
 }
 
-const renderFoundation = () => {
-    allCardDivElements["#foundation-0"] = []
-    allCardRefElements["#foundation-1"] = []
-    allCardRefElements["#foundation-2"] = []
-    allCardRefElements["#foundation-3"] = []
+
+const flipCardInit = (cardObject, toFlipOrNot) => {
+    cardObject.dataset.inplay = toFlipOrNot
+    return cardObject
+}
+
+
+
+
+/* --- flip  the cards --- */
+const flipCardFace = (cardObject) => {
+    if (cardObject.dataset.inplay > 0) {
+        let cardId = cardObject.dataset.card
+        cardObject.innerHTML = ''
+        let cardUrl = CARD_LIBRARY[cardId]["img"]
+        cardObject.innerHTML = `<img data-card='${cardId}' data-inplay='1' src=${cardUrl}>`
+
+    }}
+
+// const flipCard = (cardObject) => {
+//     let currentState = cardObject.dataset.inplay
+//     cardObject.dataset.inplay = currentState * -1
+// }
+
+const shuffledDeck = randomShuffle(CARD_LIST);
+
+// re-doing function 3/7:
+// makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
+
+const renderDeck = () => {
+    shuffledDeck.forEach((cardId) => {
+        let newDiv= document.createElement('div')
+        let cardUrl = CARD_LIBRARY[cardId]["imgBack"]
+        newDiv.innerHTML = `<img data-card='${cardId}' data-inplay='-1' src=${cardUrl}>`
+        newDiv.dataset.card=`${cardId}`
+        newDiv.dataset.inplay=`-1`
+        allCardObjectKeyValue[cardId] = newDiv;
+        stockElement.appendChild(newDiv)
+    })
+}
+
+
+
+
+const updateNodes = (card) => {
+    allCardObjectKeyValue[card]
+}
+
+const renderStock = () => {
+    while (shuffledDeck.length > 0){
+        let nextCard = shuffledDeck.pop()
+        boardArray[12].push(nextCard)
+    }    
 
 }
+
+
+
+const renderTableau = () => {
+    for (let n=1;n<8;n++) {
+        let nextTableauCol = document.querySelector(`#tableau${n-1}`)
+        // assign the card to the div
+        let stockEls = document.querySelectorAll('#stock div')
+        let stockCardNodes = Array.from(stockEls)
+        startingTableau[n].forEach((isCardUpOrDown) => {
+            let nextCard  = dealCardFromStockInit(stockCardNodes)
+            let nextDiv = flipCardInit(nextCard, isCardUpOrDown) // changes the flip data of the card from -1 to 1
+            flipCardFace(nextCard)                              // actually flips the card
+            nextTableauCol.appendChild(nextDiv);                // adds the object to the divs
+            //allCardDivElements[nextCard] = nextDiv;
+
+
+        })
+
+    }
+}
+
+
+const updateBoardNode = () => {
+    boardNode["tableau0"] = Array.from(tableau0Elements)
+    boardNode["tableau1"] = Array.from(tableau1Elements)
+    boardNode["tableau2"] = Array.from(tableau2Elements)
+    boardNode["tableau3"] = Array.from(tableau3Elements)
+    boardNode["tableau4"] = Array.from(tableau4Elements)
+    boardNode["tableau5"] = Array.from(tableau5Elements)
+    boardNode["tableau6"] = Array.from(tableau6Elements)
+    boardNode["foundation1"] = Array.from(foundation1Elements)
+    boardNode["foundation2"] = Array.from(foundation2Elements)
+    boardNode["foundation3"] = Array.from(foundation3Elements)
+    boardNode["foundation4"] = Array.from(foundation4Elements)
+    boardNode["stock"] = Array.from(stockElements)
+    boardNode["discard"] = Array.from(discardElements)
+    boardNode["played"] = Array.from(playedElements)
+}
+
 
 const updateBoard = () => {
-    console.log(allCardDivElements)
     for (let keys in allCardDivElements){
         let location = document.querySelector(`${keys}`);
         allCardDivElements[keys].forEach((element) => {
@@ -535,33 +641,35 @@ const updateBoard = () => {
 
 // for (let [index, value] of anArray.entries()){}
 
-const assignBoardPlacement = () => {
-    for (const [indexCol, cardList] of boardArray.entries) {
-        for (const [indexRow, card] of cardList.entries){
-            
-        }
+// const removeChildren
 
-    }
+// const assignBoardPlacement = () => {
+//     for (const [indexCol, cardList] of boardArray.entries) {
+//         for (const [indexRow, card] of cardList.entries){
 
-}
+//         }
+
+//     }
+
+// }
 
 
-
-
-function render(renderT, renderF, renderS, renderW, updateB){
-    renderDeck();
-    setTimeout(renderS, 5);
-    setTimeout(renderT, 15);
-    setTimeout(renderF, 20);
-    setTimeout(renderW, 25);
-    setTimeout(updateB, 200);
-
+function render(renderDeck, renderStock, renderTableau, updateBoardNode, updateBoard){
+    setTimeout(renderDeck, 10)
+    setTimeout(renderStock, 20)
+    setTimeout(renderTableau, 30)
+    setTimeout(updateBoardNode, 40)
+    setTimeout(updateBoard, 50)
 };
 
-
 function init(){
-    render(renderTableau, renderFoundation, renderStock, renderWaste, updateBoard);
+    render(renderDeck, renderStock, renderTableau, updateBoardNode, updateBoard);
     console.log('This is the init function');
 }
 
 init();
+
+console.log(`shuffledDeck: ${shuffledDeck}`)
+console.log(`AllCardObjectKeyValue: ${allCardObjectKeyValue}`)
+console.log(allCardObjectKeyValue)
+console.log(boardNode)

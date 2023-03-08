@@ -219,63 +219,6 @@ const boardArray = [
 ]
 
 
-const boardNode = { 
-"tableau-0":[],
-"tableau-1":[],
-"tableau-2":[],
-"tableau-3":[],
-"tableau-4":[],
-"tableau-5":[],
-"tableau-6":[],
-"foundation-1":[],
-"foundation-2":[],
-"foundation-3":[],
-"foundation-4":[],
-"played":[],
-"stock":[],
-"discard":[]
-}
-
-
-
-
-const tableau1Element = document.querySelectorAll('#tableau-1 div')
-const tableau2Element = document.querySelectorAll('#tableau-2 div')
-const tableau3Element = document.querySelectorAll('#tableau-3 div')
-const tableau0Element = document.querySelectorAll('#tableau-0 div')
-const tableau4Element = document.querySelectorAll('#tableau-4 div')
-const tableau5Element = document.querySelectorAll('#tableau-5 div')
-const tableau6Element = document.querySelectorAll('#tableau-6 div')
-const foundation1Element = document.querySelectorAll('#foundation-1 div')
-const foundation2Element = document.querySelectorAll('#foundation-2 div')
-const foundation3Element = document.querySelectorAll('#foundation-3 div')
-const foundation4Element = document.querySelectorAll('#foundation-4 div')
-const playedElement = document.querySelectorAll('#played div')
-const stockElement = document.querySelectorAll('#stock div')
-const discardElement = document.querySelectorAll('#discard div')
-
-
-
-// const boardNode = { 
-//     "tableau-0":tableau0Element,   
-//     "tableau-1":tableau1Element,
-//     "tableau-2":tableau2Element,
-//     "tableau-3":tableau3Element,
-//     "tableau-4":tableau4Element,
-//     "tableau-5":tableau5Element,
-//     "tableau-6":tableau6Element,
-//     "foundation-1":foundation1Element,
-//     "foundation-2":foundation2Element,
-//     "foundation-3":foundation3Element,
-//     "foundation-4":foundation4Element,
-//     "played":playedElement ,
-//     "stock":stockElement,
-//     "discard":discardElement,
-// }
-
-
-
-
 
 const updateDataObject = () => {
     for (let keys in allCardDivElements){
@@ -455,7 +398,7 @@ const dealCardFromDeck = () => {
 /* ######### INITIALIZATION AND RENDERING ######### */
 /* ################ do not delete  ################ */
 
-// break up render() into smaller renderXxxx(), because it can get bloated
+// break up render() into smaller renderXxxx(), because it cam get bloated
 // Render function should transfer all states to user interface. 
 
 const renderStock = () => {
@@ -469,9 +412,7 @@ const renderStock = () => {
         allCardRefElements["#stock"].push(nextCard);
         cardObjectKeyValue[nextCard] = nextDiv
         boardArray[12].push(nextCard)
-        boardNode["stock"] = Array.from(boardArray[12])
-
-}
+    }
 }
 
 //WORK ON THIS FOR 3/6
@@ -491,8 +432,6 @@ const renderWaste = () => {
     allCardRefElements["#waste"] = []
 }
 
-
-
 const renderFoundation = () => {
     allCardDivElements["#foundation-0"] = []
     allCardRefElements["#foundation-1"] = []
@@ -500,14 +439,6 @@ const renderFoundation = () => {
     allCardRefElements["#foundation-3"] = []
 
 }
-
-// const renderFoundation = () => {
-//     boardNode["foundation-1"] = Array.from(foundation1Element)
-//     boardNode["foundation-2"] = Array.from(foundation2Element)
-//     boardNode["foundation-3"] = Array.from(foundation3Element)
-//     boardNode["foundation-4"] = Array.from(foundation4Element)
-
-// }
 
 const updateBoard = () => {
     for (let keys in allCardDivElements){
@@ -517,14 +448,6 @@ const updateBoard = () => {
         });
     } 
 }
-
-// const updateBoard = () => {
-//     boardNode 
-// }
-
-
-// }
-
 
 
 function render(renderT, renderF, renderS, renderW, updateB, ){
@@ -544,4 +467,3 @@ function init(){
 
 init();
 
-console.log(boardNode)
