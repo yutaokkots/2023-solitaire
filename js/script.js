@@ -347,6 +347,7 @@ const deactivateDragOver = () => {
 /* --- functions --- */
 init();
 
+
 /* --- shuffle the cards --- */
 function randomShuffle(cardArr) {
     let initialDeck = [...cardArr];
@@ -374,14 +375,15 @@ function renderTableau() {
         columnArr.forEach((columnCell, rowIndex) => {
             // name an id name for the div element based on constant array
             const stackName = `c${columnIndex}r${rowIndex}`
-
+            console.log(stackName)
+            
             // draw each shuffled card individually and save into a variable, card
             let card = shuffledDeck.pop()
-            
+            const stackElement = document.getElementById(stackName);
+
             console.log(card[3])
             console.log(`c${columnIndex}r${rowIndex}`)
             console.log(`c${columnIndex}r${rowIndex}`)
-            const stackElement = document.getElementById(`${stackName}`);
             console.log(stackElement)
 
             if (columnCell > 0){   
@@ -412,6 +414,16 @@ function getDisplayImage (card){
     newImage.src = CARD_LIBRARY[card[3]]['img']
     return newImage;
 }
+
+function grabAndDeleteDisplayImage (divElementObject){
+    divElementObject.innerHTML = ""
+    // if ('-1' == card[2]){
+    //     return;
+    // }
+    // const newImage = document.createElement('img')
+    // newImage.src = CARD_LIBRARY[card[3]]['img']
+}
+
 
 function flipCard(card){
     if (0 < card[2]){
@@ -451,32 +463,21 @@ function renderBoard (renderTableau) {
 }
 
 
-
-// function render(){
-//     renderTableau()
-//     renderBoard()
-// };
-
-// function init(){
-//     render();
-// }
-
-
-function render(renderTableau, renderBoard){
-    setTimeout(renderTableau, 50)
-    setTimeout(renderBoard, 200)
+function render(){
+    renderTableau()
+    renderBoard()
 };
 
-function init(){
 
+function init(){
     shuffledDeck = randomShuffle(CARD_LIST);
     boardArray = [
-        [[3,  2, -1, 'S06'], [3,  2, -1, 'S06']],                     //tableau-0     [0]
+        [[3,  2, -1, 'S06']],                     //tableau-0     [0]
         [],
         [],
         [],
         [],
-        [],
+        [ [3,  2, -1, 'S06']],
         [],                     //tableau-7     [6]
         [],                     //foundation-1  [7]
         [],                     //foundation-2  [8]
@@ -486,7 +487,36 @@ function init(){
         [],                     // stock        [12] 
         []                      // waste        [13] 
     ]
-    render(renderTableau, renderBoard);
+    render();
 }
+
+
+
+// function render(renderTableau, renderBoard){
+//     setTimeout(renderTableau, 50)
+//     setTimeout(renderBoard, 200)
+// };
+
+// function init(){
+
+//     shuffledDeck = randomShuffle(CARD_LIST);
+//     boardArray = [
+//         [[3,  2, -1, 'S06'], [3,  2, -1, 'S06']],                     //tableau-0     [0]
+//         [],
+//         [],
+//         [],
+//         [],
+//         [],
+//         [],                     //tableau-7     [6]
+//         [],                     //foundation-1  [7]
+//         [],                     //foundation-2  [8]
+//         [],                     //foundation-3  [9]
+//         [],                     //foundation-4  [10]
+//         [],                     // shown        [11] 
+//         [],                     // stock        [12] 
+//         []                      // waste        [13] 
+//     ]
+//     render(renderTableau, renderBoard);
+// }
 
 
