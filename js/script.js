@@ -1,94 +1,263 @@
-import {CARD_LIST, CARD_LIBRARY, CARD_IMAGES, startingTableau} from "./constants.js";
+
 console.log("initialized")
 
-
-
 /*----- constants -----*/
-// see constants.js
+// let suit numerical values?
+// e.g. +1 or -1
+// let number be card value
+
+
+
+const CARD_IMAGES = {
+    S01: 'images/single_cards/SPADE-1.svg',
+    S02: 'images/single_cards/SPADE-2.svg',
+    S03: 'images/single_cards/SPADE-3.svg',
+    S04: 'images/single_cards/SPADE-4.svg',
+    S05: 'images/single_cards/SPADE-5.svg',
+    S06: 'images/single_cards/SPADE-6.svg',
+    S07: 'images/single_cards/SPADE-7.svg',
+    S08: 'images/single_cards/SPADE-8.svg',
+    S09: 'images/single_cards/SPADE-9.svg',
+    S10: 'images/single_cards/SPADE-10.svg',
+    S11: 'images/single_cards/SPADE-11-JACK.svg',
+    S12: 'images/single_cards/SPADE-12-QUEEN.svg',
+    S13: 'images/single_cards/SPADE-13-KING.svg',
+    H01: 'images/single_cards/HEART-1.svg',
+    H02: 'images/single_cards/HEART-2.svg',
+    H03: 'images/single_cards/HEART-3.svg',
+    H04: 'images/single_cards/HEART-4.svg',
+    H05: 'images/single_cards/HEART-5.svg',
+    H06: 'images/single_cards/HEART-6.svg',
+    H07: 'images/single_cards/HEART-7.svg',
+    H08: 'images/single_cards/HEART-8.svg',
+    H09: 'images/single_cards/HEART-9.svg',
+    H10: 'images/single_cards/HEART-10.svg',
+    H11: 'images/single_cards/HEART-11-JACK.svg',
+    H12: 'images/single_cards/HEART-12-QUEEN.svg',
+    H13: 'images/single_cards/HEART-13-KING.svg',
+    C01: 'images/single_cards/CLUB-1.svg',
+    C02: 'images/single_cards/CLUB-2.svg',
+    C03: 'images/single_cards/CLUB-3.svg',
+    C04: 'images/single_cards/CLUB-4.svg',
+    C05: 'images/single_cards/CLUB-5.svg',
+    C06: 'images/single_cards/CLUB-6.svg',
+    C07: 'images/single_cards/CLUB-7.svg',
+    C08: 'images/single_cards/CLUB-8.svg',
+    C09: 'images/single_cards/CLUB-9.svg',
+    C10: 'images/single_cards/CLUB-10.svg',
+    C11: 'images/single_cards/CLUB-11-JACK.svg',
+    C12: 'images/single_cards/CLUB-12-QUEEN.svg',
+    C13: 'images/single_cards/CLUB-13-KING.svg',
+    D01: 'images/single_cards/DIAMOND-1.svg',
+    D02: 'images/single_cards/DIAMOND-2.svg',
+    D03: 'images/single_cards/DIAMOND-3.svg',
+    D04: 'images/single_cards/DIAMOND-4.svg',
+    D05: 'images/single_cards/DIAMOND-5.svg',
+    D06: 'images/single_cards/DIAMOND-6.svg',
+    D07: 'images/single_cards/DIAMOND-7.svg',
+    D08: 'images/single_cards/DIAMOND-8.svg',
+    D09: 'images/single_cards/DIAMOND-9.svg',
+    D10: 'images/single_cards/DIAMOND-10.svg',
+    D11: 'images/single_cards/DIAMOND-11-JACK.svg',
+    D12: 'images/single_cards/DIAMOND-12-QUEEN.svg',
+    D13: 'images/single_cards/DIAMOND-13-KING.svg',
+    BAK: 'images/single_cards/BACK-2.svg',
+    EMP: 'images/single_cards/EMPTY.svg'
+}
+
+// CARD_IMAGES[S01]
+// CARD_IMAGES[S02]
+// CARD_IMAGES[S03]
+// CARD_IMAGES[S04]
+// CARD_IMAGES[S05]
+// CARD_IMAGES[S06]
+// CARD_IMAGES[S07]
+// CARD_IMAGES[S08]
+// CARD_IMAGES[S09]
+// CARD_IMAGES[S10]
+// CARD_IMAGES[S11]
+// CARD_IMAGES[S12]
+// CARD_IMAGES[S13]
+// CARD_IMAGES[H01]
+// CARD_IMAGES[H02]
+// CARD_IMAGES[H03]
+// CARD_IMAGES[H04]
+// CARD_IMAGES[H05]
+// CARD_IMAGES[H06]
+// CARD_IMAGES[H07]
+// CARD_IMAGES[H08]
+// CARD_IMAGES[H09]
+// CARD_IMAGES[H10]
+// CARD_IMAGES[H11]
+// CARD_IMAGES[H12]
+// CARD_IMAGES[H13]
+// CARD_IMAGES[C01]
+// CARD_IMAGES[C02]
+// CARD_IMAGES[C03]
+// CARD_IMAGES[C04]
+// CARD_IMAGES[C05]
+// CARD_IMAGES[C06]
+// CARD_IMAGES[C07]
+// CARD_IMAGES[C08]
+// CARD_IMAGES[C09]
+// CARD_IMAGES[C10]
+// CARD_IMAGES[C11]
+// CARD_IMAGES[C12]
+// CARD_IMAGES[C13]
+// CARD_IMAGES[D01]
+// CARD_IMAGES[D02]
+// CARD_IMAGES[D03]
+// CARD_IMAGES[D04]
+// CARD_IMAGES[D05]
+// CARD_IMAGES[D06]
+// CARD_IMAGES[D07]
+// CARD_IMAGES[D08]
+// CARD_IMAGES[D09]
+// CARD_IMAGES[D10]
+// CARD_IMAGES[D11]
+// CARD_IMAGES[D12]
+// CARD_IMAGES[D13]
+
+
+CARD_LIBRARY = {
+    S01: {suit:'s', color:'b', value:1,  img:CARD_IMAGES['S01'], imgBack:CARD_IMAGES['BAK'], before:-1,  after:2},
+    S02: {suit:'s', color:'b', value:2,  img:CARD_IMAGES['S02'], imgBack:CARD_IMAGES['BAK'], before:1,  after:3},
+    S03: {suit:'s', color:'b', value:3,  img:CARD_IMAGES['S03'], imgBack:CARD_IMAGES['BAK'], before:2,  after:4},
+    S04: {suit:'s', color:'b', value:4,  img:CARD_IMAGES['S04'], imgBack:CARD_IMAGES['BAK'], before:3,  after:5},
+    S05: {suit:'s', color:'b', value:5,  img:CARD_IMAGES['S05'], imgBack:CARD_IMAGES['BAK'], before:4,  after:6},
+    S06: {suit:'s', color:'b', value:6,  img:CARD_IMAGES['S06'], imgBack:CARD_IMAGES['BAK'], before:5,  after:7},
+    S07: {suit:'s', color:'b', value:7,  img:CARD_IMAGES['S07'], imgBack:CARD_IMAGES['BAK'], before:6,  after:8},
+    S08: {suit:'s', color:'b', value:8,  img:CARD_IMAGES['S08'], imgBack:CARD_IMAGES['BAK'], before:7,  after:9},
+    S09: {suit:'s', color:'b', value:9,  img:CARD_IMAGES['S09'], imgBack:CARD_IMAGES['BAK'], before:8,  after:10},
+    S10: {suit:'s', color:'b', value:10, img:CARD_IMAGES['S10'], imgBack:CARD_IMAGES['BAK'], before:9,  after:11},
+    S11: {suit:'s', color:'b', value:11, img:CARD_IMAGES['S11'], imgBack:CARD_IMAGES['BAK'], before:10, after:12},
+    S12: {suit:'s', color:'b', value:12, img:CARD_IMAGES['S12'], imgBack:CARD_IMAGES['BAK'], before:11, after:13},
+    S13: {suit:'s', color:'b', value:13, img:CARD_IMAGES['S13'], imgBack:CARD_IMAGES['BAK'], before:12, after:0},
+    H01: {suit:'h', color:'r', value:1,  img:CARD_IMAGES['H01'], imgBack:CARD_IMAGES['BAK'], before:0,  after:2},
+    H02: {suit:'h', color:'r', value:2,  img:CARD_IMAGES['H02'], imgBack:CARD_IMAGES['BAK'], before:1,  after:3},
+    H03: {suit:'h', color:'r', value:3,  img:CARD_IMAGES['H03'], imgBack:CARD_IMAGES['BAK'], before:2,  after:4},
+    H04: {suit:'h', color:'r', value:4,  img:CARD_IMAGES['H04'], imgBack:CARD_IMAGES['BAK'], before:3,  after:5},
+    H05: {suit:'h', color:'r', value:5,  img:CARD_IMAGES['H05'], imgBack:CARD_IMAGES['BAK'], before:4,  after:6},
+    H06: {suit:'h', color:'r', value:6,  img:CARD_IMAGES['H06'], imgBack:CARD_IMAGES['BAK'], before:5,  after:7},
+    H07: {suit:'h', color:'r', value:7,  img:CARD_IMAGES['H07'], imgBack:CARD_IMAGES['BAK'], before:6,  after:8},
+    H08: {suit:'h', color:'r', value:8,  img:CARD_IMAGES['H08'], imgBack:CARD_IMAGES['BAK'], before:7,  after:9},
+    H09: {suit:'h', color:'r', value:9,  img:CARD_IMAGES['H09'], imgBack:CARD_IMAGES['BAK'], before:8,  after:10},
+    H10: {suit:'h', color:'r', value:10, img:CARD_IMAGES['H10'], imgBack:CARD_IMAGES['BAK'], before:9,  after:11},
+    H11: {suit:'h', color:'r', value:11, img:CARD_IMAGES['H11'], imgBack:CARD_IMAGES['BAK'], before:10, after:12},
+    H12: {suit:'h', color:'r', value:12, img:CARD_IMAGES['H12'], imgBack:CARD_IMAGES['BAK'], before:11, after:13},
+    H13: {suit:'h', color:'r', value:13, img:CARD_IMAGES['H13'], imgBack:CARD_IMAGES['BAK'], before:12, after:0},
+    C01: {suit:'c', color:'b', value:1,  img:CARD_IMAGES['C01'], imgBack:CARD_IMAGES['BAK'], before:0,  after:2},
+    C02: {suit:'c', color:'b', value:2,  img:CARD_IMAGES['C02'], imgBack:CARD_IMAGES['BAK'], before:1,  after:3},
+    C03: {suit:'c', color:'b', value:3,  img:CARD_IMAGES['C03'], imgBack:CARD_IMAGES['BAK'], before:2,  after:4},
+    C04: {suit:'c', color:'b', value:4,  img:CARD_IMAGES['C04'], imgBack:CARD_IMAGES['BAK'], before:3,  after:5},
+    C05: {suit:'c', color:'b', value:5,  img:CARD_IMAGES['C05'], imgBack:CARD_IMAGES['BAK'], before:4,  after:6},
+    C06: {suit:'c', color:'b', value:6,  img:CARD_IMAGES['C06'], imgBack:CARD_IMAGES['BAK'], before:5,  after:7},
+    C07: {suit:'c', color:'b', value:7,  img:CARD_IMAGES['C07'], imgBack:CARD_IMAGES['BAK'], before:6,  after:8},
+    C08: {suit:'c', color:'b', value:8,  img:CARD_IMAGES['C08'], imgBack:CARD_IMAGES['BAK'], before:7,  after:9},
+    C09: {suit:'c', color:'b', value:9,  img:CARD_IMAGES['C09'], imgBack:CARD_IMAGES['BAK'], before:8,  after:10},
+    C10: {suit:'c', color:'b', value:10, img:CARD_IMAGES['C10'], imgBack:CARD_IMAGES['BAK'], before:9,  after:11},
+    C11: {suit:'c', color:'b', value:11, img:CARD_IMAGES['C11'], imgBack:CARD_IMAGES['BAK'], before:10, after:12},
+    C12: {suit:'c', color:'b', value:12, img:CARD_IMAGES['C12'], imgBack:CARD_IMAGES['BAK'], before:11, after:13},
+    C13: {suit:'c', color:'b', value:13, img:CARD_IMAGES['C13'], imgBack:CARD_IMAGES['BAK'], before:12, after:0},
+    D01: {suit:'d', color:'r', value:1,  img:CARD_IMAGES['D01'], imgBack:CARD_IMAGES['BAK'], before:0,  after:2},
+    D02: {suit:'d', color:'r', value:2,  img:CARD_IMAGES['D02'], imgBack:CARD_IMAGES['BAK'], before:1,  after:3},
+    D03: {suit:'d', color:'r', value:3,  img:CARD_IMAGES['D03'], imgBack:CARD_IMAGES['BAK'], before:2,  after:4},
+    D04: {suit:'d', color:'r', value:4,  img:CARD_IMAGES['D04'], imgBack:CARD_IMAGES['BAK'], before:3,  after:5},
+    D05: {suit:'d', color:'r', value:5,  img:CARD_IMAGES['D05'], imgBack:CARD_IMAGES['BAK'], before:4,  after:6},
+    D06: {suit:'d', color:'r', value:6,  img:CARD_IMAGES['D06'], imgBack:CARD_IMAGES['BAK'], before:5,  after:7},
+    D07: {suit:'d', color:'r', value:7,  img:CARD_IMAGES['D07'], imgBack:CARD_IMAGES['BAK'], before:6,  after:8},
+    D08: {suit:'d', color:'r', value:8,  img:CARD_IMAGES['D08'], imgBack:CARD_IMAGES['BAK'], before:7,  after:9},
+    D09: {suit:'d', color:'r', value:9,  img:CARD_IMAGES['D09'], imgBack:CARD_IMAGES['BAK'], before:8,  after:10},
+    D10: {suit:'d', color:'r', value:10, img:CARD_IMAGES['D10'], imgBack:CARD_IMAGES['BAK'], before:9,  after:11},
+    D11: {suit:'d', color:'r', value:11, img:CARD_IMAGES['D11'], imgBack:CARD_IMAGES['BAK'], before:10, after:12},
+    D12: {suit:'d', color:'r', value:12, img:CARD_IMAGES['D12'], imgBack:CARD_IMAGES['BAK'], before:11, after:13},
+    D13: {suit:'d', color:'r', value:13, img:CARD_IMAGES['D13'], imgBack:CARD_IMAGES['BAK'], before:12, after:-1},
+    EMP: {suit:'0', color:'0', value:-1, img:CARD_IMAGES['EMP'], imgBack:CARD_IMAGES['EMP'], before:0, after:-1},
+} 
+
+
+const startingTableau = [
+    [1],
+    [-1,1],
+    [-1,-1,1],
+    [-1,-1,-1,1],
+    [-1,-1,-1,-1,1],
+    [-1,-1,-1,-1,-1,1],
+    [-1,-1,-1,-1,-1,-1,1],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 -1],
+    []
+]  
 
 
 
 
+//suit, color, front/back, name
+const CARD_LIST = [
+[3,  2, -1, 'S01'],
+[3,  2, -1, 'S02'],
+[3,  2, -1, 'S03'],
+[3,  2, -1, 'S04'],
+[3,  2, -1, 'S05'],
+[3,  2, -1, 'S06'],
+[3,  2, -1, 'S07'],
+[3,  2, -1, 'S08'],
+[3,  2, -1, 'S09'],
+[3,  2, -1, 'S10'],
+[3,  2, -1, 'S11'],
+[3,  2, -1, 'S12'],
+[3,  2, -1, 'S13'],
+[5, -2, -1, 'H01'],
+[5, -2, -1, 'H02'],
+[5, -2, -1, 'H03'],
+[5, -2, -1, 'H04'],
+[5, -2, -1, 'H05'],
+[5, -2, -1, 'H06'],
+[5, -2, -1, 'H07'],
+[5, -2, -1, 'H08'],
+[5, -2, -1, 'H09'],
+[5, -2, -1, 'H10'],
+[5, -2, -1, 'H11'],
+[5, -2, -1, 'H12'],
+[5, -2, -1, 'H13'],
+[7,  2, -1, 'C01'],
+[7,  2, -1, 'C02'],
+[7,  2, -1, 'C03'],
+[7,  2, -1, 'C04'],
+[7,  2, -1, 'C05'],
+[7,  2, -1, 'C06'],
+[7,  2, -1, 'C07'],
+[7,  2, -1, 'C08'],
+[7,  2, -1, 'C09'],
+[7,  2, -1, 'C10'],
+[7,  2, -1, 'C11'],
+[7,  2, -1, 'C12'],
+[7,  2, -1, 'C13'],
+[9, -2, -1, 'D01'],
+[9, -2, -1, 'D02'],
+[9, -2, -1, 'D03'],
+[9, -2, -1, 'D04'],
+[9, -2, -1, 'D05'],
+[9, -2, -1, 'D06'],
+[9, -2, -1, 'D07'],
+[9, -2, -1, 'D08'],
+[9, -2, -1, 'D09'],
+[9, -2, -1, 'D10'],
+[9, -2, -1, 'D11'],
+[9, -2, -1, 'D12'],
+[9, -2, -1, 'D13']
+]
 
 /*----- app's state (variables) -----*/
-
-let score;
-let currentDeck;                // contains non-repeating card information after randomization //randomShuffle()
-let currentDeckObjects;         // contains each card object: {reference to DOM objects, their states of flipped over or not, }
-let tableauStatus;              // the various decks in the tableau and what they contain     
-let stockCards;
-
-
-//global variable
-let currentBottomCardType;    //this variable holds the information about what card the user is currently dragging
-// holds master information about 
-// 1) card is face or back 
-
-//should be a key:value pairing of all card information and their DOM objects, used for reference
-let allCardObjectKeyValue = {};
-
-let allCardDivElements = {};
-
-
-let allCardRefElements = {};
-
-
-let cardObjectKeyValue = {}
-
-
-const boardArray = [
-    [],                     //tableau-0     [0]
-    [],
-    [],
-    [],
-    [],
-    [],
-    [],                     //tableau-7     [6]
-    [],                     //foundation-1  [7]
-    [],                     //foundation-2  [8]
-    [],                     //foundation-3  [9]
-    [],                     //foundation-4  [10]
-    [],                     // shown        [11] 
-    [],                     // stock        [12] 
-    []                      // waste        [13] 
-]
-const boardNode = { 
-    "tableau0":[],
-    "tableau1":[],
-    "tableau2":[],
-    "tableau3":[],
-    "tableau4":[],
-    "tableau5":[],
-    "tableau6":[],
-    "foundation1":[],
-    "foundation2":[],
-    "foundation3":[],
-    "foundation4":[],
-    "played":[],
-    "stock":[],
-    "discard":[]
-    }
-    
-    const stockElement = document.querySelector('#stock')
-    
-    const tableau1Elements = document.querySelectorAll('#tableau1 div')
-    const tableau2Elements = document.querySelectorAll('#tableau2 div')
-    const tableau3Elements = document.querySelectorAll('#tableau3 div')
-    const tableau0Elements = document.querySelectorAll('#tableau0 div')
-    const tableau4Elements = document.querySelectorAll('#tableau4 div')
-    const tableau5Elements = document.querySelectorAll('#tableau5 div')
-    const tableau6Elements = document.querySelectorAll('#tableau6 div')
-    const foundation1Elements = document.querySelectorAll('#foundation1 div')
-    const foundation2Elements = document.querySelectorAll('#foundation2 div')
-    const foundation3Elements = document.querySelectorAll('#foundation3 div')
-    const foundation4Elements = document.querySelectorAll('#foundation4 div')
-    const playedElements = document.querySelectorAll('#played div')
-    const stockElements = document.querySelectorAll('#stock div')
-    const discardElements = document.querySelectorAll('#discard div')
-    
-
+let boardArray = null;
+let shuffledDeck = null
 
 /*----- cached element references -----*/
+
 
 // Makes the card outlines placed on screen (having dashed lines) into objects
 const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-origin, .stock-origin")
@@ -101,8 +270,6 @@ allEmptyCardAreas.forEach((card) => {
 
 
 const mainElement = document.querySelector('main')
-
-
 
 
 /*----- event listeners -----*/
@@ -168,332 +335,20 @@ const deactivateDragOver = () => {
     })
 }
 
-//dragged objects are passed through to determine if the top card is compatible with the bottom card
-const checkDroppable = (draggedCard, bottomCard) => {
-    if (draggedCard.type !== "dragenter" && bottomCard.type !== "dragenter"){
-        return false;
-    }
-    let draggedCardId   = draggedCard.target.getAttribute('data-card')
-    let draggedCardColor = CARD_LIBRARY[draggedCardId]['color']
-    let draggedCardValue = CARD_LIBRARY[draggedCardId]['value']
-    let draggedCardSuit = CARD_LIBRARY[draggedCardId]['suit']
-    let draggedCardUpperAdj = CARD_LIBRARY[draggedCardId]['after']
-    let draggedCardLowerAdj = CARD_LIBRARY[draggedCardId]['before']
-    let bottomCardId     = bottomCard.target.getAttribute('data-card')
-    let bottomCardColor = CARD_LIBRARY[bottomCardId]['color']
-    let bottomCardValue = CARD_LIBRARY[bottomCardId]['value']
-    let bottomCardSuit  = CARD_LIBRARY[bottomCardId]['suit']
-    console.log(allCardRefElements) /////// delete
-    // if the card is in the tableau area, descending order + alternate color
-    if (bottomCard.fromElement.id === "tableau") {
-        if (draggedCardValue == 13 && bottomCardValue == -1) {
-            // console.log(draggedCardId)      //delete later
-            // console.log(bottomCardId)       //delete later
-            return true;
-        } else {
-            let isDiffColorDecreasNum = (draggedCardColor !== bottomCardColor && draggedCardUpperAdj === bottomCardValue) ? true : false;
-            // console.log(draggedCardId)      //delete later
-            // console.log(bottomCardId)       //delete later
-            return isDiffColorDecreasNum;
-        }
-    } else if (bottomCard.fromElement.id === "foundation"){
-        // console.log('bottom card is in foundation');    //delete later
-        if (draggedCardValue == 1 && bottomCardValue == -1) {
-            // console.log(draggedCardId)      //delete later
-            // console.log(bottomCardId)       //delete later
-            return true;
-        } else {
-            let result = (draggedCardSuit === bottomCardSuit && draggedCardLowerAdj === bottomCardValue) ? true : false;
-            // console.log(draggedCardId)      //delete later
-            // console.log(bottomCardId)       //delete later
-            return result;
-        }
-    }
-}   
 
-// dropped card event listener, removes the css of any outlined sections to remove the outline
-mainElement.addEventListener('drop', (evt) => {
-    // guards -> everything except div elements that contain data
-    deactivateDragOver()
 
-    // let currentDraggedCardType = evt
-    // console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
 
-    evt.target.parentNode.classList.remove("card-selection")
-});
 
 
-// At the end of where the card is dragged and released, this function calls the checkDroppable function to see drop can proceed
-mainElement.addEventListener('dragend', (evt) => {
-    // guards -> everything except div elements that contain data
 
-    let currentDraggedCardType = evt
-    // console.log(currentDraggedCardType )
 
-    console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
-    checkDroppable(currentDraggedCardType, currentBottomCardType);
-    let topCard = currentDraggedCardType.target.getAttribute('data-card')
-    let bottomCard = currentBottomCardType.target.getAttribute('data-card')
-    // console.log(bottomCard)
 
-    if (checkDroppable(currentDraggedCardType, currentBottomCardType)) {
-        //revealCard(topCard);
-        moveCard(topCard, bottomCard);
 
-    }
-
-});
-
-// the dragged item can be determined by:
-// evt.target.getAttribute('data-card')
-// evt.target.getAttribute('data-inplay')
-
-
-
-/*----- functions -----*/
-
-//
-
-
-// const revealCard = (topCard) => {
-
-//     console.log(allCardDivElements[topCard].parentNode.lastChild.dataset.inplay)
-// }
-
-const moveCard = (topCard, bottomCard) => {
-    console.log(topCard);
-    console.log(bottomCard);
-    for (let keys in allCardRefElements){
-        allCardRefElements[keys].forEach((x, i) => {
-            if (x === topCard && i === allCardRefElements[keys].length - 1){
-                let poppedValue = allCardRefElements[keys].pop()
-                for (let keys in allCardRefElements){
-                    allCardRefElements[keys].forEach((x, i) => {
-                        if (x === bottomCard && i === allCardRefElements[keys].length - 1){
-                            allCardRefElements[keys].push(poppedValue)
-                        }
-                    })
-                }
-            }
-        })} 
-    for (let keys in allCardRefElements){
-        allCardRefElements[keys].forEach((x, i) => {
-            if (x === bottomCard && i === allCardRefElements[keys].length - 1){
-                allCardRefElements[keys].push(poppedValue)
-            }
-        })
-    }
-
-    console.log(boardNode.tableau2.lastChild)
-    console.log(boardArray)
-    // boardNode.forEach((node) => console.log(node))
-    // for (let key in cardObjectKeyValue){
-    //     console.log(key)
-    //     console.log(cardObjectKeyValue[key])
-    //     cardObjectKeyValue[key].
-    // }
-    updateDataObject()
-    //console.log(allCardRefElements)
-    //console.log(cardObjectKeyValue )
-    //allCardDivElements[topCard].parentNode.removeChild(allCardDivElements[topCard])
-    //allCardDivElements[bottomCard].parentNode.appendChild(allCardDivElements[topCard])
-}
-
-
-
-function checkPlacement(){};    // checks to see if dragged card is able to be placed at location
-
-
-// []                      // shown     [13] 11
-// [],                     // stock     [11] 12
-// [],                     // waste     [12] 13
-
-function dealCardsFromStock(){
-    if (boardArray[11].length > 0) {
-        boardArray[1].forEach((card) => {
-            let discardedCard = boardArray[11].shift(card)
-            // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-            boardArray[13].push(discardedCard )
-        })
-    }
-    if (boardArray[11].length < 3){
-        for (let i = boardArray[12].length; i > 0; i--){
-            let dealtCard = boardArray[12].pop()
-            // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-            boardArray[11].push(dealtCard)
-                        
-        }
-    } else if (boardArray[12].length > 2){
-        let dealtCard = boardArray[11].pop()
-        // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-        boardArray[11].push(dealtCard)
-    }
-};         // deal out the stock cards and reveal top three
-
-function resetStockFromWaste(){
-    if (boardArray[11].length > 0 || boardArray[12].length > 0){
-        dealCardsFromStock()}
-    for (let i = boardArray[13].length; i > 0; i--){
-        let restockCard = boardArray[13].shift()
-        boardArray[13].push(restockCard)
-    }    
-        
-    // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-}
-
-
-
-
-
-/* ################################################ */
-/* ########### INITIALIZATION FUNCTIONS ########### */
-
-
-
-// const makeCardO = (cardIdentity, cardUpOrDown) => {
-//     let newDiv= document.createElement('div')
-//     // uses constant CARD_LIBRARY to get the image source
-//     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
-//     newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
-//     newDiv.dataset.card=`${cardIdentity}`
-//     newDiv.dataset.inplay=`${cardUpOrDown}`
-//     newDiv.draggable = 'true';                  //is this needed?
-//     return newDiv
-// }
-
-// this is a copy made on 3/7
-// // makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
-// const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
-//     let newDiv= document.createElement('div')
-//     // uses constant CARD_LIBRARY to get the image source
-//     let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
-//     newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
-//     newDiv.dataset.card=`${cardIdentity}`
-//     newDiv.dataset.inplay=`${cardUpOrDown}`
-//     newDiv.draggable = 'true';                  //is this needed? 
-//     return newDiv
-// }
-
-
-// makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
-const addCardToBoard = (cardObject, cardUpOrDown) => {
-    let newDiv= document.createElement('div')
-    // uses constant CARD_LIBRARY to get the image source
-    let cardUrl = cardUpOrDown > 0 ? CARD_LIBRARY[cardIdentity]["img"] : CARD_LIBRARY[cardIdentity]["imgBack"];
-    newDiv.innerHTML = `<img data-card='${cardIdentity}' data-inplay='${cardUpOrDown}' src=${cardUrl}>`
-    newDiv.dataset.card=`${cardIdentity}`
-    newDiv.dataset.inplay=`${cardUpOrDown}`
-    newDiv.draggable = 'true';                  //is this needed?
-    return newDiv
-}
-
-
-
-const updateDataObject = () => {
-    for (let keys in allCardDivElements){
-        let location = document.querySelector(`${keys}`);
-        allCardDivElements[keys].forEach((element) => {
-            location.append(element);
-        });
-    } 
-}
-
-
-
-// const renderTableau = () => {
-//     // create a new div for each column in tableau
-//     for (let n=0;n<8;n++) {
-//         let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
-//         // assign the card to the div
-//         startingTableau[n].forEach((isCardUpOrDown) => {
-//             let nextCard = dealCardFromDeck()
-//             let nextDiv = makeDivElementWithCard(nextCard, isCardUpOrDown)
-//             nextTableauCol.appendChild(nextDiv);
-//             allCardDivElements[nextCard] = nextDiv;
-//         })
-//     }
-// }
-
-
-
-
-/* ################################################ */
-/* ############## STANDARD FUNCTIONS ############## */
-/* ################ do not delete  ################ */
-
-const dealCardFromDeck = () => {
-    let nextCard = shuffledDeck.pop()
-    return nextCard
-}
-
-
-/* ################################################ */
-/* ######### INITIALIZATION AND RENDERING ######### */
-/* ################ do not delete  ################ */
-
-// break up render() into smaller renderXxxx(), because it cam get bloated
-// Render function should transfer all states to user interface. 
-
-// random-shuffles initial deck 
-
-
-
-
-    // allCardDivElements["#stock"] = []
-    // allCardRefElements["#stock"] = []
-    // while (currentDeck.length > 0){
-    //     let nextCard = dealCardFromDeck();
-    //     let nextDiv = makeDivElementWithCard(nextCard, -1);
-    //     //stockPile.appendChild(nextDiv);
-    //     allCardDivElements["#stock"].push(nextDiv);
-    //     allCardRefElements["#stock"].push(nextCard);
-//        cardObjectKeyValue[nextCard] = nextDiv
-        
-// const renderTableau = () => {
-//     // create a new div for each column in tableau
-//     for (let n=0;n<7;n++) {
-//         let tableauKey = `tableau-${n+1}`
-//         allCardDivElements[tableauKey] = []
-//         allCardRefElements[tableauKey] = []
-
-//         startingTableau[n+1].forEach((isCardUpOrDown) => {
-
-//             let card = boardArray[12].pop()
-//             if (isCardUpOrDown == -1){
-//                 flipCard(allCardObjectKeyValue[card])
-//             }
-//             boardArray[n].push(card)
-            
-//             let nextDiv = addCardToBoard(Card, isCardUpOrDown)
-//             allCardDivElements[tableauKey].push(nextDiv)
-//             //allCardRefElements[tableauKey].push(nextCard)
-//             cardObjectKeyValue[nextCard] = nextDiv
-//         })
-//     }
-// }
-    
-
-    
-
-
-
-
-
-
-//WORK ON THIS FOR 3/6
-
-// const renderBoard2 = () => {
-//     for (let keys in allCardRefElements){
-//         allCardRefElements[keys].forEach((element) => {
-            
-//         });
-//     } 
-// }
-
-
+/* --- functions --- */
+init();
 
 /* --- shuffle the cards --- */
-const randomShuffle = (cardArr) => {
+function randomShuffle(cardArr) {
     let initialDeck = [...cardArr];
     let newDeck = []
     for (let i = 52; i > 0; i--) {
@@ -503,173 +358,135 @@ const randomShuffle = (cardArr) => {
     return newDeck;
 };
 
+//const shuffledDeck = randomShuffle(CARD_LIST);
 
-function dealCardsFromStockNode(){
-    if (stockElements.length > 0) {
-        stockElements.forEach((card) => {
-            let discardedCard = stockElements.shift(card)
-            // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-            stockElements.push(discardedCard )
-        })
-    }
-    if (boardArray[11].length < 3){
-        for (let i = boardArray[12].length; i > 0; i--){
-            let dealtCard = boardArray[12].pop()
-            // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-            boardArray[11].push(dealtCard)
-                        
-        }
-    } else if (boardArray[12].length > 2){
-        let dealtCard = boardArray[11].pop()
-        // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
-        boardArray[11].push(dealtCard)
-    }
-};         // deal out the stock cards and reveal top three
-
-
-// takes a node array (e.g. from the stock pile, and just removes and distributes from that pil)
-const dealCardFromStockInit = (nodeArray) => {
-    return nodeArray.pop()
-}
-
-
-const flipCardInit = (cardObject, toFlipOrNot) => {
-    cardObject.dataset.inplay = toFlipOrNot
-    return cardObject
-}
-
-
-
-
-/* --- flip  the cards --- */
-const flipCardFace = (cardObject) => {
-    if (cardObject.dataset.inplay > 0) {
-        let cardId = cardObject.dataset.card
-        cardObject.innerHTML = ''
-        let cardUrl = CARD_LIBRARY[cardId]["img"]
-        cardObject.innerHTML = `<img data-card='${cardId}' data-inplay='1' src=${cardUrl}>`
-
-    }}
-
-// const flipCard = (cardObject) => {
-//     let currentState = cardObject.dataset.inplay
-//     cardObject.dataset.inplay = currentState * -1
+// const createStock = () => {
+//     while (shuffledDeck.length > 0){
+//         let nextCard = shuffledDeck.pop()
+//     }    
 // }
 
-const shuffledDeck = randomShuffle(CARD_LIST);
 
-// re-doing function 3/7:
-// makeDivElementWithCard creates a new div that contains dataset type attributes (e.g. "data-name" within HTML)
 
-const renderDeck = () => {
-    shuffledDeck.forEach((cardId) => {
-        let newDiv= document.createElement('div')
-        let cardUrl = CARD_LIBRARY[cardId]["imgBack"]
-        newDiv.innerHTML = `<img data-card='${cardId}' data-inplay='-1' src=${cardUrl}>`
-        newDiv.dataset.card=`${cardId}`
-        newDiv.dataset.inplay=`-1`
-        allCardObjectKeyValue[cardId] = newDiv;
-        stockElement.appendChild(newDiv)
+
+function renderTableau() {
+    startingTableau.forEach((columnArr, columnIndex) => {
+        columnArr.forEach((columnCell, rowIndex) => {
+            // name an id name for the div element based on constant array
+            const stackName = `c${columnIndex}r${rowIndex}`
+
+            // draw each shuffled card individually and save into a variable, card
+            let card = shuffledDeck.pop()
+            
+            console.log(card[3])
+            console.log(`c${columnIndex}r${rowIndex}`)
+            console.log(`c${columnIndex}r${rowIndex}`)
+            const stackElement = document.getElementById(`${stackName}`);
+            console.log(stackElement)
+
+            if (columnCell > 0){   
+                // change the card's showing value by splicing   
+                card.splice(2, 1, 1)   
+                // grab the url of the image of the front of the card  
+                let image = getDisplayImage(card);
+                stackElement.appendChild(image)
+
+                        //stackElement.innerHTML = `<img data-card=${card[3]} data-inplay='1' src=${cardUrl}>`
+
+            } else if (columnCell < 0) {
+                let image = getDisplayImage(card);
+                stackElement.appendChild(image)
+            }
+            startingTableau.splice(rowIndex, 1, card)   
+            boardArray[columnIndex].push(card)
+        })
     })
 }
 
 
-
-
-const updateNodes = (card) => {
-    allCardObjectKeyValue[card]
+function getDisplayImage (card){
+    if ('-1' == card[2]){
+        return;
+    }
+    const newImage = document.createElement('img')
+    newImage.src = CARD_LIBRARY[card[3]]['img']
+    return newImage;
 }
 
-const renderStock = () => {
-    while (shuffledDeck.length > 0){
-        let nextCard = shuffledDeck.pop()
-        boardArray[12].push(nextCard)
-    }    
-
+function flipCard(card){
+    if (0 < card[2]){
+        card.splice(2, 1, 2)
+    }
+    else {
+        card.splice(2, 1, -1)
+    }
+    return card;
 }
 
 
+function renderBoard (renderTableau) {
+    setTimeout(renderTableau, 20)
+    boardArray.forEach((columnArr, columnIndex) => {
+        columnArr.forEach((columnCell, rowIndex) => {
+            let stackName = `c${columnIndex}r${rowIndex}`
+            let stackElement = document.getElementById(stackName);
+            if (columnCell[3] > 0) {
+                // // change the card's showing value by splicing   
+                // card.splice(2, 1, 1)   
+                // // grab the url of the image of the front of the card  
+                let image = getDisplayImage(card);
+                stackElement.appendChild(image)
 
-const renderTableau = () => {
-    for (let n=1;n<8;n++) {
-        let nextTableauCol = document.querySelector(`#tableau${n-1}`)
-        // assign the card to the div
-        let stockEls = document.querySelectorAll('#stock div')
-        let stockCardNodes = Array.from(stockEls)
-        startingTableau[n].forEach((isCardUpOrDown) => {
-            let nextCard  = dealCardFromStockInit(stockCardNodes)
-            let nextDiv = flipCardInit(nextCard, isCardUpOrDown) // changes the flip data of the card from -1 to 1
-            flipCardFace(nextCard)                              // actually flips the card
-            nextTableauCol.appendChild(nextDiv);                // adds the object to the divs
-            //allCardDivElements[nextCard] = nextDiv;
-
+            } else if (columnCell[3] < 0) {
+                //let cardUrl = CARD_LIBRARY[card[3]]["imgBack"] 
+                //stackElement.innerHTML = `<img data-card='${card[3]}' data-inplay='-1' src=${cardUrl}>`
+                let image = getDisplayImage(card);
+                stackElement.appendChild(image)
+            }
 
         })
-
-    }
-}
-
-
-const updateBoardNode = () => {
-    boardNode["tableau0"] = Array.from(tableau0Elements)
-    boardNode["tableau1"] = Array.from(tableau1Elements)
-    boardNode["tableau2"] = Array.from(tableau2Elements)
-    boardNode["tableau3"] = Array.from(tableau3Elements)
-    boardNode["tableau4"] = Array.from(tableau4Elements)
-    boardNode["tableau5"] = Array.from(tableau5Elements)
-    boardNode["tableau6"] = Array.from(tableau6Elements)
-    boardNode["foundation1"] = Array.from(foundation1Elements)
-    boardNode["foundation2"] = Array.from(foundation2Elements)
-    boardNode["foundation3"] = Array.from(foundation3Elements)
-    boardNode["foundation4"] = Array.from(foundation4Elements)
-    boardNode["stock"] = Array.from(stockElements)
-    boardNode["discard"] = Array.from(discardElements)
-    boardNode["played"] = Array.from(playedElements)
-}
-
-
-const updateBoard = () => {
-    for (let keys in allCardDivElements){
-        let location = document.querySelector(`${keys}`);
-        allCardDivElements[keys].forEach((element) => {
-            location.append(element);
-        });
-    } 
+    })
+    let stackElement = document.getElementById("c0r2");
+    console.log(stackElement)
 }
 
 
 
-// for (let [index, value] of anArray.entries()){}
+// function render(){
+//     renderTableau()
+//     renderBoard()
+// };
 
-// const removeChildren
-
-// const assignBoardPlacement = () => {
-//     for (const [indexCol, cardList] of boardArray.entries) {
-//         for (const [indexRow, card] of cardList.entries){
-
-//         }
-
-//     }
-
+// function init(){
+//     render();
 // }
 
 
-function render(renderDeck, renderStock, renderTableau, updateBoardNode, updateBoard){
-    setTimeout(renderDeck, 10)
-    setTimeout(renderStock, 20)
-    setTimeout(renderTableau, 30)
-    setTimeout(updateBoardNode, 40)
-    setTimeout(updateBoard, 50)
+function render(renderTableau, renderBoard){
+    setTimeout(renderTableau, 50)
+    setTimeout(renderBoard, 200)
 };
 
 function init(){
-    render(renderDeck, renderStock, renderTableau, updateBoardNode, updateBoard);
-    console.log('This is the init function');
+
+    shuffledDeck = randomShuffle(CARD_LIST);
+    boardArray = [
+        [[3,  2, -1, 'S06'], [3,  2, -1, 'S06']],                     //tableau-0     [0]
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],                     //tableau-7     [6]
+        [],                     //foundation-1  [7]
+        [],                     //foundation-2  [8]
+        [],                     //foundation-3  [9]
+        [],                     //foundation-4  [10]
+        [],                     // shown        [11] 
+        [],                     // stock        [12] 
+        []                      // waste        [13] 
+    ]
+    render(renderTableau, renderBoard);
 }
 
-init();
 
-console.log(`shuffledDeck: ${shuffledDeck}`)
-console.log(`AllCardObjectKeyValue: ${allCardObjectKeyValue}`)
-console.log(allCardObjectKeyValue)
-console.log(boardNode)
