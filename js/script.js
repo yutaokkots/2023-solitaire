@@ -152,66 +152,71 @@ const startingTableau = [
 
 
 
-//suit, color, front/back, name
+//suit, color, front/back, name, value, col, row]
 const CARD_LIST = [
-[3,  2, -1, 'S01',  1],
-[3,  2, -1, 'S02',  2],
-[3,  2, -1, 'S03',  3],
-[3,  2, -1, 'S04',  4],
-[3,  2, -1, 'S05',  5],
-[3,  2, -1, 'S06',  6],
-[3,  2, -1, 'S07',  7],
-[3,  2, -1, 'S08',  8],
-[3,  2, -1, 'S09',  9],
-[3,  2, -1, 'S10', 10],
-[3,  2, -1, 'S11', 11],
-[3,  2, -1, 'S12', 12],
-[3,  2, -1, 'S13', 13],
-[5, -2, -1, 'H01',  1],
-[5, -2, -1, 'H02',  2],
-[5, -2, -1, 'H03',  3],
-[5, -2, -1, 'H04',  4],
-[5, -2, -1, 'H05',  5],
-[5, -2, -1, 'H06',  6],
-[5, -2, -1, 'H07',  7],
-[5, -2, -1, 'H08',  8],
-[5, -2, -1, 'H09',  9],
-[5, -2, -1, 'H10', 10],
-[5, -2, -1, 'H11', 11],
-[5, -2, -1, 'H12', 12],
-[5, -2, -1, 'H13', 13],
-[7,  2, -1, 'C01',  1],
-[7,  2, -1, 'C02',  2],
-[7,  2, -1, 'C03',  3],
-[7,  2, -1, 'C04',  4],
-[7,  2, -1, 'C05',  5],
-[7,  2, -1, 'C06',  6],
-[7,  2, -1, 'C07',  7],
-[7,  2, -1, 'C08',  8],
-[7,  2, -1, 'C09',  9],
-[7,  2, -1, 'C10', 10],
-[7,  2, -1, 'C11', 11],
-[7,  2, -1, 'C12', 12],
-[7,  2, -1, 'C13', 13],
-[9, -2, -1, 'D01',  1],
-[9, -2, -1, 'D02',  2],
-[9, -2, -1, 'D03',  3],
-[9, -2, -1, 'D04',  4],
-[9, -2, -1, 'D05',  5],
-[9, -2, -1, 'D06',  6],
-[9, -2, -1, 'D07',  7],
-[9, -2, -1, 'D08',  8],
-[9, -2, -1, 'D09',  9],
-[9, -2, -1, 'D10', 10],
-[9, -2, -1, 'D11', 11],
-[9, -2, -1, 'D12', 12],
-[9, -2, -1, 'D13', 13]
+[3,  2, -1, 'S01',  1, 12, 0],
+[3,  2, -1, 'S02',  2, 12, 0],
+[3,  2, -1, 'S03',  3, 12, 0],
+[3,  2, -1, 'S04',  4, 12, 0],
+[3,  2, -1, 'S05',  5, 12, 0],
+[3,  2, -1, 'S06',  6, 12, 0],
+[3,  2, -1, 'S07',  7, 12, 0],
+[3,  2, -1, 'S08',  8, 12, 0],
+[3,  2, -1, 'S09',  9, 12, 0],
+[3,  2, -1, 'S10', 10, 12, 0],
+[3,  2, -1, 'S11', 11, 12, 0],
+[3,  2, -1, 'S12', 12, 12, 0],
+[3,  2, -1, 'S13', 13, 12, 0],
+[5, -2, -1, 'H01',  1, 12, 0],
+[5, -2, -1, 'H02',  2, 12, 0],
+[5, -2, -1, 'H03',  3, 12, 0],
+[5, -2, -1, 'H04',  4, 12, 0],
+[5, -2, -1, 'H05',  5, 12, 0],
+[5, -2, -1, 'H06',  6, 12, 0],
+[5, -2, -1, 'H07',  7, 12, 0],
+[5, -2, -1, 'H08',  8, 12, 0],
+[5, -2, -1, 'H09',  9, 12, 0],
+[5, -2, -1, 'H10', 10, 12, 0],
+[5, -2, -1, 'H11', 11, 12, 0],
+[5, -2, -1, 'H12', 12, 12, 0],
+[5, -2, -1, 'H13', 13, 12, 0],
+[7,  2, -1, 'C01',  1, 12, 0],
+[7,  2, -1, 'C02',  2, 12, 0],
+[7,  2, -1, 'C03',  3, 12, 0],
+[7,  2, -1, 'C04',  4, 12, 0],
+[7,  2, -1, 'C05',  5, 12, 0],
+[7,  2, -1, 'C06',  6, 12, 0],
+[7,  2, -1, 'C07',  7, 12, 0],
+[7,  2, -1, 'C08',  8, 12, 0],
+[7,  2, -1, 'C09',  9, 12, 0],
+[7,  2, -1, 'C10', 10, 12, 0],
+[7,  2, -1, 'C11', 11, 12, 0],
+[7,  2, -1, 'C12', 12, 12, 0],
+[7,  2, -1, 'C13', 13, 12, 0],
+[9, -2, -1, 'D01',  1, 12, 0],
+[9, -2, -1, 'D02',  2, 12, 0],
+[9, -2, -1, 'D03',  3, 12, 0],
+[9, -2, -1, 'D04',  4, 12, 0],
+[9, -2, -1, 'D05',  5, 12, 0],
+[9, -2, -1, 'D06',  6, 12, 0],
+[9, -2, -1, 'D07',  7, 12, 0],
+[9, -2, -1, 'D08',  8, 12, 0],
+[9, -2, -1, 'D09',  9, 12, 0],
+[9, -2, -1, 'D10', 10, 12, 0],
+[9, -2, -1, 'D11', 11, 12, 0],
+[9, -2, -1, 'D12', 12, 12, 0],
+[9, -2, -1, 'D13', 13, 12, 0]
 ]
+
+
+
 
 /*----- app's state (variables) -----*/
 let boardArray = [];
 let shuffledDeck = null
 let cardsAtPlay;
+let workingDeck;
+let cardArray;
 
 /*----- cached element references -----*/
 
@@ -247,9 +252,10 @@ mainElement.addEventListener('dragstart', (evt) => {
     console.log(`origin .alt card-orientation: ${evt.target.alt}`)
     console.log(`origin .id  card-id:          ${evt.target.id}`)
 
-    console.log(cardsAtPlay)
-    cardsAtPlay.unshift(evt.target.id)
-    console.log(cardsAtPlay)
+    console.log(cardAtPlay)
+    // add the dragged card into a global variable array. 
+    cardAtPlay.unshift(target.id)
+    console.log(cardAtPlay)
 })
 
 // When something is dragged into an area, the css is modified to show an outline of the drop area, and records information about the current bottom card
@@ -303,20 +309,26 @@ const deactivateDragOver = () => {
 
 mainElement.addEventListener('dragend', (evt) => {
     // guards -> everything except div elements that contain data
-
-
 });
+
+
 
 // dropped card event listener, removes the css of any outlined sections to remove the outline
 mainElement.addEventListener('drop', (evt) => {
     // guards -> everything except div elements that contain data
     deactivateDragOver()
+    let bottomCardTarget = evt.target
 
     console.log(`destin .alt card-orientation: ${evt.target.alt}`)
     console.log(`destin .id  card-id:          ${evt.target.id}`)
 
+  
+    cardOnBottom.unshift(bottomCardTarget.id)
+    console.log(cardArray)
+    console.log(workingDeck)
+    canItBeDropped()
+    
 
-    cardsAtPlay.push(evt.target.id)
 
     evt.target.parentNode.classList.remove("card-selection")
     // render();
@@ -328,7 +340,51 @@ mainElement.addEventListener('drop', (evt) => {
 /* ################  ################ */
 
 
+/* --- find the card position --- */
+const findCardPosition = (card) => {
+    let foundPosition = [];
+    console.log(boardArray)
+    boardArray.forEach((potentialColumn, columnIndex) => {
+        potentialColumn.forEach((potentialRow, rowIndex) => {
+            if (potentialRow.indexOf(card) > -1){
+                console.log(columnIndex)
+                console.log(rowIndex)
+                foundPosition = [columnIndex, rowIndex]
+                return foundPosition
 
+            } 
+        })
+    })
+    //returns undefined if not in tableau
+}
+
+
+
+
+//const canItBeDropped = (topCardId) //, topCardOri,  bottomCardId, bottomCardOri ) =>{
+
+// const canItBeDropped = (card) =>{
+//     // basecase
+//     if ( == -1){
+//     //     return;
+//     // }
+
+//     //cardAtPlay[0] cardOnBottom[0] 
+//     console.log(findCardPosition(cardAtPlay[0]))
+//     console.log(findCardPosition(cardOnBottom[0]))
+//     console.log(cardAtPlay[0])
+//     console.log(cardOnBottom[0])
+
+    
+//     console.log( findCardPosition(`${cardAtPlay}`))
+//     let cardPosition = findCardPosition(cardAtPlay)
+//     console.log(`Here is the card position ${cardPosition}`)
+    
+
+
+
+
+// }
 
 
 
@@ -378,50 +434,87 @@ function randomShuffle(cardArr) {
     return newDeck;
 };
 
-/* --- find the card position --- */
-const findCardPosition = (card) => {
-    let foundPosition = [];
-
-    boardArray.forEach((potentialColumn, columnIndex) => {
-        potentialColumn.forEach((potentialMatch, rowIndex) => {
-            if (potentialMatch[3] === card[3]){
-                row = rowIndex
-                column = columnIndex
-            }});
+function randomShuffleInPlace(cardObject) {
+    let newDeck = []
+    for (let i = 52; i > 0; i--) {
+        let n = Math.floor(Math.random() * i);
+        newDeck.push(n)
+    }
+    cardObject.forEach((cardKey) => {
+        cardKey.pop()
+        cardKey.push(newDeck.pop)
     })
-    foundPostion = [columnIndex, rowIndex]
-    return foundPosition
+return cardObject
 }
 
 
 
-function renderTableau() {
-    startingTableau.forEach((columnArr, columnIndex) => {
-        columnArr.forEach((columnCell, rowIndex) => {
-            // name an id name for the div element based on constant array
-            const stackName = `c${columnIndex}r${rowIndex}`
+// function renderTableauAgain() {
+//     let n = 0
+//     startingTableau.forEach((columnArr, columnIndex) => {
+//         columnArr.forEach((columnCell, rowIndex) => {
+//             // name an id name for the div element based on constant array
+//             const stackName = `c${columnIndex}r${rowIndex}`
             
-            // draw each shuffled card individually and save into a variable, card
-            let card = shuffledDeck.pop()
-            const stackElement = document.getElementById(stackName);
+//             // draw each shuffled card individually and save into a variable, card
+//             workingDeck[n][6]
+//             card.splice(5, 1, columnIndex)  //modify the saved col information in the card, position 5
+//             card.splice(6, 1, rowIndex)     //modify the saved row information in the card, position 6
+//             const stackElement = document.getElementById(stackName);
+            
+//             // a negative columnCell indicates that it will remain face-down
+//             if (columnCell < 0) {;
+//                 stackElement.appendChild(getDisplayImage(card))
+//             }else if (columnCell > 0){   
+//                 // change the card's showing value by splicing  
 
-            if (columnCell < 0) {;
-                stackElement.appendChild(getDisplayImage(card))
-            }else if (columnCell > 0){   
-                // change the card's showing value by splicing  
+//                 card.splice(2, 1, 1)   
+//                 stackElement.appendChild(getDisplayImage(card))
+//             } 
 
-                card.splice(2, 1, 1)   
-                stackElement.appendChild(getDisplayImage(card))
-            } 
+//             startingTableau.splice(rowIndex, 1, card)   
+//             boardArray[columnIndex].push(card)
+//             workingDeck.push(card) 
+//             n++
+//         })
+//     })
+//     //switch, adds an element in front to make the starting tableau inactive
+//     startingTableau.unshift("pause")
 
-            startingTableau.splice(rowIndex, 1, card)   
-            boardArray[columnIndex].push(card) 
-        })
-    })
-    //switch, adds an element in front to make the starting tableau inactive
-    startingTableau.unshift("pause")
+// }
 
-}
+
+// function renderTableau() {
+//     startingTableau.forEach((columnArr, columnIndex) => {
+//         columnArr.forEach((columnCell, rowIndex) => {
+//             // name an id name for the div element based on constant array
+//             const stackName = `c${columnIndex}r${rowIndex}`
+            
+//             // draw each shuffled card individually and save into a variable, card
+//             let card = shuffledDeck.pop()
+//             card.splice(5, 1, columnIndex)  //modify the saved col information in the card, position 5
+//             card.splice(6, 1, rowIndex)     //modify the saved row information in the card, position 6
+//             const stackElement = document.getElementById(stackName);
+            
+//             // a negative columnCell indicates that it will remain face-down
+//             if (columnCell < 0) {;
+//                 stackElement.appendChild(getDisplayImage(card))
+//             }else if (columnCell > 0){   
+//                 // change the card's showing value by splicing  
+
+//                 card.splice(2, 1, 1)   
+//                 stackElement.appendChild(getDisplayImage(card))
+//             } 
+
+//             startingTableau.splice(rowIndex, 1, card)   
+//             boardArray[columnIndex].push(card)
+//             workingDeck.push(card) 
+//         })
+//     })
+//     //switch, adds an element in front to make the starting tableau inactive
+//     startingTableau.unshift("pause")
+
+// }
 
 function getDisplayImage (card){
     if (card === undefined) {
@@ -507,28 +600,80 @@ function removeImage() {
 // }
 
 
-function renderBoard () {
-    removeImage()
-    // boardArray.forEach((columnArr, columnIndex) => {
-    //     columnArr.forEach((card, rowIndex) => {
+// function renderBoard () {
+//     removeImage()
+//     // boardArray.forEach((columnArr, columnIndex) => {
+//     //     columnArr.forEach((card, rowIndex) => {
             
-    //     })
-    // })
+//     //     })
+//     // })
+
+//     boardArray.forEach((columnArr, columnIndex) => {
+//         columnArr.forEach((card, rowIndex) => {
+//             let stackName = `c${columnIndex}r${rowIndex}`
+//             let stackElement = document.getElementById(stackName);
+//             if (card[2] > 0) {
+//                 flipCard(card)  
+//             }
+
+//             //removeImage(columnIndex, rowIndex)
+//             stackElement.appendChild(getDisplayImage(card))
+
+//         })
+//     })
+// }
+
+
+// function renderBoard () {
+
+//     //removes 
+//     removeImage()
+
+//     boardArray.forEach((columnArr, columnIndex) => {
+//         columnArr.forEach((card, rowIndex) => {
+//             // //row information 
+//             // card[5]
+//             // //col information
+//             // card[6]
+
+//             let stackName = `c${card[5]}r${card[6]}`
+//             let stackElement = document.getElementById(stackName);
+//             if (card[2] > 0) {
+//                 flipCard(card)  
+//             }
+
+//             stackElement.appendChild(getDisplayImage(card))
+
+//         })
+//     })
+// }
+
+
+function renderBoard () {
+
+    //removes 
+    removeImage()
 
     boardArray.forEach((columnArr, columnIndex) => {
         columnArr.forEach((card, rowIndex) => {
-            let stackName = `c${columnIndex}r${rowIndex}`
+            // //row information 
+            // card[5]
+            // //col information
+            // card[6]
+
+            let stackName = `c${card[5]}r${card[6]}`
             let stackElement = document.getElementById(stackName);
             if (card[2] > 0) {
                 flipCard(card)  
             }
 
-            //removeImage(columnIndex, rowIndex)
             stackElement.appendChild(getDisplayImage(card))
 
         })
     })
 }
+
+
 
 
 function render() {
@@ -537,9 +682,10 @@ function render() {
 }
 
 function init(){
-
-    cardsAtPlay = []
+    cardAtPlay =[]
+    cardOnBottom = []
     shuffledDeck = randomShuffle(CARD_LIST);
+    cardArray = randomShuffleInPlace(CARD_LIST);
 
     
     boardArray = [
@@ -559,36 +705,63 @@ function init(){
         []                      // waste        [13] 
     ]
 
+    cardArray ={
+        S01:[3,  2, -1,  1, 12, 0],
+        S02:[3,  2, -1,  2, 12, 0],
+        S03:[3,  2, -1,  3, 12, 0],
+        S04:[3,  2, -1,  4, 12, 0],
+        S05:[3,  2, -1,  5, 12, 0],
+        S06:[3,  2, -1,  6, 12, 0],
+        S07:[3,  2, -1,  7, 12, 0],
+        S08:[3,  2, -1,  8, 12, 0],
+        S09:[3,  2, -1,  9, 12, 0],
+        S10:[3,  2, -1, 10, 12, 0],
+        S11:[3,  2, -1, 11, 12, 0],
+        S12:[3,  2, -1, 12, 12, 0],
+        S13:[3,  2, -1, 13, 12, 0],
+        H01:[5, -2, -1,  1, 12, 0],
+        H02:[5, -2, -1,  2, 12, 0],
+        H03:[5, -2, -1,  3, 12, 0],
+        H04:[5, -2, -1,  4, 12, 0],
+        H05:[5, -2, -1,  5, 12, 0],
+        H06:[5, -2, -1,  6, 12, 0],
+        H07:[5, -2, -1,  7, 12, 0],
+        H08:[5, -2, -1,  8, 12, 0],
+        H09:[5, -2, -1,  9, 12, 0],
+        H10:[5, -2, -1, 10, 12, 0],
+        H11:[5, -2, -1, 11, 12, 0],
+        H12:[5, -2, -1, 12, 12, 0],
+        H13:[5, -2, -1, 13, 12, 0],
+        C01:[7,  2, -1,  1, 12, 0],
+        C02:[7,  2, -1,  2, 12, 0],
+        C03:[7,  2, -1,  3, 12, 0],
+        C04:[7,  2, -1,  4, 12, 0],
+        C05:[7,  2, -1,  5, 12, 0],
+        C06:[7,  2, -1,  6, 12, 0],
+        C07:[7,  2, -1,  7, 12, 0],
+        C08:[7,  2, -1,  8, 12, 0],
+        C09:[7,  2, -1,  9, 12, 0],
+        C10:[7,  2, -1, 10, 12, 0],
+        C11:[7,  2, -1, 11, 12, 0],
+        C12:[7,  2, -1, 12, 12, 0],
+        C13:[7,  2, -1, 13, 12, 0],
+        D01:[9, -2, -1,  1, 12, 0],
+        D02:[9, -2, -1,  2, 12, 0],
+        D03:[9, -2, -1,  3, 12, 0],
+        D04:[9, -2, -1,  4, 12, 0],
+        D05:[9, -2, -1,  5, 12, 0],
+        D06:[9, -2, -1,  6, 12, 0],
+        D07:[9, -2, -1,  7, 12, 0],
+        D08:[9, -2, -1,  8, 12, 0],
+        D09:[9, -2, -1,  9, 12, 0],
+        D10:[9, -2, -1, 10, 12, 0],
+        D11:[9, -2, -1, 11, 12, 0],
+        D12:[9, -2, -1, 12, 12, 0],
+        D13:[9, -2, -1, 13, 12, 0]
+   }
+   
 
     render();
 }
-
-
-// function render(renderTableau, renderBoard){
-//     setTimeout(renderTableau, 50)
-//     setTimeout(renderBoard, 200)
-// };
-
-// function init(){
-
-//     shuffledDeck = randomShuffle(CARD_LIST);
-//     boardArray = [
-//         [[3,  2, -1, 'S06'], [3,  2, -1, 'S06']],                     //tableau-0     [0]
-//         [],
-//         [],
-//         [],
-//         [],
-//         [],
-//         [],                     //tableau-7     [6]
-//         [],                     //foundation-1  [7]
-//         [],                     //foundation-2  [8]
-//         [],                     //foundation-3  [9]
-//         [],                     //foundation-4  [10]
-//         [],                     // shown        [11] 
-//         [],                     // stock        [12] 
-//         []                      // waste        [13] 
-//     ]
-//     render(renderTableau, renderBoard);
-// }
 
 
