@@ -332,8 +332,10 @@ const performAnalysis = (cb1, cb2) => {
     setTimeout(cb2, 50)
 }
 
+
 /* --- find the card position and output results as a list that is ordered --- */
-const findListOfCardsUnderneath = (searchColumn, searchRow) => {
+/* --- takes the column number, and ouputs a list of cards--- */
+const findListOfCardsUnderneath = (searchColumn) => {
     console.log(searchColumn)
     const arrayOfLists = []
     for (const key in cardArray){
@@ -341,13 +343,13 @@ const findListOfCardsUnderneath = (searchColumn, searchRow) => {
             arrayOfLists.push(cardArray[key])
         }
     }
-    
-    arrayOfLists.sort(() )
-
+    // this returns the list sorted in order, with the top most card at the last index
+    arrayOfLists.sort(function(a, b) {
+        return a[5] - b[5]
+    })
 
     return arrayOfLists
 }
-
 
 
 
@@ -389,8 +391,6 @@ const flipTheCardAfterDrawing = (card) => {
     let bottomCard = cardArray[card];
     let topCardCol = topCard[5]
     let topCardRow = topCard[6]-1
-
-
 
     underTopCard.splice(5, 2, topCardCol) 
     underTopCard.push(topCardRow)
@@ -438,8 +438,6 @@ const canItBeDropped = (card) => {
     if (bottomCard[2] === -1){
         return;
     }
-    findCardPosition(topCard[5], topCard[6])
-    //flipTheCardAfterDrawing(topCard[5], topCard[6])
 
     // only applicable for tableau area
     if (bottomCard[5] < 7){
@@ -450,10 +448,22 @@ const canItBeDropped = (card) => {
             let bottomCardCol = bottomCard[5]
             let bottomCardRow = bottomCard[6]+1
 
+            // This returns a list of cards from where the top card was drawn
+            let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
+            // index of the card that needs to be flipped
+            let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+            console.log(nameOfCard)
+            console.log(cardListofWhereCardRemoved)
+
+            let flipCard = cardArray[nameOfCard]
+            flipCard.splice(2, 1, 1)
+
             topCard.splice(5, 2, bottomCardCol) 
             topCard.push(bottomCardRow)
 
 
+
+            
         }
     }
 }    
@@ -593,6 +603,25 @@ function renderBoard () {
     // adds the images back into the div element    
         stackElement.appendChild(getDisplayImage(card))
     }
+
+    // this function flips up any top card that is facing down
+    for (let arrayInfo in cardArray) {
+        card = cardArray[arrayInfo]
+        nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+
+    }
+
+
+            // // This returns a list of cards from where the top card was drawn
+            // let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
+            // // index of the card that needs to be flipped
+            // let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+            // console.log(nameOfCard)
+            // console.log(cardListofWhereCardRemoved)
+
+            // let flipCard = cardArray[nameOfCard]
+            // flipCard.splice(2, 1, 1)
+
 }
 
 
