@@ -107,6 +107,11 @@ main {
     position:relative; 
 }
 
+#tableau div div:nth-child(n+2) {
+    margin-top: -110%;
+
+}
+
 
 #stock {
     display:flex;
@@ -156,9 +161,6 @@ main {
 } */
 
 #tableau div div:first-child {
-
-
-
 }
 
 #tableau div div:nth-child(n+2) {

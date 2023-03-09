@@ -65,16 +65,6 @@ const CARD_IMAGES = {
 }
 
 
-const resetArray = [
-    ["c0r0","c0r1","c0r2","c0r3","c0r4","c0r5","c0r6","c0r7","c0r8","c0r9","c0r10","c0r11","c0r12","c0r13","c0r14","c0r15","c0r16","c0r17","c0r18"],
-    ["c1r0","c1r1","c1r2","c1r3","c1r4","c1r5","c1r6","c1r7","c1r8","c1r9","c1r10","c1r11","c1r12","c1r13","c1r14","c1r15","c1r16","c1r17","c1r18"],
-    ["c2r0","c2r1","c2r2","c2r3","c2r4","c2r5","c2r6","c2r7","c2r8","c2r9","c2r10","c2r11","c2r12","c2r13","c2r14","c2r15","c2r16","c2r17","c2r18"],
-    ["c3r0","c3r1","c3r2","c3r3","c3r4","c3r5","c3r6","c3r7","c3r8","c3r9","c3r10","c3r11","c3r12","c3r13","c3r14","c3r15","c3r16","c3r17","c3r18"],
-    ["c4r0","c4r1","c4r2","c4r3","c4r4","c4r5","c4r6","c4r7","c4r8","c4r9","c4r10","c4r11","c4r12","c4r13","c4r14","c4r15","c4r16","c4r17","c4r18"],
-    ["c5r0","c5r1","c5r2","c5r3","c5r4","c5r5","c5r6","c5r7","c5r8","c5r9","c5r10","c5r11","c5r12","c5r13","c5r14","c5r15","c5r16","c5r17","c5r18"],
-    ["c6r0","c6r1","c6r2","c6r3","c6r4","c6r5","c6r6","c6r7","c6r8","c6r9","c6r10","c6r11","c6r12","c6r13","c6r14","c6r15","c6r16","c6r17","c6r18"]
-    ]
-
 
 CARD_LIBRARY = {
     S01: {suit:'s', color:'b', value:1,  img:CARD_IMAGES['S01'], imgBack:CARD_IMAGES['BAK'], before:-1,  after:2},
@@ -131,23 +121,6 @@ CARD_LIBRARY = {
     D13: {suit:'d', color:'r', value:13, img:CARD_IMAGES['D13'], imgBack:CARD_IMAGES['BAK'], before:12, after:-1},
     EMP: {suit:'0', color:'0', value:-1, img:CARD_IMAGES['EMP'], imgBack:CARD_IMAGES['EMP'], before:0, after:-1},
 } 
-
-
-const startingTableau = [
-    [1],
-    [-1,1],
-    [-1,-1,1],
-    [-1,-1,-1,1],
-    [-1,-1,-1,-1,1],
-    [-1,-1,-1,-1,-1,1],
-    [-1,-1,-1,-1,-1,-1,1],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
-]  
 
 
 
@@ -210,13 +183,13 @@ const CARD_LIST = [
 
 
 
-
 /*----- app's state (variables) -----*/
-let boardArray = [];
-let shuffledDeck = null
 let cardsAtPlay;
-let workingDeck;
+let cardOnBottom;
+let shuffledDeck = null
 let cardArray;
+let boardArray = [];
+let startingTableau = [];
 
 /*----- cached element references -----*/
 
@@ -261,8 +234,6 @@ mainElement.addEventListener('dragstart', (evt) => {
     deleteArray(cardOnBottom)
     console.log(cardOnBottom)
 })
-
-
 
 const  deleteArray = (array) =>{
     array.splice(0, array.length)
@@ -338,18 +309,15 @@ mainElement.addEventListener('drop', (evt) => {
 
     cardOnBottom.unshift(bottomCardTarget.id)
 
-  
-    canItBeDropped(bottomCardTarget.id)
+    if (!evt.target.id.includes("found") ){
+        canItBeDropped(bottomCardTarget.id)
+    }
+    droppingOnFoundation(bottomCardTarget.id)
 
-    // if (moveTheCard(bottomCardTarget.id) === true){
-    //     //canItBeDropped(bottomCardTarget.id)
-    // }
-    //render();
+
+
     evt.target.parentNode.classList.remove("card-selection")
     render();
-
-
-    
 });
 
 
@@ -364,22 +332,23 @@ const performAnalysis = (cb1, cb2) => {
     setTimeout(cb2, 50)
 }
 
-/* --- find the card position --- */
-// const findCardPosition = (card) => {
-//     let foundPosition = [];
-//     boardArray.forEach((potentialColumn, columnIndex) => {
-//         potentialColumn.forEach((potentialRow, rowIndex) => {
-//             potentialRow.forEach ((item) => {
-//                 if (item === card){
-//                     console.log(columnIndex)
-//                     console.log(rowIndex)
-//                 }
-//             })
-//         })
-//     })
-//     columnIndex, rowIndex
-// }
-    //returns undefined if not in tableau
+/* --- find the card position and output results as a list that is ordered --- */
+const findListOfCardsUnderneath = (searchColumn, searchRow) => {
+    console.log(searchColumn)
+    const arrayOfLists = []
+    for (const key in cardArray){
+        if (cardArray[key][5] === searchColumn){
+            arrayOfLists.push(cardArray[key])
+        }
+    }
+    
+    arrayOfLists.sort(() )
+
+
+    return arrayOfLists
+}
+
+
 
 
 const checkFoundation = () => {
@@ -387,488 +356,120 @@ const checkFoundation = () => {
 
 }
 
- 
-    // console.log(bottomCardColumn)
-    // console.log(boardArray)
-    // console.log(topCard)
-    // console.log(topCardColumn)
-    // console.log(bottomCard)
-    // console.log(boardArray[bottomCardColumn]) // this is the arrays of the bottom card at its column
+
+
+const updateStartingTableau = () => {
+    
+    // access the name of the card from StartingTableau, acecss the corresponding name from cardArray,
+    // and modify the StartingTableau's position
+    startingTableau.forEach((column, colIndex) =>{
+        column.forEach((array, rowIndex) => {
+            console.log(array)
+            // as the startinTableau is scanned, the name of the card is recorded
+            let cardRef = String(array[3])
+            // and pulls up the corresponding name in the cardArray
+            let arrayOfCard = cardArray[`${cardRef}`]
+            // access the values for the row and column
+            let updatedCol = arrayOfCard[5]
+            let updatedRow = arrayOfCard[6]
+            // add this information back into StartingTableau
+            array.splice(5, 2, updatedCol)
+            array.push(updatedRow)
+
+        })
+
+    })
+    console.log(cardArray)
+    
+}
+
+const flipTheCardAfterDrawing = (card) => {
+    console.log(card)
+    let topCard = cardArray[cardAtPlay[0]];
+    let bottomCard = cardArray[card];
+    let topCardCol = topCard[5]
+    let topCardRow = topCard[6]-1
 
 
 
+    underTopCard.splice(5, 2, topCardCol) 
+    underTopCard.push(topCardRow)
+}
 
 
-    // const moveTheCard = (card) => {
-    //     // establishes the columns of where the cards are coming from and where they are landing
-    //     let topCard = cardArray[cardAtPlay[0]];
-    //     let bottomCardColumn = cardArray[card][5];
-    //     let topCardColumn = cardArray[cardAtPlay[0]][5]
-    
-    //     console.log(topCard );
-    //     console.log(bottomCardColumn);
-    //     console.log("it can be dropped!");
-    
-    //     // Change what is reflected in the cardArray (a 1-d key-value pair) and boardArray (2-D array)
-    //     // change the boardArray here
-    //     boardArray[bottomCardColumn].push(boardArray[topCardColumn].pop())
-    //     // and reflect that change in the information stored in the cardArray
-    
-    //     //the location of bottom card (in the boardArray), reassigning to cardArray:
-    //     console.log(boardArray[bottomCardColumn].length)
-    
-    //     console.log(cardArray)
-    //     cardArray[topCard].pop()
-    //     cardArray[topCard].pop()
-    //     cardArray[topCard].push(boardArray[bottomCardColumn])
-    //     cardArray[topCard].push(boardArray[bottomCardColumn])
-    
-    //     console.log(cardAtPlay[0])
-    
-    //     console.log(topCardColumn)
-    //     console.log(topCardRow)
-    
-    //  }
-    
-    // const canItBeDropped = (card) => {
-    //     // establishes the columns of where the cards are coming from and where they are landing
-    //     let topCard = cardArray[cardAtPlay[0]];
-    //     let bottomCardColumn = cardArray[card][5];
-    
-    //     //testing how the bottom card's deck will be accepting of the card using slice()
-    //     let testArray
-    //     testArray = boardArray[bottomCardColumn].slice()
-    //     testArray.splice(testArray.length, 0, topCard)
-    
-    //     let suitTypeTracker = 0 
-    //     let suitColorTracker = 0
-    //     let suitValueTracker = 0
+// checks to see if the card can be dropped on foundation (aces)
+const droppingOnFoundation = (card) => {
+    let topCard = cardArray[cardAtPlay[0]];
+    let foundationColNum = card.slice(5, card.length)
+
+    //unary plus operator!
+    let bottomCard = [0, 5, 0, 'found', -1, +foundationColNum, 0]
+    console.log(cardArray)
+
+    // only applicable for foundation area
+    if (bottomCard[5] > 6 && bottomCard[5] < 11){
         
-    
-    //     if (bottomCardColumn > 10) {
-    //         return false
-    //     }
-    
-    //     // only applicable for tableau area
-    //     if (bottomCardColumn < 7){
-    //     testArray.forEach((cardArray, index) => {
-    
-    //             // only applies if the card is flipped up (positive)
-    //             // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
-    //             if (card[2] > 0 && (index - 1) > -1 ){
-    //                 // suitColorTracker should be equal to 0 each time (2 + -2)
-    //                 suitColorTracker = cardArray[1] + cardArray[index-1][1]; 
-    //                 if (suitColorTracker === 0) {
-    
-    //                     return true
-    //                 } else {
-    //                     console.log('A')
-    //                 }
-    
-    //                 suitColorTracker = 0
-    //                 // suitValueTracker should equal to 1 each time ((n+1) - n)
-    //                 suitValueTracker = testArray[index-1][4] - cardArray[4];
-    //                 if (suitValueTracker === 1){
-    //                     return true
-    //                 } else{
-    
-    //                 }
-    //                 suitValueTracker = 0
-    //             } else {
-    //                 console.log('C')
-    //             }
-    
-    //     })
-    //     // only applicable for foundation area
-    //     } else if (bottomCardColumn > 6 && bottomCardColumn < 11){
-    //         testArray.forEach((cardArray, index) => {
-    
-    //                 // only applies if the card is the same suit, and the card is flipped up
-    //                 // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
-    //                 if (cardArray[2] > 0 && (index - 1) > -1 ){
-    //                     // suitTypeTracker values after addition n times === division by n 
-    //                     suitTypeTracker += cardArray[0]; 
-    
-    //                     // suitValueTracker should equal to 1 each time ((n+1) - n)
-    //                     suitValueTracker = cardArray[4] - testArray[index-1][4];
-    //                     if (suitValueTracker !== 1){
-    //                         console.log('D')
-    //                     } else {
-    
-    //                     }
-    //                 } else{
-    //                     console.log('E')
-    //                 }
-                    
-    //             let testTracker = testArray[0][0] * cardArray.length
-    //             if (testTracker != suitTypeTracker){
-    //                 console.log('NOT OK')
-    //                 return 
-    //             } else {
-    //                 console.log('F')
-    //             }
-    //         })
-    
-    //     }
-    
-    
-    // }
+        if (topCard[4] === 1){ 
+            topCard.splice(5, 2, bottomCard[5]) 
+            topCard.push(bottomCard[6])
+        }
+        // if the suit position [0] are the same, and the cards are in ascending order, then put down
+        if (bottomCard[0] === topCard[0] &&  topCard[4] - bottomCard[4] === 1){
 
+            let bottomCardCol = bottomCard[5]
+            let bottomCardRow = bottomCard[6] + 1
 
+            topCard.splice(5, 2, bottomCardCol) 
+            topCard.push(bottomCardRow)
 
-// const moveTheCard = (card) => {
-//     // establishes the columns of where the cards are coming from and where they are landing
-//     let topCard = cardArray[cardAtPlay[0]];
-//     let bottomCardColumn = cardArray[card][5];
-//     let topCardColumn = cardArray[cardAtPlay[0]][5]
-
-//     console.log(topCard );
-//     console.log(bottomCardColumn);
-//     console.log("it can be dropped!");
-
-//     // Change what is reflected in the cardArray (a 1-d key-value pair) and boardArray (2-D array)
-//     // change the boardArray here
-//     boardArray[bottomCardColumn].push(boardArray[topCardColumn].pop())
-//     // and reflect that change in the information stored in the cardArray
-
-//     //the location of bottom card (in the boardArray), reassigning to cardArray:
-//     console.log(boardArray[bottomCardColumn].length)
-
-//     console.log(cardArray)
-//     cardArray[topCard].pop()
-//     cardArray[topCard].pop()
-//     cardArray[topCard].push(boardArray[bottomCardColumn])
-//     cardArray[topCard].push(boardArray[bottomCardColumn])
-
-//     console.log(cardAtPlay[0])
-
-//     console.log(topCardColumn)
-//     console.log(topCardRow)
-
-//  }
+            
+    }
+}
+}
 
 const canItBeDropped = (card) => {
     // establishes the columns of where the cards are coming from and where they are landing
+
+    console.log(card)
     let topCard = cardArray[cardAtPlay[0]];
     let bottomCard = cardArray[card];
 
-    console.log(topCard)
-    console.log(bottomCard)
-    
     //base case
     if (bottomCard[2] === -1){
         return;
     }
+    findCardPosition(topCard[5], topCard[6])
+    //flipTheCardAfterDrawing(topCard[5], topCard[6])
+
     // only applicable for tableau area
     if (bottomCard[5] < 7){
-        console.log("worked?")
-        console.log(bottomCard[1])
-        console.log(topCard[1])
-        console.log(topCard[4])
-        console.log(bottomCard[4])
-        console.log("worked?")
 
-
-
-        //if the bottom card color and top card color together equal 0
+        //if the bottom card color and top card color together equal 0, then same color
         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
             //then modify position of the top card
-            // console.log("before")
-            // console.log(bottomCard)
             let bottomCardCol = bottomCard[5]
             let bottomCardRow = bottomCard[6]+1
-            // console.log(bottomCardCol)
-            // console.log(bottomCardRow)
+
             topCard.splice(5, 2, bottomCardCol) 
             topCard.push(bottomCardRow)
-            // console.log(bottomCard)
-            // console.log("after")
+
 
         }
-
     }
+}    
 
 
 
-
-    // //testing how the bottom card's deck will be accepting of the card using slice()
-    // let testArray
-    // testArray = boardArray[bottomCardColumn].slice()
-    // testArray.splice(testArray.length, 0, topCard)
-
-    // let suitTypeTracker = 0 
-    // let suitColorTracker = 0
-    // let suitValueTracker = 0
-    
-
-    // if (bottomCardColumn > 10) {
-    //     return false
-    // }
-
-    // // only applicable for tableau area
-    // if (bottomCardColumn < 7){
-    // testArray.forEach((cardArray, index) => {
-
-    //         // only applies if the card is flipped up (positive)
-    //         // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
-    //         if (card[2] > 0 && (index - 1) > -1 ){
-    //             // suitColorTracker should be equal to 0 each time (2 + -2)
-    //             suitColorTracker = cardArray[1] + cardArray[index-1][1]; 
-    //             if (suitColorTracker === 0) {
-
-    //                 return true
-    //             } else {
-    //                 console.log('A')
-    //             }
-
-    //             suitColorTracker = 0
-    //             // suitValueTracker should equal to 1 each time ((n+1) - n)
-    //             suitValueTracker = testArray[index-1][4] - cardArray[4];
-    //             if (suitValueTracker === 1){
-    //                 return true
-    //             } else{
-
-    //             }
-    //             suitValueTracker = 0
-    //         } else {
-    //             console.log('C')
-    //         }
-
-    // })
-    // // only applicable for foundation area
-    // } else if (bottomCardColumn > 6 && bottomCardColumn < 11){
-    //     testArray.forEach((cardArray, index) => {
-
-    //             // only applies if the card is the same suit, and the card is flipped up
-    //             // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
-    //             if (cardArray[2] > 0 && (index - 1) > -1 ){
-    //                 // suitTypeTracker values after addition n times === division by n 
-    //                 suitTypeTracker += cardArray[0]; 
-
-    //                 // suitValueTracker should equal to 1 each time ((n+1) - n)
-    //                 suitValueTracker = cardArray[4] - testArray[index-1][4];
-    //                 if (suitValueTracker !== 1){
-    //                     console.log('D')
-    //                 } else {
-
-    //                 }
-    //             } else{
-    //                 console.log('E')
-    //             }
-                
-    //         let testTracker = testArray[0][0] * cardArray.length
-    //         if (testTracker != suitTypeTracker){
-    //             console.log('NOT OK')
-    //             return 
-    //         } else {
-    //             console.log('F')
-    //         }
-    //     })
-
-    // }
-
-
-}
-
-
-
-// const moveTheCard = (card) => {
-//     // establishes the columns of where the cards are coming from and where they are landing
-//     let topCard = cardArray[cardAtPlay[0]];
-//     let bottomCardColumn = cardArray[card][5];
-//     let topCardColumn = cardArray[cardAtPlay[0]][5]
-
-//     console.log(topCard );
-//     console.log(bottomCardColumn);
-//     console.log("it can be dropped!");
-
-//     // Change what is reflected in the cardArray (a 1-d key-value pair) and boardArray (2-D array)
-//     // change the boardArray here
-//     boardArray[bottomCardColumn].push(boardArray[topCardColumn].pop())
-//     // and reflect that change in the information stored in the cardArray
-
-//     //the location of bottom card (in the boardArray), reassigning to cardArray:
-//     console.log(boardArray[bottomCardColumn].length)
-
-//     console.log(cardArray[])
-//     cardArray[topCard].pop()
-//     cardArray[topCard].pop()
-//     cardArray[topCard].push(boardArray[bottomCardColumn])
-//     cardArray[topCard].push(boardArray[bottomCardColumn])
-
-//     console.log(cardAtPlay[0])
-
-//     console.log(topCardColumn)
-//     console.log(topCardRow)
-
-//  }
-
-// const canItBeDropped = (card) => {
-//     // establishes the columns of where the cards are coming from and where they are landing
-//     let topCard = cardArray[cardAtPlay[0]];
-//     let bottomCardColumn = cardArray[card][5];
-
-//     //testing how the bottom card's deck will be accepting of the card using slice()
-//     let testArray
-//     testArray = boardArray[bottomCardColumn].slice()
-//     testArray.splice(testArray.length, 0, topCard)
-
-//     let suitTypeTracker = 0 
-//     let suitColorTracker = 0
-//     let suitValueTracker = 0
-
-
-//     if (bottomCardColumn > 10) {
-//         return false
-//     }
-
-//     // only applicable for tableau area
-//     if (bottomCardColumn < 7){
-//     testArray.forEach((cardArray, index) => {
-
-//             // only applies if the card is flipped up (positive)
-//             // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
-//             if (card[2] > 0 && (index - 1) > -1 ){
-//                 // suitColorTracker should be equal to 0 each time (2 + -2)
-//                 suitColorTracker = cardArray[1] + cardArray[index-1][1]; 
-//                 if (suitColorTracker === 0) {
-
-//                     return true
-//                 } else {
-//                     console.log('A')
-//                 }
-
-//                 suitColorTracker = 0
-//                 // suitValueTracker should equal to 1 each time ((n+1) - n)
-//                 suitValueTracker = testArray[index-1][4] - cardArray[4];
-//                 if (suitValueTracker === 1){
-//                     return true
-//                 } else{
-
-//                 }
-//                 suitValueTracker = 0
-//             } else {
-//                 console.log('C')
-//             }
-
-//     })
-//     // only applicable for foundation area
-//     } else if (bottomCardColumn > 6 && bottomCardColumn < 11){
-//         testArray.forEach((cardArray, index) => {
-
-//                 // only applies if the card is the same suit, and the card is flipped up
-//                 // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
-//                 if (cardArray[2] > 0 && (index - 1) > -1 ){
-//                     // suitTypeTracker values after addition n times === division by n 
-//                     suitTypeTracker += cardArray[0]; 
-
-//                     // suitValueTracker should equal to 1 each time ((n+1) - n)
-//                     suitValueTracker = cardArray[4] - testArray[index-1][4];
-//                     if (suitValueTracker !== 1){
-//                         console.log('D')
-//                     } else {
-
-//                     }
-//                 } else{
-//                     console.log('E')
-//                 }
-                
-//             let testTracker = testArray[0][0] * cardArray.length
-//             if (testTracker != suitTypeTracker){
-//                 console.log('NOT OK')
-//                 return 
-//             } else {
-//                 console.log('F')
-//             }
-//         })
-
-//     }
-// }
-
-
-// const canItBeDropped = (card, upOrDown) => {
-//     //parameter, card is the id of where the card is being dropped
-
-    
-//     let topCard = cardAtPlay[0];
-//     let bottomCard = card;
-
-
-
-// //     // base-cases
-//     if (card === "play" || card === "stock" || card === "waste" || upOrDown === "-1") {
-//         console.log("foundation, stock, waste, or carddown!")
-//         return
-//     }
-
-//     //actions differ between tableau -> columns 0-6, and foundation -> columns 7-10
-//     else if (cardArray[card][5] < 7) 
-    
-    
-//     (&& (cardArray[card][1] + cardArray[cardAtPlay[0]][1] === 0) && (cardArray[cardAtPlay[0]][1] - cardArray[card][1] === 1 )){
-//             console.log("you can put this down")
+function resetStockFromWaste(){
+    if (boardArray[11].length > 0 || boardArray[12].length > 0){
+        dealCardsFromStock()}
+    for (let i = boardArray[13].length; i > 0; i--){
+        let restockCard = boardArray[13].shift()
+        boardArray[13].push(restockCard)
+    }    
         
-//     }
-
-//     // calling from cardArray that holds card status, using cardAtPlay list that holds currently dragging card at position 0
-   
-//     else if ((cardArray[card][5] > 6 && cardArray[card][5] < 11)
-//         && (cardArray[card][0] === cardArray[cardAtPlay[0]][0] === 0 && cardArray[cardAtPlay[0]][1] - cardArray[card][1] === -1)){
-//             console.log("you can put this down too")
-//         }
-    
-//         console.log(cardArray[cardAtPlay[0]][4])
-//         console.log(cardArray[cardAtPlay[0]][4])
-    
-//         console.log(cardArray[card][4])
-//         console.log(cardArray[card][4])
-
-// }
-
-
-
-//     // base-cases
-
-
-
-//     //cardAtPlay[0] cardOnBottom[0] 
-
-//     console.log(cardAtPlay[0])
-//     console.log(cardOnBottom[0])
-
-
-//     let cardPosition = findCardPosition(cardAtPlay)
-
-    
-// }
-
-
-// // At the end of where the card is dragged and released, this function calls the checkDroppable function to see drop can proceed
-// mainElement.addEventListener('dragend', (evt) => {
-//     // guards -> everything except div elements that contain data
-
-//     let currentDraggedCardType = evt
-//     // console.log(currentDraggedCardType )
-
-//     console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
-//     checkDroppable(currentDraggedCardType, currentBottomCardType);
-//     let topCard = currentDraggedCardType.target.getAttribute('data-card')
-//     let bottomCard = currentBottomCardType.target.getAttribute('data-card')
-//     // console.log(bottomCard)
-
-//     if (checkDroppable(currentDraggedCardType, currentBottomCardType)) {
-//         //revealCard(topCard);
-//         moveCard(topCard, bottomCard);
-
-//     }
-// render()
-// });
-
-
-
-
-
-
+    // INSERT FUNCTION HERE TO CAPTURE THIS INFORMATION AND MODIFY GAME BOARD
+}
 
 
 
@@ -892,31 +493,11 @@ function randomShuffle(cardArr) {
 
 
 
-// /* --- shuffle the cards --- */
-// /* --- shuffle and  --- */
-// function randomShuffleInPlace(cardObject) {
-//    let newDeck = []
-//    let distArray = [0,1,1,2,2,2,3,3,3,3,4,4,4,4,4,5,5,5,5,5,5,6,6,6,6,6,6,6,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12]
-//     //shuffles the order
-//     for (let i = 52; i > 0; i--) {
-//        let n = Math.floor(Math.random() * i);
-//        newDeck.push(n)
-//     }
-//    cardObject.forEach((cardKey) => {
-//       cardKey.splice(-2,2)
-//        cardKey.push(distArray.unshift)
-//        cardKey.push(newDeck.pop)
-        
-//   })
-// return cardObject
 
-
-
-
-
-
+// initiates the first step of rendering the initial gameboard, using a template called
+// startingTableau. StartingTableu becomes the basis for other functions
 function renderTableau() {
-
+// startingTableau. 
     startingTableau.forEach((columnArr, columnIndex) => {
         columnArr.forEach((columnCell, rowIndex) => {
             // name an id name for the div element based on constant array
@@ -936,7 +517,6 @@ function renderTableau() {
                 card.splice(2, 1, 1)   
                 stackElement.appendChild(getDisplayImage(card))
             } 
-            
             
             cardArray[card[3]] = card
             //boardArray[columnIndex].push(card)
@@ -973,15 +553,6 @@ function getDisplayImage (card){
     return newImage;
 }
 
-function grabAndDeleteDisplayImage (divElementObject){
-    divElementObject.innerHTML = ""
-    // if ('-1' == card[2]){
-    //     return;
-    // }
-    // const newImage = document.createElement('img')
-    // newImage.src = CARD_LIBRARY[card[3]]['img']
-}
-
 
 function flipCard(card){
     if (card[2] > 0){
@@ -993,7 +564,6 @@ function flipCard(card){
     return card;
 }
 
-
 function removeImage() {
     let resetArray = [18,18,18,18,18,18,18,12,12,12,12,12,52,52]
     resetArray.forEach((value, idx) => {
@@ -1004,86 +574,13 @@ function removeImage() {
     })
 }
 
-
-// function renderBoard () {
-
-//     boardArray.forEach((columnArr, columnIndex) => {
-//         columnArr.forEach((card, rowIndex) => {
-
-//             removeImage(columnIndex, rowIndex)
-
-//             let stackName = `c${columnIndex}r${rowIndex}`
-//             let stackElement = document.getElementById(stackName);
-//             if (card[2] > 0) {
-//                 // // change the card's showing value by splicing   
-//                 flipCard(card)  
-//                 // // grab the img tag containing src=url of front of the card  
-//             }
-//             // } else if ([card[2]] < 0) {
-//             //     //let cardUrl = CARD_LIBRARY[card[3]]["imgBack"] 
-//             //     //stackElement.innerHTML = `<img data-card='${card[3]}' data-inplay='-1' src=${cardUrl}>`
-//             // }
-        
-//                 stackElement.appendChild(getDisplayImage(card))
-//                 console.log(image.alt)
-
-//         })
-//     })
-// }
-
-
-// function renderBoard () {
-//     removeImage()
-//     // boardArray.forEach((columnArr, columnIndex) => {
-//     //     columnArr.forEach((card, rowIndex) => {
-            
-//     //     })
-//     // })
-
-//     boardArray.forEach((columnArr, columnIndex) => {
-//         columnArr.forEach((card, rowIndex) => {
-//             let stackName = `c${columnIndex}r${rowIndex}`
-//             let stackElement = document.getElementById(stackName);
-//             if (card[2] > 0) {
-//                 flipCard(card)  
-//             }
-
-//             //removeImage(columnIndex, rowIndex)
-//             stackElement.appendChild(getDisplayImage(card))
-
-//         })
-//     })
-// }
-
-
-// function renderBoard () {
-//     // removes the initial image to render the board correctly. 
-//     removeImage()
-//     // do not remove!
-
-//     boardArray.forEach((columnArr, columnIndex) => {
-//         columnArr.forEach((card, rowIndex) => {
-
-//             let stackName = `c${card[5]}r${card[6]}`
-//             let stackElement = document.getElementById(stackName);
-//             if (card[2] > 0) {
-//                 flipCard(card)  
-//             }
-//             stackElement.appendChild(getDisplayImage(card))
-
-//         })
-//     })
-// }
-
-
-//test this one
+//renderboard reads through the cardArray (a javascript object and updates html elements)
 function renderBoard () {
-
-    // removes the initial image to render the board correctly. 
+    // removes the initial image to render the board correctly.     // do not remove!
     removeImage()
-    // do not remove!
-console.log(boardArray)
-console.log(startingTableau)
+
+    console.log(boardArray)
+    console.log(startingTableau)
     for (let arrayInfo in cardArray) {
         card = cardArray[arrayInfo]
         //console.log(card)
@@ -1093,32 +590,10 @@ console.log(startingTableau)
         if (card[2] > 0) {
             flipCard(card)  
         }
+    // adds the images back into the div element    
         stackElement.appendChild(getDisplayImage(card))
     }
-
-
 }
-
-
-
-// function renderBoard () {
-
-//     removeImage()
-
-//     cardArray.forEach((cardKey) => {
-//         cardKey
-//             let stackName = `c${cardKey[5]}r${cardKey[6]}`
-//             let stackElement = document.getElementById(stackName);
-//             if (cardKey[2] > 0) {
-//                 cardKey.splice(2, 1, 1) 
-//             }
-
-//             stackElement.appendChild(getDisplayImage(card))
-
-//         })
-
-// }
-
 
 
 
@@ -1130,11 +605,24 @@ function init(){
     cardAtPlay =[]
     cardOnBottom = []
     shuffledDeck = randomShuffle(CARD_LIST); // each item in the shuffled Deck is a list
-    //cardArray = randomShuffleInPlace(CARD_LIST);
     cardArray = {}
    
-
-
+    startingTableau = [
+        [1],
+        [-1,1],
+        [-1,-1,1],
+        [-1,-1,-1,1],
+        [-1,-1,-1,-1,1],
+        [-1,-1,-1,-1,-1,1],
+        [-1,-1,-1,-1,-1,-1,1],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+    ]  
+    
 
     boardArray = [
         [],                     //tableau-0     [0]
@@ -1158,5 +646,3 @@ function init(){
 
     render();
 }
-
-

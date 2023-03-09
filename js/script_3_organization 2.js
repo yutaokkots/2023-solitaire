@@ -6,8 +6,6 @@ console.log("initialized")
 /*----- constants -----*/
 // see constants.js
 
-
-
 const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-origin, .stock-origin")
 allEmptyCardAreas.forEach((card) => {
     let cardUrl = CARD_LIBRARY["EMP"]["img"] 
@@ -16,7 +14,6 @@ allEmptyCardAreas.forEach((card) => {
     card.setAttribute("data-inplay", "-1")
 
 })
-
 
 
 /*----- app's state (variables) -----*/
@@ -48,7 +45,6 @@ let allCardRefElements = {};
 
 
 let cardObjectKeyValue = {}
-
 
 
 
@@ -129,7 +125,8 @@ const checkDroppable = (draggedCard, bottomCard) => {
     let bottomCardColor = CARD_LIBRARY[bottomCardId]['color']
     let bottomCardValue = CARD_LIBRARY[bottomCardId]['value']
     let bottomCardSuit  = CARD_LIBRARY[bottomCardId]['suit']
-    console.log(allCardRefElements) /////// delete
+
+
     // if the card is in the tableau area, descending order + alternate color
     if (bottomCard.fromElement.id === "tableau") {
         if (draggedCardValue == 13 && bottomCardValue == -1) {
@@ -171,15 +168,12 @@ mainElement.addEventListener('drop', (evt) => {
 
 
 
-
-
 mainElement.addEventListener('dragend', (evt) => {
     // guards -> everything except div elements that contain data
 
     let currentDraggedCardType = evt
     // console.log(currentDraggedCardType )
 
-    console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
     checkDroppable(currentDraggedCardType, currentBottomCardType);
     let topCard = currentDraggedCardType.target.getAttribute('data-card')
     let bottomCard = currentBottomCardType.target.getAttribute('data-card')
@@ -192,12 +186,6 @@ mainElement.addEventListener('dragend', (evt) => {
     }
 
 });
-
-// the dragged item can be determined by:
-// evt.target.getAttribute('data-card')
-// evt.target.getAttribute('data-inplay')
-
-
 
 /*----- functions -----*/
 
@@ -348,22 +336,6 @@ const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
 }
 
 
-
-
-
-// const renderTableau = () => {
-//     // create a new div for each column in tableau
-//     for (let n=1;n<8;n++) {
-//         let nextTableauCol = document.querySelector(`#tableau-${n-1}`)
-//         // assign the card to the div
-//         startingTableau[n].forEach((isCardUpOrDown) => {
-//             let nextCard = dealCardFromDeck()
-//             let nextDiv = makeDivElementWithCard(nextCard, isCardUpOrDown)
-//             nextTableauCol.appendChild(nextDiv);
-//             allCardDivElements[nextCard] = nextDiv;
-//         })
-//     }
-// }
 
 const renderTableau = () => {
     // create a new div for each column in tableau
