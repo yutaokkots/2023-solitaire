@@ -343,10 +343,14 @@ mainElement.addEventListener('drop', (evt) => {
 
   
 
-    canItBeDropped(bottomCardTarget.id, bottomCardTarget.alt)
 
+    if (moveTheCard(bottomCardTarget.id) === true){
+        canItBeDropped(bottomCardTarget.id)
+    }
+    render();
     evt.target.parentNode.classList.remove("card-selection")
-    //render();
+
+    
 });
 
 
@@ -384,56 +388,112 @@ const checkFoundation = () => {
 
 }
 
+ 
+    // console.log(bottomCardColumn)
+    // console.log(boardArray)
+    // console.log(topCard)
+    // console.log(topCardColumn)
+    // console.log(bottomCard)
+    // console.log(boardArray[bottomCardColumn]) // this is the arrays of the bottom card at its column
 
-const canItBeDropped = (card) => {
-    
 
+
+
+const moveTheCard = (card) => {
     // establishes the columns of where the cards are coming from and where they are landing
     let topCard = cardArray[cardAtPlay[0]];
-    let topCardColumn = cardArray[cardAtPlay[0]][5];
-    let bottomCard = cardArray[card];
     let bottomCardColumn = cardArray[card][5];
 
-
-
+    console.log(topCard );
+    console.log(bottomCardColumn);
+    console.log("it can be dropped!");
+    topCardColumn = topCard[5]
+    topCardRow = topCard[6]
+    
+    boardArray[bottomCardColumn].push(boardArray[topCardColumn].pop())
     console.log(boardArray)
-    console.log(topCard)
-    console.log(topCardColumn)
-    console.log(bottomCard)
-    console.log(boardArray[bottomCardColumn]) // this is the arrays of the bottom card at its column
+}
 
+const canItBeDropped = (card) => {
+    // establishes the columns of where the cards are coming from and where they are landing
+    let topCard = cardArray[cardAtPlay[0]];
+    let bottomCardColumn = cardArray[card][5];
+
+    //testing how the bottom card's deck will be accepting of the card using slice()
     let testArray
     testArray = boardArray[bottomCardColumn].slice()
-
     testArray.splice(testArray.length, 0, topCard)
-    console.log(testArray)
+
     let suitTypeTracker = 0 
     let suitColorTracker = 0
     let suitValueTracker = 0
 
+
+    if (bottomCardColumn > 10) {
+        return false
+    }
+
+    // only applicable for tableau area
+    if (bottomCardColumn < 7){
     testArray.forEach((cardArray, index) => {
-        position.forEach((card, cardIndex) => {
 
             // only applies if the card is flipped up (positive)
-            // only starts to count if the index of the card is 0 or more (negative index does not exist)
+            // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
             if (card[2] > 0 && (index - 1) > -1 ){
                 // suitColorTracker should be equal to 0 each time (2 + -2)
-                suitColorTracker =  card[1] + cardArray[index-1]; 
-                if (suitColorTracker !== 0) {
-                    return;
+                suitColorTracker = cardArray[1] + cardArray[index-1][1]; 
+                if (suitColorTracker === 0) {
+                    return true
+                } else {
+                    console.log('A')
                 }
 
+                suitColorTracker = 0
                 // suitValueTracker should equal to 1 each time ((n+1) - n)
-                if (  ){}
+                suitValueTracker = testArray[index-1][4] - cardArray[4];
+                if (suitValueTracker === 1){
+                    return true
+                } else{
+
+                }
+                suitValueTracker = 0
+            } else {
+                console.log('C')
             }
 
-
-        })
     })
+    // only applicable for foundation area
+    } else if (bottomCardColumn > 6 && bottomCardColumn < 11){
+        testArray.forEach((cardArray, index) => {
 
+                // only applies if the card is the same suit, and the card is flipped up
+                // only starts to count if the index of the card is 0 or more (works only if negative index does not exist)
+                if (cardArray[2] > 0 && (index - 1) > -1 ){
+                    // suitTypeTracker values after addition n times === division by n 
+                    suitTypeTracker += cardArray[0]; 
 
-    let removedTopCard = boardArray[topCardColumn].pop()
-    boardArray[bottomCardColumn].push(removedTopCard)
+                    // suitValueTracker should equal to 1 each time ((n+1) - n)
+                    suitValueTracker = cardArray[4] - testArray[index-1][4];
+                    if (suitValueTracker !== 1){
+                        console.log('D')
+                    } else {
+
+                    }
+                } else{
+                    console.log('E')
+                }
+                
+            let testTracker = testArray[0][0] * cardArray.length
+            if (testTracker != suitTypeTracker){
+                console.log('NOT OK')
+                return 
+            } else {
+                console.log('F')
+            }
+        })
+
+    }
+
 
 }
 
@@ -561,41 +621,6 @@ function randomShuffle(cardArr) {
 // return cardObject
 // }
 
-
-
-// function renderTableauAgain() {
-//     let n = 0
-//     startingTableau.forEach((columnArr, columnIndex) => {
-//         columnArr.forEach((columnCell, rowIndex) => {
-//             // name an id name for the div element based on constant array
-//             const stackName = `c${columnIndex}r${rowIndex}`
-            
-//             // draw each shuffled card individually and save into a variable, card
-//             workingDeck[n][6]
-//             card.splice(5, 1, columnIndex)  //modify the saved col information in the card, position 5
-//             card.splice(6, 1, rowIndex)     //modify the saved row information in the card, position 6
-//             const stackElement = document.getElementById(stackName);
-            
-//             // a negative columnCell indicates that it will remain face-down
-//             if (columnCell < 0) {;
-//                 stackElement.appendChild(getDisplayImage(card))
-//             }else if (columnCell > 0){   
-//                 // change the card's showing value by splicing  
-
-//                 card.splice(2, 1, 1)   
-//                 stackElement.appendChild(getDisplayImage(card))
-//             } 
-
-//             startingTableau.splice(rowIndex, 1, card)   
-//             boardArray[columnIndex].push(card)
-//             workingDeck.push(card) 
-//             n++
-//         })
-//     })
-//     //switch, adds an element in front to make the starting tableau inactive
-//     startingTableau.unshift("pause")
-
-// }
 
 
 
