@@ -191,7 +191,9 @@ mainElement.addEventListener('dragend', (evt) => {
 
 /*----- functions -----*/
 
-//
+// Find the card at hand
+
+
 
 
 // const revealCard = (topCard) => {

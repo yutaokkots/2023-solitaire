@@ -7,7 +7,6 @@ console.log("initialized")
 // let number be card value
 
 
-
 const CARD_IMAGES = {
     S01: 'images/single_cards/SPADE-1.svg',
     S02: 'images/single_cards/SPADE-2.svg',
@@ -65,58 +64,16 @@ const CARD_IMAGES = {
     EMP: 'images/single_cards/EMPTY.svg'
 }
 
-// CARD_IMAGES[S01]
-// CARD_IMAGES[S02]
-// CARD_IMAGES[S03]
-// CARD_IMAGES[S04]
-// CARD_IMAGES[S05]
-// CARD_IMAGES[S06]
-// CARD_IMAGES[S07]
-// CARD_IMAGES[S08]
-// CARD_IMAGES[S09]
-// CARD_IMAGES[S10]
-// CARD_IMAGES[S11]
-// CARD_IMAGES[S12]
-// CARD_IMAGES[S13]
-// CARD_IMAGES[H01]
-// CARD_IMAGES[H02]
-// CARD_IMAGES[H03]
-// CARD_IMAGES[H04]
-// CARD_IMAGES[H05]
-// CARD_IMAGES[H06]
-// CARD_IMAGES[H07]
-// CARD_IMAGES[H08]
-// CARD_IMAGES[H09]
-// CARD_IMAGES[H10]
-// CARD_IMAGES[H11]
-// CARD_IMAGES[H12]
-// CARD_IMAGES[H13]
-// CARD_IMAGES[C01]
-// CARD_IMAGES[C02]
-// CARD_IMAGES[C03]
-// CARD_IMAGES[C04]
-// CARD_IMAGES[C05]
-// CARD_IMAGES[C06]
-// CARD_IMAGES[C07]
-// CARD_IMAGES[C08]
-// CARD_IMAGES[C09]
-// CARD_IMAGES[C10]
-// CARD_IMAGES[C11]
-// CARD_IMAGES[C12]
-// CARD_IMAGES[C13]
-// CARD_IMAGES[D01]
-// CARD_IMAGES[D02]
-// CARD_IMAGES[D03]
-// CARD_IMAGES[D04]
-// CARD_IMAGES[D05]
-// CARD_IMAGES[D06]
-// CARD_IMAGES[D07]
-// CARD_IMAGES[D08]
-// CARD_IMAGES[D09]
-// CARD_IMAGES[D10]
-// CARD_IMAGES[D11]
-// CARD_IMAGES[D12]
-// CARD_IMAGES[D13]
+
+const resetArray = [
+    ["c0r0","c0r1","c0r2","c0r3","c0r4","c0r5","c0r6","c0r7","c0r8","c0r9","c0r10","c0r11","c0r12","c0r13","c0r14","c0r15","c0r16","c0r17","c0r18"],
+    ["c1r0","c1r1","c1r2","c1r3","c1r4","c1r5","c1r6","c1r7","c1r8","c1r9","c1r10","c1r11","c1r12","c1r13","c1r14","c1r15","c1r16","c1r17","c1r18"],
+    ["c2r0","c2r1","c2r2","c2r3","c2r4","c2r5","c2r6","c2r7","c2r8","c2r9","c2r10","c2r11","c2r12","c2r13","c2r14","c2r15","c2r16","c2r17","c2r18"],
+    ["c3r0","c3r1","c3r2","c3r3","c3r4","c3r5","c3r6","c3r7","c3r8","c3r9","c3r10","c3r11","c3r12","c3r13","c3r14","c3r15","c3r16","c3r17","c3r18"],
+    ["c4r0","c4r1","c4r2","c4r3","c4r4","c4r5","c4r6","c4r7","c4r8","c4r9","c4r10","c4r11","c4r12","c4r13","c4r14","c4r15","c4r16","c4r17","c4r18"],
+    ["c5r0","c5r1","c5r2","c5r3","c5r4","c5r5","c5r6","c5r7","c5r8","c5r9","c5r10","c5r11","c5r12","c5r13","c5r14","c5r15","c5r16","c5r17","c5r18"],
+    ["c6r0","c6r1","c6r2","c6r3","c6r4","c6r5","c6r6","c6r7","c6r8","c6r9","c6r10","c6r11","c6r12","c6r13","c6r14","c6r15","c6r16","c6r17","c6r18"]
+    ]
 
 
 CARD_LIBRARY = {
@@ -189,8 +146,7 @@ const startingTableau = [
     [],
     [],
     [],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 -1],
-    []
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
 ]  
 
 
@@ -198,78 +154,80 @@ const startingTableau = [
 
 //suit, color, front/back, name
 const CARD_LIST = [
-[3,  2, -1, 'S01'],
-[3,  2, -1, 'S02'],
-[3,  2, -1, 'S03'],
-[3,  2, -1, 'S04'],
-[3,  2, -1, 'S05'],
-[3,  2, -1, 'S06'],
-[3,  2, -1, 'S07'],
-[3,  2, -1, 'S08'],
-[3,  2, -1, 'S09'],
-[3,  2, -1, 'S10'],
-[3,  2, -1, 'S11'],
-[3,  2, -1, 'S12'],
-[3,  2, -1, 'S13'],
-[5, -2, -1, 'H01'],
-[5, -2, -1, 'H02'],
-[5, -2, -1, 'H03'],
-[5, -2, -1, 'H04'],
-[5, -2, -1, 'H05'],
-[5, -2, -1, 'H06'],
-[5, -2, -1, 'H07'],
-[5, -2, -1, 'H08'],
-[5, -2, -1, 'H09'],
-[5, -2, -1, 'H10'],
-[5, -2, -1, 'H11'],
-[5, -2, -1, 'H12'],
-[5, -2, -1, 'H13'],
-[7,  2, -1, 'C01'],
-[7,  2, -1, 'C02'],
-[7,  2, -1, 'C03'],
-[7,  2, -1, 'C04'],
-[7,  2, -1, 'C05'],
-[7,  2, -1, 'C06'],
-[7,  2, -1, 'C07'],
-[7,  2, -1, 'C08'],
-[7,  2, -1, 'C09'],
-[7,  2, -1, 'C10'],
-[7,  2, -1, 'C11'],
-[7,  2, -1, 'C12'],
-[7,  2, -1, 'C13'],
-[9, -2, -1, 'D01'],
-[9, -2, -1, 'D02'],
-[9, -2, -1, 'D03'],
-[9, -2, -1, 'D04'],
-[9, -2, -1, 'D05'],
-[9, -2, -1, 'D06'],
-[9, -2, -1, 'D07'],
-[9, -2, -1, 'D08'],
-[9, -2, -1, 'D09'],
-[9, -2, -1, 'D10'],
-[9, -2, -1, 'D11'],
-[9, -2, -1, 'D12'],
-[9, -2, -1, 'D13']
+[3,  2, -1, 'S01',  1],
+[3,  2, -1, 'S02',  2],
+[3,  2, -1, 'S03',  3],
+[3,  2, -1, 'S04',  4],
+[3,  2, -1, 'S05',  5],
+[3,  2, -1, 'S06',  6],
+[3,  2, -1, 'S07',  7],
+[3,  2, -1, 'S08',  8],
+[3,  2, -1, 'S09',  9],
+[3,  2, -1, 'S10', 10],
+[3,  2, -1, 'S11', 11],
+[3,  2, -1, 'S12', 12],
+[3,  2, -1, 'S13', 13],
+[5, -2, -1, 'H01',  1],
+[5, -2, -1, 'H02',  2],
+[5, -2, -1, 'H03',  3],
+[5, -2, -1, 'H04',  4],
+[5, -2, -1, 'H05',  5],
+[5, -2, -1, 'H06',  6],
+[5, -2, -1, 'H07',  7],
+[5, -2, -1, 'H08',  8],
+[5, -2, -1, 'H09',  9],
+[5, -2, -1, 'H10', 10],
+[5, -2, -1, 'H11', 11],
+[5, -2, -1, 'H12', 12],
+[5, -2, -1, 'H13', 13],
+[7,  2, -1, 'C01',  1],
+[7,  2, -1, 'C02',  2],
+[7,  2, -1, 'C03',  3],
+[7,  2, -1, 'C04',  4],
+[7,  2, -1, 'C05',  5],
+[7,  2, -1, 'C06',  6],
+[7,  2, -1, 'C07',  7],
+[7,  2, -1, 'C08',  8],
+[7,  2, -1, 'C09',  9],
+[7,  2, -1, 'C10', 10],
+[7,  2, -1, 'C11', 11],
+[7,  2, -1, 'C12', 12],
+[7,  2, -1, 'C13', 13],
+[9, -2, -1, 'D01',  1],
+[9, -2, -1, 'D02',  2],
+[9, -2, -1, 'D03',  3],
+[9, -2, -1, 'D04',  4],
+[9, -2, -1, 'D05',  5],
+[9, -2, -1, 'D06',  6],
+[9, -2, -1, 'D07',  7],
+[9, -2, -1, 'D08',  8],
+[9, -2, -1, 'D09',  9],
+[9, -2, -1, 'D10', 10],
+[9, -2, -1, 'D11', 11],
+[9, -2, -1, 'D12', 12],
+[9, -2, -1, 'D13', 13]
 ]
 
 /*----- app's state (variables) -----*/
-let boardArray = null;
+let boardArray = [];
 let shuffledDeck = null
+let cardsAtPlay;
 
 /*----- cached element references -----*/
 
 
 // Makes the card outlines placed on screen (having dashed lines) into objects
 const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-origin, .stock-origin")
-allEmptyCardAreas.forEach((card) => {
-    let cardUrl = CARD_LIBRARY["EMP"]["img"] 
-    card.innerHTML = `<img data-card='EMP' data-inplay='1' src=${cardUrl}>`
-    card.setAttribute("data-card", "EMP")
-    card.setAttribute("data-inplay", "-1")
-})
+// allEmptyCardAreas.forEach((card) => {
+//     let cardUrl = CARD_LIBRARY["EMP"]["img"] 
+//     card.innerHTML = `<img data-card='EMP' data-inplay='1' src=${cardUrl}>`
+//     card.setAttribute("data-card", "EMP")
+//     card.setAttribute("data-inplay", "-1")
+// })
 
 
 const mainElement = document.querySelector('main')
+
 
 
 /*----- event listeners -----*/
@@ -285,12 +243,13 @@ const mainElement = document.querySelector('main')
 mainElement.addEventListener('dragstart', (evt) => {
     // guards -> excludes non-playable cards
     let target = evt.target;
-    if (target.getAttribute('data-card') == null 
-        || target.getAttribute('data-inplay') == -1
-        || target.getAttribute('data-card') == 'EMP'){
-        evt.preventDefault()
-        return;
-    }
+
+    console.log(`origin .alt card-orientation: ${evt.target.alt}`)
+    console.log(`origin .id  card-id:          ${evt.target.id}`)
+
+    console.log(cardsAtPlay)
+    cardsAtPlay.unshift(evt.target.id)
+    console.log(cardsAtPlay)
 })
 
 // When something is dragged into an area, the css is modified to show an outline of the drop area, and records information about the current bottom card
@@ -300,6 +259,7 @@ mainElement.addEventListener('dragenter', (evt) => {
     // }
 
     if (evt.target.getAttribute('data-inplay') != 1) {
+        ;
         return;
     }
     if (evt.target.getAttribute('data-card') == null) {
@@ -310,9 +270,11 @@ mainElement.addEventListener('dragenter', (evt) => {
 
     // establish this global variable with event object
     currentBottomCardType = evt  
-})  
+})
 
-// When the something is dragged out of area, the default activity of drag-over is prevented
+
+
+// When something is dragged out of area, the default activity of drag-over is prevented
 mainElement.addEventListener('dragleave', (evt) => {
     // guards -> everything except div elements that contain data
     if (evt.target.getAttribute('data-inplay') != 1) {
@@ -334,6 +296,63 @@ const deactivateDragOver = () => {
         evt.preventDefault()
     })
 }
+
+
+
+// At the end of where the card is dragged and released, this function calls the checkDroppable function to see drop can proceed
+
+mainElement.addEventListener('dragend', (evt) => {
+    // guards -> everything except div elements that contain data
+
+
+});
+
+// dropped card event listener, removes the css of any outlined sections to remove the outline
+mainElement.addEventListener('drop', (evt) => {
+    // guards -> everything except div elements that contain data
+    deactivateDragOver()
+
+    console.log(`destin .alt card-orientation: ${evt.target.alt}`)
+    console.log(`destin .id  card-id:          ${evt.target.id}`)
+
+
+    cardsAtPlay.push(evt.target.id)
+
+    evt.target.parentNode.classList.remove("card-selection")
+    // render();
+});
+
+
+/* ################################################ */
+/* ############## STANDARD FUNCTIONS ############## */
+/* ################  ################ */
+
+
+
+
+
+
+
+// // At the end of where the card is dragged and released, this function calls the checkDroppable function to see drop can proceed
+// mainElement.addEventListener('dragend', (evt) => {
+//     // guards -> everything except div elements that contain data
+
+//     let currentDraggedCardType = evt
+//     // console.log(currentDraggedCardType )
+
+//     console.log(checkDroppable(currentDraggedCardType, currentBottomCardType));
+//     checkDroppable(currentDraggedCardType, currentBottomCardType);
+//     let topCard = currentDraggedCardType.target.getAttribute('data-card')
+//     let bottomCard = currentBottomCardType.target.getAttribute('data-card')
+//     // console.log(bottomCard)
+
+//     if (checkDroppable(currentDraggedCardType, currentBottomCardType)) {
+//         //revealCard(topCard);
+//         moveCard(topCard, bottomCard);
+
+//     }
+// render()
+// });
 
 
 
@@ -359,14 +378,20 @@ function randomShuffle(cardArr) {
     return newDeck;
 };
 
-//const shuffledDeck = randomShuffle(CARD_LIST);
+/* --- find the card position --- */
+const findCardPosition = (card) => {
+    let foundPosition = [];
 
-// const createStock = () => {
-//     while (shuffledDeck.length > 0){
-//         let nextCard = shuffledDeck.pop()
-//     }    
-// }
-
+    boardArray.forEach((potentialColumn, columnIndex) => {
+        potentialColumn.forEach((potentialMatch, rowIndex) => {
+            if (potentialMatch[3] === card[3]){
+                row = rowIndex
+                column = columnIndex
+            }});
+    })
+    foundPostion = [columnIndex, rowIndex]
+    return foundPosition
+}
 
 
 
@@ -375,44 +400,52 @@ function renderTableau() {
         columnArr.forEach((columnCell, rowIndex) => {
             // name an id name for the div element based on constant array
             const stackName = `c${columnIndex}r${rowIndex}`
-            console.log(stackName)
             
             // draw each shuffled card individually and save into a variable, card
             let card = shuffledDeck.pop()
             const stackElement = document.getElementById(stackName);
 
-            console.log(card[3])
-            console.log(`c${columnIndex}r${rowIndex}`)
-            console.log(`c${columnIndex}r${rowIndex}`)
-            console.log(stackElement)
+            if (columnCell < 0) {;
+                stackElement.appendChild(getDisplayImage(card))
+            }else if (columnCell > 0){   
+                // change the card's showing value by splicing  
 
-            if (columnCell > 0){   
-                // change the card's showing value by splicing   
                 card.splice(2, 1, 1)   
-                // grab the url of the image of the front of the card  
-                let image = getDisplayImage(card);
-                stackElement.appendChild(image)
+                stackElement.appendChild(getDisplayImage(card))
+            } 
 
-                        //stackElement.innerHTML = `<img data-card=${card[3]} data-inplay='1' src=${cardUrl}>`
-
-            } else if (columnCell < 0) {
-                let image = getDisplayImage(card);
-                stackElement.appendChild(image)
-            }
             startingTableau.splice(rowIndex, 1, card)   
-            boardArray[columnIndex].push(card)
+            boardArray[columnIndex].push(card) 
         })
     })
+    //switch, adds an element in front to make the starting tableau inactive
+    startingTableau.unshift("pause")
+
 }
 
-
 function getDisplayImage (card){
-    if ('-1' == card[2]){
+    if (card === undefined) {
         return;
     }
-    const newImage = document.createElement('img')
+    let newImage = document.createElement('img')
+    newImage.className ="cardImg"
+    if ('-1' == card[2]){
+        
+        newImage.src = CARD_LIBRARY[card[3]]['imgBack']
+
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        //console.log(newImage.alt)
+        return newImage
+
+    }
     newImage.src = CARD_LIBRARY[card[3]]['img']
+    newImage.alt = card[2]
+    newImage.id = card[3]
+
+    //newImage.setData.inplay = card[2]
     return newImage;
+
 }
 
 function grabAndDeleteDisplayImage (divElementObject){
@@ -426,8 +459,8 @@ function grabAndDeleteDisplayImage (divElementObject){
 
 
 function flipCard(card){
-    if (0 < card[2]){
-        card.splice(2, 1, 2)
+    if (card[2] > 0){
+        card.splice(2, 1, 1)
     }
     else {
         card.splice(2, 1, -1)
@@ -436,48 +469,86 @@ function flipCard(card){
 }
 
 
-function renderBoard (renderTableau) {
-    setTimeout(renderTableau, 20)
-    boardArray.forEach((columnArr, columnIndex) => {
-        columnArr.forEach((columnCell, rowIndex) => {
-            let stackName = `c${columnIndex}r${rowIndex}`
-            let stackElement = document.getElementById(stackName);
-            if (columnCell[3] > 0) {
-                // // change the card's showing value by splicing   
-                // card.splice(2, 1, 1)   
-                // // grab the url of the image of the front of the card  
-                let image = getDisplayImage(card);
-                stackElement.appendChild(image)
-
-            } else if (columnCell[3] < 0) {
-                //let cardUrl = CARD_LIBRARY[card[3]]["imgBack"] 
-                //stackElement.innerHTML = `<img data-card='${card[3]}' data-inplay='-1' src=${cardUrl}>`
-                let image = getDisplayImage(card);
-                stackElement.appendChild(image)
-            }
-
-        })
+function removeImage() {
+    let resetArray = [18,18,18,18,18,18,18,12,12,12,12,12,52,52]
+    resetArray.forEach((value, idx) => {
+        for (let i = value; i >= 0; i--) {
+            let cardToRemove = document.getElementById(`c${idx}r${i}`)
+            cardToRemove.innerHTML =""
+        }
     })
-    let stackElement = document.getElementById("c0r2");
-    console.log(stackElement)
 }
 
 
-function render(){
+// function renderBoard () {
+
+//     boardArray.forEach((columnArr, columnIndex) => {
+//         columnArr.forEach((card, rowIndex) => {
+
+//             removeImage(columnIndex, rowIndex)
+
+//             let stackName = `c${columnIndex}r${rowIndex}`
+//             let stackElement = document.getElementById(stackName);
+//             if (card[2] > 0) {
+//                 // // change the card's showing value by splicing   
+//                 flipCard(card)  
+//                 // // grab the img tag containing src=url of front of the card  
+//             }
+//             // } else if ([card[2]] < 0) {
+//             //     //let cardUrl = CARD_LIBRARY[card[3]]["imgBack"] 
+//             //     //stackElement.innerHTML = `<img data-card='${card[3]}' data-inplay='-1' src=${cardUrl}>`
+//             // }
+        
+//                 stackElement.appendChild(getDisplayImage(card))
+//                 console.log(image.alt)
+
+//         })
+//     })
+// }
+
+
+function renderBoard () {
+    removeImage()
+    // boardArray.forEach((columnArr, columnIndex) => {
+    //     columnArr.forEach((card, rowIndex) => {
+            
+    //     })
+    // })
+
+    boardArray.forEach((columnArr, columnIndex) => {
+        columnArr.forEach((card, rowIndex) => {
+            let stackName = `c${columnIndex}r${rowIndex}`
+            let stackElement = document.getElementById(stackName);
+            if (card[2] > 0) {
+                flipCard(card)  
+            }
+
+            //removeImage(columnIndex, rowIndex)
+            stackElement.appendChild(getDisplayImage(card))
+
+        })
+    })
+}
+
+
+function render() {
     renderTableau()
     renderBoard()
-};
-
+}
 
 function init(){
+
+    cardsAtPlay = []
     shuffledDeck = randomShuffle(CARD_LIST);
+
+    
     boardArray = [
-        [[3,  2, -1, 'S06']],                     //tableau-0     [0]
+        [],                     //tableau-0     [0]
         [],
         [],
         [],
         [],
-        [ [3,  2, -1, 'S06']],
+        [],
         [],                     //tableau-7     [6]
         [],                     //foundation-1  [7]
         [],                     //foundation-2  [8]
@@ -487,9 +558,10 @@ function init(){
         [],                     // stock        [12] 
         []                      // waste        [13] 
     ]
+
+
     render();
 }
-
 
 
 // function render(renderTableau, renderBoard){

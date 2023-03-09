@@ -349,6 +349,8 @@ const makeDivElementWithCard = (cardIdentity, cardUpOrDown) => {
 
 
 
+
+
 // const renderTableau = () => {
 //     // create a new div for each column in tableau
 //     for (let n=1;n<8;n++) {
