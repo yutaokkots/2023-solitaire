@@ -213,11 +213,21 @@ const mainElement = document.querySelector('main')
 /* ################################################ */
 /* ########### DRAG AND DROP OPERATIONS ########### */
 
+
 //THIS! reads the data-card and data-inplay values that were established when the card was created. 
 //console.log(evt.target.getAttribute('data-card'))
 //console.log(evt.target.getAttribute('data-inplay'))
 
 // creates an object out of event of initially clicking and dragging, prevents unwanted dragging in non-relevant areas
+
+mainElement.addEventListener('onclick', (evt) => {
+
+    if (!evt.target.id.includes("tab") ){
+        console.log()
+    }
+
+})
+
 
 /* ########### DRAG START ########### */
 mainElement.addEventListener('dragstart', (evt) => {
@@ -312,9 +322,10 @@ mainElement.addEventListener('drop', (evt) => {
     if (!evt.target.id.includes("found") ){
         canItBeDropped(bottomCardTarget.id)
     }
+    if (!evt.target.id.includes("tab") ){
+    }
+
     droppingOnFoundation(bottomCardTarget.id)
-
-
 
     evt.target.parentNode.classList.remove("card-selection")
     render();
@@ -347,7 +358,6 @@ const findListOfCardsUnderneath = (searchColumn) => {
     arrayOfLists.sort(function(a, b) {
         return a[5] - b[5]
     })
-
     return arrayOfLists
 }
 
@@ -419,6 +429,17 @@ const droppingOnFoundation = (card) => {
             let bottomCardCol = bottomCard[5]
             let bottomCardRow = bottomCard[6] + 1
 
+            // this section the code flips the card 
+            // This returns a list of cards from where the top card was drawn
+            let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
+            // index of the card that needs to be flipped
+            let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+            console.log(nameOfCard)
+            console.log(cardListofWhereCardRemoved)
+            let flipCard = cardArray[nameOfCard]
+            flipCard.splice(2, 1, 1)
+
+
             topCard.splice(5, 2, bottomCardCol) 
             topCard.push(bottomCardRow)
 
@@ -448,15 +469,16 @@ const canItBeDropped = (card) => {
             let bottomCardCol = bottomCard[5]
             let bottomCardRow = bottomCard[6]+1
 
+            // this section the code flips the card 
             // This returns a list of cards from where the top card was drawn
             let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
             // index of the card that needs to be flipped
-            let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+            let nameOfCard = cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
             console.log(nameOfCard)
             console.log(cardListofWhereCardRemoved)
-
             let flipCard = cardArray[nameOfCard]
             flipCard.splice(2, 1, 1)
+
 
             topCard.splice(5, 2, bottomCardCol) 
             topCard.push(bottomCardRow)
@@ -607,20 +629,19 @@ function renderBoard () {
     // this function flips up any top card that is facing down
     for (let arrayInfo in cardArray) {
         card = cardArray[arrayInfo]
-        nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
 
     }
 
 
-            // // This returns a list of cards from where the top card was drawn
-            // let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
-            // // index of the card that needs to be flipped
-            // let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
-            // console.log(nameOfCard)
-            // console.log(cardListofWhereCardRemoved)
+    // // This returns a list of cards from where the top card was drawn
+    // let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
+    // // index of the card that needs to be flipped
+    // let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+    // console.log(nameOfCard)
+    // console.log(cardListofWhereCardRemoved)
 
-            // let flipCard = cardArray[nameOfCard]
-            // flipCard.splice(2, 1, 1)
+    // let flipCard = cardArray[nameOfCard]
+    // flipCard.splice(2, 1, 1)
 
 }
 
@@ -671,7 +692,7 @@ function init(){
     ]
     renderTableau()
     
-   
+
 
     render();
 }
