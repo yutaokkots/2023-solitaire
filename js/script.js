@@ -407,8 +407,30 @@ const canItBeDropped = (card) => {
 
     testArray.splice(testArray.length, 0, topCard)
     console.log(testArray)
+    let suitTypeTracker = 0 
+    let suitColorTracker = 0
+    let suitValueTracker = 0
 
-    let suitColorContainer = 0
+    testArray.forEach((cardArray, index) => {
+        position.forEach((card, cardIndex) => {
+
+            // only applies if the card is flipped up (positive)
+            // only starts to count if the index of the card is 0 or more (negative index does not exist)
+            if (card[2] > 0 && (index - 1) > -1 ){
+                // suitColorTracker should be equal to 0 each time (2 + -2)
+                suitColorTracker =  card[1] + cardArray[index-1]; 
+                if (suitColorTracker !== 0) {
+                    return;
+                }
+
+                // suitValueTracker should equal to 1 each time ((n+1) - n)
+                if (  ){}
+            }
+
+
+        })
+    })
+
 
     let removedTopCard = boardArray[topCardColumn].pop()
     boardArray[bottomCardColumn].push(removedTopCard)
