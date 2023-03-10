@@ -376,14 +376,25 @@ const findListOfCardsUnderneath = (searchColumn) => {
 
 // deal out the stock cards and reveal top three
 function dealCardsFromStock(){
+
+    //remove the cards that are in play, and place in bottom of stock card
     //seeks out cards that are from stock, in order
+    let stockCardsArrayBeforeDealing = findListOfCardsUnderneath(12)
+    let inPlayCardsArrayBeforeDealing = findListOfCardsUnderneath(11)
+    if (inPlayCardsArrayBeforeDealing.length > 0){
+        inPlayCardsArrayBeforeDealing.forEach((card) =>{
+            flipCard(card)
+             // moves the cards to stock
+             card.splice(5, 2, 12)
+            // moves the cards to a row
+            stockCardsArrayBeforeDealing.unshift(card)
+        })
+
+    }
+
     let stockCardsArray = findListOfCardsUnderneath(12)
     let inPlayCardsArray = findListOfCardsUnderneath(11)
-    if (inPlayCardsArray.length > 0){
-        inPlayCardsArray.forEach((card) =>{
-            flipCard(card)
-        })
-    }
+
     if (stockCardsArray.length === 0){
         return;
     } else if (stockCardsArray.length < 3) {
@@ -391,7 +402,7 @@ function dealCardsFromStock(){
             //flips the card
             flipCard(stockCardsArray[i])
             console.log(stockCardsArray[i])
-            // moves the cards to stock
+            // moves the cards to in play
             stockCardsArray[i].splice(5, 2, 11)
             // moves the cards to a row
             stockCardsArray[i].push(i)
@@ -401,12 +412,17 @@ function dealCardsFromStock(){
             //flips the card
             flipCard(stockCardsArray[i])
             console.log(stockCardsArray[i])
-            // moves the cards to stock
+            // moves the cards to in play
             stockCardsArray[i].splice(5, 2, 11)
             // moves the cards to a row
             stockCardsArray[i].push(i)
         }
     }
+
+    console.log(stockCardsArrayBeforeDealing )
+    console.log(inPlayCardsArrayBeforeDealing)
+    console.log(stockCardsArray )
+    console.log(inPlayCardsArray)
 };        
 
 function resetStockFromWaste(){
@@ -472,7 +488,7 @@ const droppingOnFoundation = (card) => {
 
     //unary plus operator!
     let bottomCard = [0, 5, 0, 'found', -1, +foundationColNum, 0]
-    console.log(cardArray)
+
 
     // only applicable for foundation area
     if (bottomCard[5] > 6 && bottomCard[5] < 11){
@@ -667,8 +683,6 @@ function renderBoard () {
     // removes the initial image to render the board correctly.     // do not remove!
     removeImage()
 
-    console.log(boardArray)
-    console.log(startingTableau)
     for (let arrayInfo in cardArray) {
         card = cardArray[arrayInfo]
         //console.log(card)

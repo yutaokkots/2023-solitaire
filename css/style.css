@@ -1,14 +1,20 @@
 :root {
     --main-row-1: 3vw;
-    --play-area-color: rgb(69, 90, 96);
+    --play-area-color :rgb(69, 90, 96); 
 }
 
 body {
-    background-color: gray;
+
+
     display: box-sizing;
     justify-content: center;
     font-family: 'Pacifico', Verdana, Geneva, Tahoma, sans-serif;
     margin:0;
+    background-image: url("../images/nightsky.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(158, 152, 152, 50);
 }
 
 nav {
@@ -30,12 +36,12 @@ img {
 main {
     display:grid;
     grid-template-columns: 5vw auto 5vw;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto 50vh;
 
 }
 
 #titleDiv, #titleDivMain{
-    background-color: gray;
+    background-color: rgba(158, 152, 152, 0.3);
     text-align:center;
     color:white;
     font-size: 2rem;
@@ -44,10 +50,9 @@ main {
 
 #titleDivMain h1{
     margin: 0rem;
-    background: linear-gradient(180deg, white, gray 100%);
+    background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
-    
     vertical-align:center;
 }
 
@@ -70,7 +75,7 @@ main {
 }
 
 #buttonArea div:nth-last-child(1){
-    background-color: var(--play-area-color);
+    background-color: rgba(69, 90, 96, 0.5);
     width: 20vw;
     height: 30px;
     border-top-left-radius: 2rem;
@@ -93,6 +98,7 @@ main {
 }
 
 #foundation {
+    background:linear-gradient(rgba(196, 193, 193, 0.5), rgb(69, 90, 96));
     display: grid;
     border-top-left-radius: 1.5rem;
     width: auto;
@@ -115,7 +121,6 @@ main {
 
 }
 
-
 #stock {
     display:flex;
     flex-direction: column;
@@ -125,12 +130,6 @@ main {
 #stock div {
     margin-top: -139.5%;
 }
-
-/* #foundation {
-    display:grid;
-    grid-template-columns: auto auto 60%;
-    grid-template-rows: auto auto;
-} */
 
 
 /**********************************************/
@@ -146,11 +145,14 @@ main {
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.5rem;
-
+    background:linear-gradient(rgb(69, 90, 96), gray);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
 }
 
 /* Each column in tableau */
 #tableau div {
+    
     display:flex;
     flex-direction: column;
     position:relative;
@@ -168,8 +170,5 @@ main {
 
 
 }
-
-
-
 
 
