@@ -11,7 +11,7 @@ Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the
 
 I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>. 
 
-<div align="center"> <img src="README_files/final_mockup.png" width='500'></div>
+<div align="center"> <img src="README_files/mockup.png" width='500'></div>
 <h2>About</h2>
 
 <hr>
