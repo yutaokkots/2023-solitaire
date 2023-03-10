@@ -6,6 +6,7 @@
 
 This is Tr'ondëk, also known as Klondike or Solitaire. 
 The classic game was recreated using HTML, CSS, and vanilla JavaScript over the course of a week. 
+<a href="https://yutaokkots.github.io/2023-solitaire/">You can play it here</a>, although it still needs work: 
 
 The card game, Klondike, was said to have been named after the Tr'ondëk (The Klondike River), located in the Yukon Territory in North-Western Canada. 
 Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people. 

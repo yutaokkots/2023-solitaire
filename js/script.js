@@ -206,7 +206,7 @@ const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-or
 
 const mainElement = document.querySelector('main')
 
-
+const buttonElement = document.querySelector('#button')
 
 /*----- event listeners -----*/
 
@@ -220,11 +220,24 @@ const mainElement = document.querySelector('main')
 
 // creates an object out of event of initially clicking and dragging, prevents unwanted dragging in non-relevant areas
 
-mainElement.addEventListener('onclick', (evt) => {
 
-    if (!evt.target.id.includes("tab") ){
-        console.log()
+buttonElement.addEventListener('click', (evt) => {
+    // guards
+    if (evt.target.id !== "button"){
+        return
     }
+
+    console.log(evt.target)
+
+})
+
+
+mainElement.addEventListener('click', (evt) => {
+    console.log(evt.target.parentNode)
+
+    // if (!evt.target.parentNode){
+    //     console.log()
+    // }
 
 })
 
@@ -240,10 +253,10 @@ mainElement.addEventListener('dragstart', (evt) => {
     // add the dragged card into a global variable array. 
     cardAtPlay.unshift(target.id)
 
-    //deletes the contents of this array that holds information about the target card
+    //deletes the contents of this array that holds information about the target card(bottom card)
     deleteArray(cardOnBottom)
-    console.log(cardOnBottom)
 })
+
 
 const  deleteArray = (array) =>{
     array.splice(0, array.length)
@@ -290,7 +303,7 @@ mainElement.addEventListener('dragover', (evt) => {
 })
 
 /* ########### DRAG OVER ########### */
-// call drag-over event and remove the default. This needs to occure when something is dropped
+// call drag-over event and remove the default. This needs to occur when something is dropped
 const deactivateDragOver = () => {
     mainElement.addEventListener('dragover', (evt) => {
         cardOnBottom.unshift(evt.target.id)
@@ -343,7 +356,6 @@ const performAnalysis = (cb1, cb2) => {
     setTimeout(cb2, 50)
 }
 
-
 /* --- find the card position and output results as a list that is ordered --- */
 /* --- takes the column number, and ouputs a list of cards--- */
 const findListOfCardsUnderneath = (searchColumn) => {
@@ -359,9 +371,55 @@ const findListOfCardsUnderneath = (searchColumn) => {
         return a[5] - b[5]
     })
     return arrayOfLists
+
 }
 
+// deal out the stock cards and reveal top three
+function dealCardsFromStock(){
+    //seeks out cards that are from stock, in order
+    let stockCardsArray = findListOfCardsUnderneath(12)
+    let inPlayCardsArray = findListOfCardsUnderneath(11)
+    if (inPlayCardsArray.length > 0){
+        inPlayCardsArray.forEach((card) =>{
+            flipCard(card)
+        })
+    }
+    if (stockCardsArray.length === 0){
+        return;
+    } else if (stockCardsArray.length < 3) {
+        for (let i=stockCardsArray.length-1; i > 0; i--){
+            //flips the card
+            flipCard(stockCardsArray[i])
+            console.log(stockCardsArray[i])
+            // moves the cards to stock
+            stockCardsArray[i].splice(5, 2, 11)
+            // moves the cards to a row
+            stockCardsArray[i].push(i)
+        }
+    }else {
+        for (let i=3; i > 0; i--) {
+            //flips the card
+            flipCard(stockCardsArray[i])
+            console.log(stockCardsArray[i])
+            // moves the cards to stock
+            stockCardsArray[i].splice(5, 2, 11)
+            // moves the cards to a row
+            stockCardsArray[i].push(i)
+        }
+    }
+};        
 
+function resetStockFromWaste(){
+    if (boardArray[11].length > 0 || boardArray[12].length > 0){
+        dealCardsFromStock()}
+    for (let i = boardArray[13].length; i > 0; i--){
+        let restockCard = boardArray[13].shift()
+        boardArray[13].push(restockCard)
+    }
+}    
+
+
+// find the list of cards in the stock
 
 const checkFoundation = () => {
     // in the foundation
@@ -524,8 +582,6 @@ function randomShuffle(cardArr) {
 
 
 
-
-
 // initiates the first step of rendering the initial gameboard, using a template called
 // startingTableau. StartingTableu becomes the basis for other functions
 function renderTableau() {
@@ -588,10 +644,10 @@ function getDisplayImage (card){
 
 function flipCard(card){
     if (card[2] > 0){
-        card.splice(2, 1, 1)
+        card.splice(2, 1, -1)
     }
     else {
-        card.splice(2, 1, -1)
+        card.splice(2, 1, 1)
     }
     return card;
 }
@@ -619,9 +675,9 @@ function renderBoard () {
 
         let stackName = `c${card[5]}r${card[6]}`
         let stackElement = document.getElementById(stackName);
-        if (card[2] > 0) {
-            flipCard(card)  
-        }
+        // if (card[2] > 0) {
+        //     flipCard(card)  
+        // }
     // adds the images back into the div element    
         stackElement.appendChild(getDisplayImage(card))
     }
