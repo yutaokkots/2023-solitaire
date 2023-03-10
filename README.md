@@ -50,17 +50,17 @@ However, this is where I ran into challenges with balancing the writing of code 
 
 2) One of the other things I had wish I was smarter about, was keeping things very, very simple. Even the above reference tables are over-complicated and were difficult to use. 
 
-One of my favorite functions in this game, for example, is this:
-`function flipCard (card) {     
-    if (card[2] > 0){          
-        card.splice(2, 1, -1)  
-    }                          
-    else {                     
-        card.splice(2, 1, 1)   
-    }                          
-    return card;               `
+One of my favorite functions in this game, for example, is this:<br>
+`function flipCard (card) {     <br>
+    if (card[2] > 0){         <br> 
+        card.splice(2, 1, -1)  <br>
+    }                          <br>
+    else {                     <br>
+        card.splice(2, 1, 1)   <br>
+    }                          <br>
+    return card;               `<br>
 
-because this is what it looks like to call the function:
+because this is what it looks like to call the function:<br>
 `flipCard(card)`
 
 My other favorite feature was learning about drag and drop. After working on this project, I know this is probably not best practices, but one of the ways that the user and the cards keep track of each other is through assigning data-ids (via dataSets) to the item (in this case, the images of the cards), and saving the information into a global variable (called 'cardAtPlay'). 
