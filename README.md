@@ -13,6 +13,18 @@ Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the
 
 I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>. 
 
+<hr>
+<h2>The Gameplay</h2>
+The current edition of the game includes a tableau area (bottom), and a foundation and stock area (top).
+The purpose of the game is to get rid of the cards. 
+
+<div align="center"> <img src="README_files/instructions.png" width='500'></div>
+
+With optimal gameplay (according to official, normal rules), during gameplay, cards in the tableau can only be placed in descending order and with alternating colors. The cards in the foundation area can only be added in ascending order, starting with the ace. Once a card is played in the tableau area, the card underneath can be revealed. 
+
+New stock cards can be issued from stock to be used.  
+However, in this version of the game, the shuffle button and play button are still stylistic, and are disabled. 
+
 
 <hr>
 <h2>The Process</h2>
@@ -25,13 +37,13 @@ I was looking forward to working on this project because I knew I would be able 
 
 Initially, I designed a reference table like this to be able to keep track of where things should go and not go. 
 
-<div align="center"> <img src="README_files/table1.png" width='500'></div>
+<div align="center"> <img src="README_files/table1.png" width='200'></div>
 
 But as I was trying to incoporate the lessons I learned in class to implement this table, I realized it was difficult to manage this data. 
 
 I tried to simplify the data sets using a smaller and more compact table. 
 
-<div align="center"> <img src="README_files/table2.png" width='500'></div>
+<div align="center"> <img src="README_files/table2.png" width='200'></div>
 
 However, this is where I ran into challenges with balancing the writing of code to track the data and learning/refreshing HTML+CSS. 
 
