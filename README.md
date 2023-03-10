@@ -2,7 +2,7 @@
 
 <h2>About</h2>
 <hr>
-<div align="center"> <img src="README_files/Final_Mockup.png" width='500'></div>
+<div align="center"> <img src="README_files/Final_mockup.png" width='500'></div>
 
 This is Tr'ondëk, also known as Klondike or Solitaire. 
 The classic game was (or is in the process of being) recreated using HTML, CSS, and vanilla JavaScript over the course of a week (or more). 
@@ -52,7 +52,7 @@ because this is what it looks like to call the function:
 
 My other favorite feature was learning about drag and drop. After working on this project, I know this is probably not best practices, but one of the ways that the user and the cards keep track of each other is through assigning data-ids (via dataSets) to the item (in this case, the images of the cards), and saving the information into a global variable (called 'cardAtPlay'). 
 
-<div align="center"> <img src="README_files/table2.png" width='500'></div>
+<div align="center"> <img src="README_files/drag.png" width='500'></div>
 
 However, this is another example of making things a bit too complicated.
 
