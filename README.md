@@ -38,26 +38,26 @@ I was looking forward to working on this project because I knew I would be able 
 
 Initially, I designed a reference table like this to be able to keep track of where things should go and not go. 
 
-<div align="center"> <img src="README_files/table1.png" width='200'></div>
+<div align="center"> <img src="README_files/table1.png" width='500'></div>
 
 But as I was trying to incoporate the lessons I learned in class to implement this table, I realized it was difficult to manage this data. 
 
 I tried to simplify the data sets using a smaller and more compact table. 
 
-<div align="center"> <img src="README_files/table2.png" width='200'></div>
+<div align="center"> <img src="README_files/table2.png" width='500'></div>
 
 However, this is where I ran into challenges with balancing the writing of code to track the data and learning/refreshing HTML+CSS. 
 
 2) One of the other things I had wish I was smarter about, was keeping things very, very simple. Even the above reference tables are over-complicated and were difficult to use. 
 
 One of my favorite functions in this game, for example, is this:<br>
-<div align="center"> <img src="README_files/flipcard.png" width='200'></div>
+<div align="center"> <img src="README_files/flipcard.png" width='500'></div>
 because this is what it looks like to call the function:<br>
 `flipCard(card)`
 
 My other favorite feature was learning about drag and drop. After working on this project, I know this is probably not best practices, but one of the ways that the user and the cards keep track of each other is through assigning data-ids (via dataSets) to the item (in this case, the images of the cards), and saving the information into a global variable (called 'cardAtPlay'). 
 
-<div align="center"> <img src="README_files/drag.png" width='500'></div>
+<div align="center"> <img src="README_files/drag.png" width='600'></div>
 
 However, this is another example of making things a bit too complicated.
 
