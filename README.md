@@ -51,15 +51,7 @@ However, this is where I ran into challenges with balancing the writing of code 
 2) One of the other things I had wish I was smarter about, was keeping things very, very simple. Even the above reference tables are over-complicated and were difficult to use. 
 
 One of my favorite functions in this game, for example, is this:<br>
-`function flipCard (card) {     <br>
-    if (card[2] > 0){         <br> 
-        card.splice(2, 1, -1)  <br>
-    }                          <br>
-    else {                     <br>
-        card.splice(2, 1, 1)   <br>
-    }                          <br>
-    return card;               `<br>
-
+<div align="center"> <img src="README_files/flipcard.png" width='200'></div>
 because this is what it looks like to call the function:<br>
 `flipCard(card)`
 
