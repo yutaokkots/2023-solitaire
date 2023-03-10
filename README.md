@@ -1,6 +1,4 @@
 <h1 align="center"> Tr'ondëk </h1>
-<div align="center"> <img src="README_files/final_mockup.png" width='500'></div>
-<h2>About</h2>
 <hr>
 
 
@@ -12,6 +10,9 @@ The card game, Klondike, was said to have been named after the Tr'ondëk (The Kl
 Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people. 
 
 I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>. 
+
+<div align="center"> <img src="README_files/final_mockup.png" width='500'></div>
+<h2>About</h2>
 
 <hr>
 <h2>The Gameplay</h2>
