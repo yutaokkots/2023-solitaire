@@ -2,7 +2,7 @@
 
 <h2>About</h2>
 <hr>
-<img src="README_files/final_mockup.png" width='500'>
+<div align="center"> <img src="README_files/final_mockup.png" width='500'></div>
 
 This is Tr'ondëk, also known as Klondike or Solitaire. 
 The classic game was (or is in the process of being) recreated using HTML, CSS, and vanilla JavaScript over the course of a week (or more). 
