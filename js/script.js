@@ -267,12 +267,10 @@ bodyElement.addEventListener('click', (evt) => {
 
 /* ########### DRAG START ########### */
 mainElement.addEventListener('dragstart', (evt) => {
-    // guards -> excludes non-playable cards
     let target = evt.target;
 
     console.log(`origin .alt card-orientation: ${evt.target.alt}`)
     console.log(`origin .id  card-id:          ${evt.target.id}`)
-
     
     // add the dragged card into a global variable array. 
     cardAtPlay.unshift(target.id)
@@ -760,7 +758,7 @@ function renderBoard () {
 
     for (let arrayInfo in cardArray) {
         card = cardArray[arrayInfo]
-        //console.log(card)
+
 
         let stackName = `c${card[5]}r${card[6]}`
         let stackElement = document.getElementById(stackName);

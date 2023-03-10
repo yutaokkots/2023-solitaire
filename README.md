@@ -2,20 +2,88 @@
 
 <h2>About</h2>
 <hr>
-<div align="center"> <img src="README_files/prototype-01.png" width='500'></div>
+<div align="center"> <img src="README_files/Final_Mockup.png" width='500'></div>
 
 This is Tr'ondëk, also known as Klondike or Solitaire. 
-The classic game was recreated using HTML, CSS, and vanilla JavaScript over the course of a week. 
-<a href="https://yutaokkots.github.io/2023-solitaire/">You can play it here</a>, although it still needs work: 
+The classic game was (or is in the process of being) recreated using HTML, CSS, and vanilla JavaScript over the course of a week (or more). 
+<a href="https://yutaokkots.github.io/2023-solitaire/">You can play it here</a>, although it still has some work to be done. 
 
 The card game, Klondike, was said to have been named after the Tr'ondëk (The Klondike River), located in the Yukon Territory in North-Western Canada. 
 Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people. 
+
+I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>. 
+
+
+<hr>
+<h2>The Process</h2>
+
+Although I do not have a currently working game to show a success, what I have gained is a deeper understanding of what not to do when taking on a difficult project. 
+
+1) Although it might be obvious to people who are smarter than me, it's important to have a good idea of the balance of what is learning and what is doing, before the start of the project.
+
+I was looking forward to working on this project because I knew I would be able to work on something I didn't understand. But the amount I didn't understand was much greater than I had anticipated. For example, I knew I had to use a good data structure that allows me to keep track of the moves of the card. 
+
+Initially, I designed a reference table like this to be able to keep track of where things should go and not go. 
+
+<div align="center"> <img src="README_files/table1.png" width='500'></div>
+
+But as I was trying to incoporate the lessons I learned in class to implement this table, I realized it was difficult to manage this data. 
+
+I tried to simplify the data sets using a smaller and more compact table. 
+
+<div align="center"> <img src="README_files/table2.png" width='500'></div>
+
+However, this is where I ran into challenges with balancing the writing of code to track the data and learning/refreshing HTML+CSS. 
+
+2) One of the other things I had wish I was smarter about, was keeping things very, very simple. Even the above reference tables are over-complicated and were difficult to use. 
+
+One of my favorite functions in this game, for example, is this:
+`function flipCard (card) {     `
+`    if (card[2] > 0){          `
+`        card.splice(2, 1, -1)  `
+`    }                          `
+`    else {                     `
+`        card.splice(2, 1, 1)   `
+`    }                          `
+`    return card;               `
+
+because this is what it looks like to call the function:
+`flipCard(card)`
+
+My other favorite feature was learning about drag and drop. After working on this project, I know this is probably not best practices, but one of the ways that the user and the cards keep track of each other is through assigning data-ids (via dataSets) to the item (in this case, the images of the cards), and saving the information into a global variable (called 'cardAtPlay'). 
+
+<div align="center"> <img src="README_files/table2.png" width='500'></div>
+
+However, this is another example of making things a bit too complicated.
+
+<hr>
+
+The game still has many bugs, and is difficult to use. However, even as the week deadline has arrived, I plan to continue working on the game, although the next version will probably be a much more simple version.   
+
+
+
+
+
+<h2>License</h2>
+Vector Playing Card Library 
+VERSION 3.2 - RELEASED 6/27/2020
+
+Licensed under https://www.gnu.org/licenses/lgpl-3.0.html
+
+Chris Aguilar 
+conjurenation@gmail.com         
+https://totalnonsense.com/open-source-vector-playing-cards/
+
+Alternate Joker by John Merrill
+john@delirus.net
+Colored version of alternate Joker by Chris Aguilar
+
 
 <h2>Roadmap</h2>
 - [X] Initial conceptualization<br>
 - [X] Wireframe & sketches<br>
 - [X] Pseudocode<br>
-- [ ] Working functions and DOM elements<br>
+- [?] Working functions and DOM elements<br>
 - [ ] First draft MVP<br>
 - [ ] Testing and debugging<br>
 - [ ] CSS styling<br>
@@ -27,48 +95,3 @@ Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the
       - [ ] Spanish<br>
     - [ ] Styling<br>
       - [ ] color theme styling choices<br>
-
-<h2>Pseudocode</h2>
-<ol>
-<li>(Optional) Start Page -> user click on button on start page -> start page dissolves revealing game board.</li>
-<li>Button (located Row1 Col5) press by user resets game function and renders board.</li>
-<li>Game-reset:
-    <ol>
-    <li>shuffle deck (back-end)</li>
-    <li>deal cards in tableau-area (Row2 Col1:7) in standard Solitaire pattern (row=n, column: n cards), with all cards having back-side (the side that is the same and shared among all cards) facing towards user, and only the top card in each column having the face-side(the side that contains number and suit information) facing towards the user.</li>
-    <li>assignment of states (card face up or down)</li>
-    <li>load three cards that are face-up in stock area.</li>
-    </ol></li>
-<li>Drag and Drop movements:</li>
-    <ol>
-    <li>board is clickable, can be dragged and dropped using mouse cursor.</li>
-    <li>only the card's 2-D area on the screen causes an event </li>
-    <li>click and drag movement (cursor click followed by movement of mouse while holding the click) assigns data to the card object (the data includes the card that is picked up, and whether the card is facing up or facing down)</li>
-    <li>movement of the clicked and dragged card across non-relevant areas on the board and outside the board are ignored. movement of the clicked and dragged card onto relevant areas are registered.</li>
-    <li>dropping the card onto a relevant area results in function(s) to be run. The function(s) inputs the data contained by the clicked-and-dragged object and the dropped-on object.</li>
-    <li>The function(s) compares:</li>
-        <ol>
-        <li>the start of where the card was dragged from vs the end of where the card was dropped-on to.</li>
-            <ul>
-            <li>from stock to tableau -> the color of the suit ('b' or 'r') are alternating, && the number of the suit (dragged card must have immediate and descending order compared to dropped-on card).</li>
-            <li>from stock to foundation -> the type of suit ('S', 'H', 'C', 'D') are the same && the dragged card must be in immediate and ascending order compared to dropped-on card.</li>
-            <li>from tableau to tableau -> the color of the suit ('b' or 'r') are alternating, && the number of the suit (dragged card must have immediate and descending order compared to dropped-on card).</li>
-            <li>from tableau to tableau -> if the stack contains a King, the King and its descendants can be moved to an empty tableau column </li>
-            <li>from tableau to foundation -> the type of suit ('S', 'H', 'C', 'D') are the same && the dragged card must be in immediate and ascending order compared to dropped-on card.</li>
-            </ul>
-        <li>the dragged card and dropped-on card must have the state of the card with face up</li>
-            </ol> 
-    </ol>
-<li>Dealing cards:
-    <ol>
-    <li>up to three cards are displayed face-up, and playable, with the top-most card being playable (draggable and droppable).</li>
-    <li>pressing deal button cause the playable cards to be placed into a waste area.</li>
-    <li>three new cards are placed face-up in the stock area</li>
-    <li>once the stock area is empty, the cards in the waste area are moved to the stock area.</li>
-    </ol></li>
-<li>When the waste area, stock area, and tableau contain no cards, there is a win. </li>
-</ol>
-
-<h2>License</h2>
-
-<h2>Contact</h2>
