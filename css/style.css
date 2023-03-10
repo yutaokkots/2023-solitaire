@@ -24,6 +24,7 @@ nav {
 
 img {
     max-width: 100%;
+    position: 
 }
 
 /* combination of  img{max-width: 100%;} + #tableau-5{grid-template-rows: repeat(auto-fill, 3rem);}*/
@@ -71,6 +72,7 @@ main {
     height: 30px;
     display:flex;
     justify-content: flex-end;
+    cursor: pointer;
 
 }
 
@@ -95,10 +97,7 @@ main {
 .foundationDiv {
     padding-top: 1rem;
     padding-bottom: 0.5rem;
-}
 
-#foundation {
-    background:linear-gradient(rgba(196, 193, 193, 0.5), rgb(69, 90, 96));
     display: grid;
     border-top-left-radius: 1.5rem;
     width: auto;
@@ -109,16 +108,18 @@ main {
     padding-right: 1rem;
 }
 
+
+.foundationDiv div div{
+    display: inline-block;
+    
+}
+
 #foundation div {
+
     display:flex;
     flex-direction: column;
     position:relative; 
     align-items: flex-start; 
-}
-
-#tableau div div:nth-child(n+2) {
-    margin-top: -110%;
-
 }
 
 #stock {
@@ -166,7 +167,7 @@ main {
 } */
 
 #tableau div div:nth-child(n+2) {
-    margin-top: -110%;
+    margin-top: -120%;
 
 
 }

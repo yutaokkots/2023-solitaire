@@ -1,4 +1,3 @@
-
 console.log("initialized")
 
 /*----- constants -----*/
@@ -6,6 +5,7 @@ console.log("initialized")
 // e.g. +1 or -1
 // let number be card value
 
+const CARDLIST = ['S01','S02','S03','S04','S05','S06','S07','S08','S09','S10','S11','S12','S13','H01','H02','H03','H04','H05','H06','H07','H08','H09','H10','H11','H12','H13','C01','C02','C03','C04','C05','C06','C07','C08','C09','C10','C11','C12','C13','D01','D02','D03','D04','D05','D06','D07','D08','D09','D10','D11','D12','D13']
 
 const CARD_IMAGES = {
     S01: 'images/single_cards/SPADE-1.svg',
@@ -204,9 +204,10 @@ const allEmptyCardAreas = document.querySelectorAll(".foundation-origin, .tab-or
 // })
 
 
-const mainElement = document.querySelector('main')
-
+const shuffleElement = document.querySelector('#shuffle')
+const bodyElement = document.querySelector('body')
 const buttonElement = document.querySelector('#button')
+const mainElement = document.querySelector('main')
 
 /*----- event listeners -----*/
 
@@ -226,20 +227,42 @@ buttonElement.addEventListener('click', (evt) => {
     if (evt.target.id !== "button"){
         return
     }
+    if (evt.target.getAttribute('data-card') == play) {
+        return;
+    }
 
-    console.log(evt.target)
+    //dealCardsFromStock()
+    //removeInPlayCard()
+
+    shuffleDeck()
+    render()
 
 })
 
 
-mainElement.addEventListener('click', (evt) => {
-    console.log(evt.target.parentNode)
 
-    // if (!evt.target.parentNode){
-    //     console.log()
+bodyElement.addEventListener('click', (evt) => {
+    // if (evt.target.){
+    // if (evt.target.id !== "button" ){
+    //     return
     // }
 
+    if (evt.target.id ==="shuffle" || evt.target.id ==="stock"){
+        shuffleDeck()
+        return
+    }
+
+    //let isCardonTop = isCardTopAndDown(evt.target.id)
+    //references array library, if card is on top, flip
+    if (isCardTopAndDown(evt.target.id) === true){
+        flipCard(cardArray[evt.target.id])
+    }
+
+    render()
 })
+
+
+
 
 
 /* ########### DRAG START ########### */
@@ -250,6 +273,7 @@ mainElement.addEventListener('dragstart', (evt) => {
     console.log(`origin .alt card-orientation: ${evt.target.alt}`)
     console.log(`origin .id  card-id:          ${evt.target.id}`)
 
+    
     // add the dragged card into a global variable array. 
     cardAtPlay.unshift(target.id)
 
@@ -257,10 +281,6 @@ mainElement.addEventListener('dragstart', (evt) => {
     deleteArray(cardOnBottom)
 })
 
-
-const  deleteArray = (array) =>{
-    array.splice(0, array.length)
-}
 
 
 /* ########### DRAG ENTER ########### */
@@ -350,6 +370,13 @@ mainElement.addEventListener('drop', (evt) => {
 /* ################                ################ */
 
 
+
+
+
+const deleteArray = (array) =>{
+    array.splice(0, array.length)
+}
+
 /* --- call back functions with delay --- */
 const performAnalysis = (cb1, cb2) => {
     setTimeout(cb1, 40)
@@ -359,7 +386,6 @@ const performAnalysis = (cb1, cb2) => {
 /* --- find the card position and output results as a list that is ordered --- */
 /* --- takes the column number, and ouputs a list of cards--- */
 const findListOfCardsUnderneath = (searchColumn) => {
-    console.log(searchColumn)
     const arrayOfLists = []
     for (const key in cardArray){
         if (cardArray[key][5] === searchColumn){
@@ -374,10 +400,9 @@ const findListOfCardsUnderneath = (searchColumn) => {
 
 }
 
-// deal out the stock cards and reveal top three
-function dealCardsFromStock(){
 
-    //remove the cards that are in play, and place in bottom of stock card
+const removeInPlayCard = () =>{
+        //remove the cards that are in play, and place in bottom of stock card
     //seeks out cards that are from stock, in order
     let stockCardsArrayBeforeDealing = findListOfCardsUnderneath(12)
     let inPlayCardsArrayBeforeDealing = findListOfCardsUnderneath(11)
@@ -387,10 +412,22 @@ function dealCardsFromStock(){
              // moves the cards to stock
              card.splice(5, 2, 12)
             // moves the cards to a row
-            stockCardsArrayBeforeDealing.unshift(card)
+            stockCardsArrayBeforeDealing.push(card[6])
+            console.log(card)
         })
-
     }
+}
+
+const isCardTopAndDown = (card) => {
+    let cardCol = cardArray[card][5]
+    let arrayList = findListOfCardsUnderneath(cardCol)
+    if (arrayList[arrayList.length -1][3] === card)
+    return true;
+}
+
+// deal out the stock cards and reveal top three
+function dealCardsFromStock(){
+
 
     let stockCardsArray = findListOfCardsUnderneath(12)
     let inPlayCardsArray = findListOfCardsUnderneath(11)
@@ -419,21 +456,23 @@ function dealCardsFromStock(){
         }
     }
 
+    let stockCardsArrayBeforeDealing = findListOfCardsUnderneath(12)
+    let inPlayCardsArrayBeforeDealing = findListOfCardsUnderneath(11)
+
     console.log(stockCardsArrayBeforeDealing )
     console.log(inPlayCardsArrayBeforeDealing)
     console.log(stockCardsArray )
     console.log(inPlayCardsArray)
 };        
 
-function resetStockFromWaste(){
-    if (boardArray[11].length > 0 || boardArray[12].length > 0){
-        dealCardsFromStock()}
-    for (let i = boardArray[13].length; i > 0; i--){
-        let restockCard = boardArray[13].shift()
-        boardArray[13].push(restockCard)
-    }
-}    
-
+// function resetStockFromWaste(){
+//     if (boardArray[11].length > 0 || boardArray[12].length > 0){
+//         dealCardsFromStock()}
+//     for (let i = boardArray[13].length; i > 0; i--){
+//         let restockCard = boardArray[13].shift()
+//         boardArray[13].push(restockCard)
+//     }
+// }    
 
 // find the list of cards in the stock
 
@@ -469,7 +508,7 @@ const updateStartingTableau = () => {
     
 }
 
-const flipTheCardAfterDrawing = (card) => {
+function flipTheCardAfterDrawing (card) {
     console.log(card)
     let topCard = cardArray[cardAtPlay[0]];
     let bottomCard = cardArray[card];
@@ -482,7 +521,7 @@ const flipTheCardAfterDrawing = (card) => {
 
 
 // checks to see if the card can be dropped on foundation (aces)
-const droppingOnFoundation = (card) => {
+function droppingOnFoundation (card) {
     let topCard = cardArray[cardAtPlay[0]];
     let foundationColNum = card.slice(5, card.length)
 
@@ -493,7 +532,9 @@ const droppingOnFoundation = (card) => {
     // only applicable for foundation area
     if (bottomCard[5] > 6 && bottomCard[5] < 11){
         
+        // the top card having, at position [4], the value of the card being 1,
         if (topCard[4] === 1){ 
+           // updates the topCard's position to that of the bottom card 
             topCard.splice(5, 2, bottomCard[5]) 
             topCard.push(bottomCard[6])
         }
@@ -508,8 +549,7 @@ const droppingOnFoundation = (card) => {
             let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
             // index of the card that needs to be flipped
             let nameOfCard =  cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
-            console.log(nameOfCard)
-            console.log(cardListofWhereCardRemoved)
+
             let flipCard = cardArray[nameOfCard]
             flipCard.splice(2, 1, 1)
 
@@ -522,7 +562,7 @@ const droppingOnFoundation = (card) => {
 }
 }
 
-const canItBeDropped = (card) => {
+function canItBeDropped (card){
     // establishes the columns of where the cards are coming from and where they are landing
 
     console.log(card)
@@ -530,6 +570,7 @@ const canItBeDropped = (card) => {
     let bottomCard = cardArray[card];
 
     //base case
+    // if the card is already flipped upside down, return
     if (bottomCard[2] === -1){
         return;
     }
@@ -537,30 +578,28 @@ const canItBeDropped = (card) => {
     // only applicable for tableau area
     if (bottomCard[5] < 7){
 
-        //if the bottom card color and top card color together equal 0, then same color
+        //if the bottom card color and top card color together equal 0, then different colors
         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
             //then modify position of the top card
             let bottomCardCol = bottomCard[5]
             let bottomCardRow = bottomCard[6]+1
 
-            // this section the code flips the card 
-            // This returns a list of cards from where the top card was drawn
-            let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
-            // index of the card that needs to be flipped
-            let nameOfCard = cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
-            console.log(nameOfCard)
-            console.log(cardListofWhereCardRemoved)
-            let flipCard = cardArray[nameOfCard]
-            flipCard.splice(2, 1, 1)
+            // // this section the code flips the card 
+            // // This returns a list of cards from where the top card was drawn
+            // let cardListofWhereCardRemoved = findListOfCardsUnderneath(topCard[5])
+            // // index of the card that needs to be flipped
+            // let nameOfCard = cardListofWhereCardRemoved[cardListofWhereCardRemoved.length-2][3]
+            // console.log(nameOfCard)
+            // console.log(cardListofWhereCardRemoved)
+            // let flipCard = cardArray[nameOfCard]
+            // flipCard.splice(2, 1, 1)
 
 
             topCard.splice(5, 2, bottomCardCol) 
             topCard.push(bottomCardRow)
+        } 
 
-
-
-            
-        }
+        
     }
 }    
 
@@ -584,8 +623,22 @@ function resetStockFromWaste(){
 init();
 
 
+function win () {
+    let number = 0
+    for (let key in cardArray) {
+        card = cardArray[key]
+        if (card[5] > 6 && card[5] < 11){
+            number += 1
+        }
+    if (number == 52){
+        alert("you win!")
+    }
+} 
+}
+
+
 /* --- shuffle the cards --- */
-// takes CARD_LIST array and adds random row coordinates
+// takes CARD_LIST array and adds random row coordinates, by splicing a random numbered card from one array to another
 function randomShuffle(cardArr) {
     let initialDeck = [...cardArr];
     let newDeck = []
@@ -596,6 +649,31 @@ function randomShuffle(cardArr) {
     return newDeck;
 };
 
+
+/*-- shuffle the cards of the 'cardArray' object variable ---*/
+function shuffleDeck() {
+
+    const arrayOfLists = findListOfCardsUnderneath(12)
+
+    let newList = []
+    for (let i = arrayOfLists.length; i > 0; i--) {
+        let n = Math.floor(Math.random() * i);
+        newList.unshift(n)   
+    }
+    console.log(newList)
+    const arrayOfCardNames = []
+    arrayOfLists.forEach((card) => {
+        arrayOfCardNames.push(card[3])
+    })
+  
+    arrayOfCardNames.map((cardName) => { 
+        let tempList = cardArray[cardName]
+        tempList.splice(6,1,newList.pop())
+        cardArray[cardName] = tempList
+    })
+
+    console.log(cardArray)
+}
 
 
 // initiates the first step of rendering the initial gameboard, using a template called
@@ -625,16 +703,13 @@ function renderTableau() {
             cardArray[card[3]] = card
             //boardArray[columnIndex].push(card)
             startingTableau[columnIndex].splice(rowIndex, 1, card)  
-        })
-        
+        })  
     })
-
 }
 
 
-
 // receives the array of card information, and returns an img tag containing information.
-function getDisplayImage (card){
+function getDisplayImage(card) {
     if (card === undefined) {
         return;
     }
@@ -657,8 +732,8 @@ function getDisplayImage (card){
     return newImage;
 }
 
-
-function flipCard(card){
+// flips card by changing the status of the object, cardArray
+function flipCard (card){
     if (card[2] > 0){
         card.splice(2, 1, -1)
     }
@@ -668,7 +743,7 @@ function flipCard(card){
     return card;
 }
 
-function removeImage() {
+function removeImage () {
     let resetArray = [18,18,18,18,18,18,18,12,12,12,12,12,52,52]
     resetArray.forEach((value, idx) => {
         for (let i = value; i >= 0; i--) {
@@ -689,12 +764,15 @@ function renderBoard () {
 
         let stackName = `c${card[5]}r${card[6]}`
         let stackElement = document.getElementById(stackName);
-        // if (card[2] > 0) {
-        //     flipCard(card)  
-        // }
-    // adds the images back into the div element    
+         // adds the images back into the div element  
         stackElement.appendChild(getDisplayImage(card))
-    }
+
+        // if (card[5] < 7){
+            
+        // }
+        // if (card[5] > 6 && card[5] <11){
+        //     let stackElement = document.getElementById()
+        // } 
 
     // this function flips up any top card that is facing down
     for (let arrayInfo in cardArray) {
@@ -714,11 +792,12 @@ function renderBoard () {
     // flipCard.splice(2, 1, 1)
 
 }
-
+}
 
 
 function render() {
     renderBoard()
+    win()
 }
 
 function init(){
