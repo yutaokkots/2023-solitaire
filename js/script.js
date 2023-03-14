@@ -422,6 +422,7 @@ const updateStartingTableau = () => {
     })
 }
 
+
 function flipTheCardAfterDrawing (card) {
     let topCard = cardArray[cardAtPlay[0]];
     let topCardCol = topCard[5]
@@ -456,14 +457,8 @@ function droppingOnFoundation (card) {
             let bottomCardCol = bottomCard[5]
             let bottomCardRow = bottomCard[6] + 1
 
-
-            
             topCard.splice(5, 2, bottomCardCol) 
-            topCard.push(bottomCardRow)
-
-            
-
-            
+            topCard.push(bottomCardRow)            
     }
 }
 }
@@ -502,8 +497,7 @@ function resetStockFromWaste(){
     for (let i = boardArray[13].length; i > 0; i--){
         let restockCard = boardArray[13].shift()
         boardArray[13].push(restockCard)
-    }    
-        
+    }     
 }
 
 
