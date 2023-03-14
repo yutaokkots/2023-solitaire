@@ -1,0 +1,50 @@
+body{
+    background-color: gainsboro;
+}
+
+main {
+    display: box-sizing;
+    background-color: #617143;
+    display: grid;
+    grid-template-columns: auto 5rem auto;
+    grid-template-rows: 10vh 10rem 10vh;
+    grid-template-areas: 
+    tl tc tr
+    cl cc cr
+    bl bc br; 
+    color: #EDE9D5;
+    font-family: 'Source Serif Pro', arial, serif;
+}
+
+/* div container that holds the cards */
+#test {
+    height:0rem;
+    
+    
+}
+
+
+
+
+
+
+/* allows the svg to stick to same size in whole document */
+img {
+    height: 20vh;
+}
+
+/* allows the cards to stack */
+#test div{
+    height:1rem;
+}
+
+/* allows the cards to stack */
+#test div:first-child{
+    height:0.2rem;
+    background-color: #EDE9D5;
+    border-radius: 0.2rem;
+    width: 50%;
+}
+
+
+

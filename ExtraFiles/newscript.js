@@ -1,3 +1,13 @@
+// state information
+// CARD_LIST[i] = card;
+// card[0]= suit
+// card[1]= color
+// card[2]= up or down
+// card[3]= cardname
+// card[4]= value
+// card[5]= col position
+// card[6]= row position
+
 const CARD_LIST = [
     [1,     2, -1, 'S01',  1, 12, 0],
     [1,     2, -1, 'S02',  2, 12, 0],
@@ -57,26 +67,149 @@ const CARD_LIST = [
     ]
 
 
-
-
-
-// if the first 7 columns (0-6), then add onto board as image
-// if rows [7-10, and 12, set value to 0 (not shown on screen)
-// 
-
 // -- initialization of variables -- //
 let startingTableau;
 let shuffledCards;
 
 
+const mainElement = document.querySelector('main')
 
 
+// -- event listeners -- //
 
+bodyElement.addEventListener('click', (evt) => {
+
+    // if (evt.target.id ==="shuffle" || evt.target.id ==="stock"){
+    //     shuffleDeck()
+    //     return
+    // }
+
+    //let isCardonTop = isCardTopAndDown(evt.target.id)
+    //references array library through is CardTopAndDown; if card is on top, flip
+    if (isCardTopAndDown(evt.target.id) === true){
+        flipCard(cardArray[evt.target.id])
+    }
+    render()
+})
 
 
 // -- functions-- //
 init();
 
+
+// -> moves the card 
+
+// checkMove() -> checks if the move is possible
+
+
+
+
+
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+// from previous version of the game:
+
+
+// checks to see if the card can be dropped on foundation (aces)
+
+
+function droppingOnFoundation (card) {
+    // let topCard = cardArray[cardAtPlay[0]];
+    // let foundationColNum = card.slice(5, card.length)
+    
+    // The following checks to see if the bottom card is located in the columns 7->10 (foundation)
+    if (bottomCard[5] > 6 && bottomCard[5] < 11){
+        if (topCard[4] === 1){
+            return true;
+        } 
+        if (bottomCard[0] === topCard[0] &&  topCard[4] - bottomCard[4] === 1){
+            return true;
+        } else {
+            false
+        }
+}}
+
+
+        //    // updates the topCard's position to that of the bottom card 
+        //    topCard.splice(5, 2, bottomCard[5]) 
+        //    topCard.push(bottomCard[6])
+
+        //            // if the suit position [0] are the same, and the cards are in ascending order, then put down
+        // if (bottomCard[0] === topCard[0] &&  topCard[4] - bottomCard[4] === 1){
+
+        //     let bottomCardCol = bottomCard[5]
+        //     let bottomCardRow = bottomCard[6] + 1
+
+        //     topCard.splice(5, 2, bottomCardCol) 
+        //     topCard.push(bottomCardRow)   
+        
+                // //if the bottom card color and top card color together equal 0, then different colors
+                // if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
+                //     //then modify position of the top card
+                //     let bottomCardCol = bottomCard[5]
+                //     let bottomCardRow = bottomCard[6]+1
+        
+                //     topCard.splice(5, 2, bottomCardCol) 
+                //     topCard.push(bottomCardRow)
+
+function droppingOnTableau (card){
+    // establishes the columns of where the cards are coming from and where they are landing
+
+    let topCard = cardArray[cardAtPlay[0]];
+    let bottomCard = cardArray[card];
+
+    if (topCard[4] === 13){
+        return true;
+    } 
+    // The following checks to see if the bottom card is located in the columns 0->6 (tableau)
+    if (bottomCard[5] < 7){
+        //if the bottom card color and top card color together equal 0, then different colors
+        if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
+            return true
+        } 
+    }
+}   
+
+/* --- find the card position and output results as a list that is ordered --- */
+/* --- takes the column number, and ouputs a list of cards--- */
+const findListOfCardsUnderneath = (searchColumn) => {
+    const arrayOfLists = []
+    for (const key in cardArray){
+        if (cardArray[key][5] === searchColumn){
+            arrayOfLists.push(cardArray[key])
+        }
+    }
+    // this returns the list sorted in order, with the top most card at the last index
+    arrayOfLists.sort(function(a, b) {
+        return a[5] - b[5]
+    })
+    return arrayOfLists
+}
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+// updateCards() -> updates the position information stored inside the cards after moving them.
+// Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
+function updateCards(array){
+    array.forEach((column, colIndex) => {
+        column.forEach((card, rowIndex) => {
+            if (card[5] !== colIndex){
+                card.splice(5, 1, colIndex)
+            }
+            if (card[6] !== rowIndex){
+                card.splice(6, 1, rowIndex)
+            }
+        })
+    })
+}
+
+// flipsCards() -> Ensures that cards in the tableau are 
+function flipsCards(array){
+}
 
 // shuffle(array) -> randomizes an array
 function shuffle(array) {
@@ -93,24 +226,19 @@ function renderInitialBoard(array) {
     let n = 51
     startingTableau.forEach((column, colIndex) => {
         column.forEach((row, rowIndex) => {
-            if (row < 0){
-                array[n].splice(5, 1, colIndex) 
-                array[n].splice(6, 1, rowIndex) 
-                startingTableau[colIndex].splice(rowIndex, 1, array[n]);
-
-            } else if (row > 0){
-                array[n].splice(5, 1, colIndex) 
-                array[n].splice(6, 1, rowIndex) 
+            if (row > 0){
                 array[n].splice(2, 1, 1) 
-                startingTableau[colIndex].splice(rowIndex, 1, array[n]);
             }
+                array[n].splice(5, 1, colIndex); 
+                array[n].splice(6, 1, rowIndex); 
+                startingTableau[colIndex].splice(rowIndex, 1, array[n]);
             n--;
         })
     })
 }
 
-
 function render(){
+    updateCards(array);
 };
 
 
