@@ -80,39 +80,43 @@ init();
 
 // shuffle(array) -> randomizes an array
 function shuffle(array) {
-    let newArray;
-    for (let i = newArray.length; i > 0; i--){
+    let newArray = [];
+    for (let i = array.length-1; i > -1; i--){
         let n = Math.floor(Math.random()*i);
-        array.pop(array[n]);
+        newArray.push(array.splice(n, 1)[0])
     }
     return newArray
 }
 
 // renderInitialBoard() -> passes the initial deck through the startingTableau
 function renderInitialBoard(array) {
-    let n = 52
+    let n = 51
     startingTableau.forEach((column, colIndex) => {
         column.forEach((row, rowIndex) => {
-            if (column[rowIndex] < 0){
-                column[rowIndex].splice(rowIndex, 1, array[n]);
-            } else if (column[rowIndex] > 0){
-                
-            }
+            if (row < 0){
+                array[n].splice(5, 1, colIndex) 
+                array[n].splice(6, 1, rowIndex) 
+                startingTableau[colIndex].splice(rowIndex, 1, array[n]);
 
+            } else if (row > 0){
+                array[n].splice(5, 1, colIndex) 
+                array[n].splice(6, 1, rowIndex) 
+                array[n].splice(2, 1, 1) 
+                startingTableau[colIndex].splice(rowIndex, 1, array[n]);
+            }
             n--;
         })
     })
 }
 
 
-render(){
-
+function render(){
 };
 
 
 function init(){
-
-    shuffledCards
+    shuffledCards = shuffle(CARD_LIST);
+    
     startingTableau = [
         [1],
         [-1,1],
@@ -128,8 +132,7 @@ function init(){
         [],
         [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
     ]  
-
-
-
-render();
+    renderInitialBoard(shuffledCards)
+    console.log(startingTableau)
+    render();
 }
