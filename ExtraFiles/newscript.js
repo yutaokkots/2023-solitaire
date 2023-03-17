@@ -132,28 +132,6 @@ function droppingOnFoundation (card) {
 }}
 
 
-        //    // updates the topCard's position to that of the bottom card 
-        //    topCard.splice(5, 2, bottomCard[5]) 
-        //    topCard.push(bottomCard[6])
-
-        //            // if the suit position [0] are the same, and the cards are in ascending order, then put down
-        // if (bottomCard[0] === topCard[0] &&  topCard[4] - bottomCard[4] === 1){
-
-        //     let bottomCardCol = bottomCard[5]
-        //     let bottomCardRow = bottomCard[6] + 1
-
-        //     topCard.splice(5, 2, bottomCardCol) 
-        //     topCard.push(bottomCardRow)   
-        
-                // //if the bottom card color and top card color together equal 0, then different colors
-                // if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
-                //     //then modify position of the top card
-                //     let bottomCardCol = bottomCard[5]
-                //     let bottomCardRow = bottomCard[6]+1
-        
-                //     topCard.splice(5, 2, bottomCardCol) 
-                //     topCard.push(bottomCardRow)
-
 function droppingOnTableau (card){
     // establishes the columns of where the cards are coming from and where they are landing
 
@@ -192,6 +170,35 @@ const findListOfCardsUnderneath = (searchColumn) => {
 //////////////////////////////////////////////////
 //////////////////////////////////////////////////
 
+//function  (bottomCard, topCard) 
+// unfinished, untested
+// returns the card column and row as array [col, row]
+function findCardLocation(card){
+    //card is a string or array. 
+    let cardId;
+    let cardColRow = []
+    if (typeof card === array){
+        cardId = card[3]
+    } else if (typeof card === string){
+        cardId = card
+    }
+    startingTableau.forEach((column, colIndex) => {
+        column.forEach((cardArray, rowIndex) => {
+            if (cardId === cardArray[3]){
+                cardColRow.push(cardArray[5])
+                cardColRow.push(cardArray[6])
+                return cardColRow;
+            }
+        })
+    })
+}
+
+//
+function moveCards(){
+
+}
+
+
 // updateCards() -> updates the position information stored inside the cards after moving them.
 // Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
 function updateCards(array){
@@ -206,6 +213,40 @@ function updateCards(array){
         })
     })
 }
+
+// function renderBoard(){}
+function renderBoard () {
+    // removes the initial image to render the board correctly.     // do not remove!
+    startingTableau.forEach((column, colIndex) => {
+        let columnElement = document.getElementById(`c${colIndex}`)
+        column.forEach((card, rowIndex) => {
+            let cardDiv = document.createElement('div')
+            let cardName = `c${card[5]}r${card[6]}`
+            let newId = document.createAttribute("id")
+            newId.value = cardName
+            cardDiv.setAttribute(newId)
+
+        })
+    })
+    
+    
+    // removeImage()
+
+    // for (let arrayInfo in cardArray) {
+    //     card = cardArray[arrayInfo]
+
+    //     let stackName = `c${card[5]}r${card[6]}`
+    //     let stackElement = document.getElementById(stackName);
+    //      // adds the images back into the div element  
+    //     stackElement.appendChild(getDisplayImage(card))
+
+    // // this function flips up any top card that is facing down
+    // for (let arrayInfo in cardArray) {
+    //     card = cardArray[arrayInfo]
+    // }
+}
+}
+
 
 // flipsCards() -> Ensures that cards in the tableau are 
 function flipsCards(array){
@@ -243,7 +284,7 @@ function render(){
 
 
 function init(){
-    shuffledCards = shuffle(CARD_LIST);
+    shuffledCards = (CARD_LIST);
     
     startingTableau = [
         [1],

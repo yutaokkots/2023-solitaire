@@ -1,13 +1,15 @@
 body{
     background-color: gainsboro;
+    margin: 0;
+    display: box-sizing;
 }
 
 main {
     display: box-sizing;
     background-color: #617143;
     display: grid;
-    grid-template-columns: auto 5rem auto;
-    grid-template-rows: 10vh 10rem 10vh;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 20vh 8rem 50vh;
     grid-template-areas: 
     tl tc tr
     cl cc cr
@@ -19,8 +21,6 @@ main {
 /* div container that holds the cards */
 #test {
     height:0rem;
-    
-    
 }
 
 
@@ -34,16 +34,34 @@ img {
 }
 
 /* allows the cards to stack */
-#test div{
-    height:1rem;
+
+.tab{
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    grid-column-gap: 2vw;
+}
+
+/* .stack{} === .tab div{} */
+/* .marker{} ==== .stack-Div*/
+.tab div{
+
+    width: 10vw;
+}
+.stack div{
+    height:0.2rem;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+    width: auto;
+    background-color: var(--play-area-color);
 }
 
 /* allows the cards to stack */
-#test div:first-child{
-    height:0.2rem;
-    background-color: #EDE9D5;
+.marker{
+    height:0;
+    padding-top: 0;
+    border-top: 0.15rem dotted #EDE9D5;
     border-radius: 0.2rem;
-    width: 50%;
+
 }
 
 
