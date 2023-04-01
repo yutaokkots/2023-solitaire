@@ -65,6 +65,9 @@ img {
     width: auto;
     background-color: var(--play-area-color);
 }
+.tableau .stack div:nth-child(2){
+    height:0;
+}
 .foundation .stack div {
     height: 0;
 }

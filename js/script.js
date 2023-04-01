@@ -9,19 +9,19 @@
 // card[6]= row position
 
 const BOARD_INIT = [
-[0, 0, 0, 'EMP', 14, 0, 0],
-[0, 0, 0, 'EMP', 14, 1, 0],
-[0, 0, 0, 'EMP', 14, 2, 0],
-[0, 0, 0, 'EMP', 14, 3, 0],
-[0, 0, 0, 'EMP', 14, 4, 0],
-[0, 0, 0, 'EMP', 14, 5, 0],
-[0, 0, 0, 'EMP', 14, 6, 0],
-[0, 0, 0, 'ACE',  0, 7, 0],
-[0, 0, 0, 'ACE',  0, 8, 0],
-[0, 0, 0, 'ACE',  0, 9, 0],
-[0, 0, 0, 'ACE', 0, 10, 0],
-[0, 0, 0, 'EMP', 0, 11, 0],
-[0, 0, 0, 'EMP', 0, 12, 0]
+[0, 0, 0, 'EMP0', 14, 0, 0],
+[0, 0, 0, 'EMP1', 14, 1, 0],
+[0, 0, 0, 'EMP2', 14, 2, 0],
+[0, 0, 0, 'EMP3', 14, 3, 0],
+[0, 0, 0, 'EMP4', 14, 4, 0],
+[0, 0, 0, 'EMP5', 14, 5, 0],
+[0, 0, 0, 'EMP6', 14, 6, 0],
+[0, 0, 0, 'ACE7',  0, 7, 0],
+[0, 0, 0, 'ACE8',  0, 8, 0],
+[0, 0, 0, 'ACE9',  0, 9, 0],
+[0, 0, 0, 'ACE10', 0, 10, 0],
+[0, 0, 0, 'EMP11', 0, 11, 0],
+[0, 0, 0, 'EMP12', 0, 12, 0]
 ]
 
 
@@ -159,18 +159,24 @@ const mainElement = document.querySelector('main')
 /* ####################################### */
 
 mainElement.addEventListener('click', (evt) => {
+    console.log(evt.target.id)
+    if (evt.target.id === 'empty') return;
+    let card = evt.target.id 
+    flip(card)
 
-    // if (evt.target.id ==="shuffle" || evt.target.id ==="stock"){
-    //     shuffleDeck()
-    //     return
+    //if cardLocation 
+    // //let isCardonTop = isCardTopAndDown(evt.target.id)
+    // //references array library through is CardTopAndDown; if card is on top, flip
+    // if (isCardTopAndDown(evt.target.id) === true){
+    //     flipCard(cardArray[evt.target.id])
     // }
 
-    //let isCardonTop = isCardTopAndDown(evt.target.id)
-    //references array library through is CardTopAndDown; if card is on top, flip
-    if (isCardTopAndDown(evt.target.id) === true){
-        flipCard(cardArray[evt.target.id])
-    }
-    render()
+    removeDivs()
+    updateCards(startingTableau);
+
+    evt.target.parentNode.classList.remove("card-selection")
+  
+    render();
 })
 
 /* ########### DRAG START ########### */
@@ -232,14 +238,12 @@ mainElement.addEventListener('drop', (evt) => {
     updateBottomCard(cardOnBottom[0])
     updateTopCard(cardAtPlay[0])
 
-    //moveCards()
-    
-    relocateCard()
+    if (check()) {
+        relocateCard()
+    }
     removeDivs()
     updateCards(startingTableau);
 
-    console.log(checkAddFoundation())
-    console.log(checkAddTableau())
 
 
     evt.target.parentNode.classList.remove("card-selection")
@@ -257,12 +261,6 @@ mainElement.addEventListener('drop', (evt) => {
 init();
 
 
-// -> moves the card 
-
-// checkMove() -> checks if the move is possible
-
-
-
 
 
 
@@ -275,35 +273,75 @@ init();
 // checks to see if the card can be dropped on foundation (aces)
 
 // checkAddFoundation() -> Returns true if the card can be dropped on the foundation area (top area)
-// 
-function checkAddFoundation() {
-    let topCard = theTopCard;
-    let bottomCard = theBottomCard
-    // The following checks to see if the bottom card is located in the columns 7->10 (foundation)
-    if (bottomCard[5] > 6 && bottomCard[5] < 11){
-        // if -> (1) top card is an ace && top value - bottom value = 1
-        if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) return true;
-        // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
-        if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
-            return true;
-        } else return false;
-    }
-}
+
+// function checkAddFoundation() {
+//     let topCard = theTopCard;
+//     let bottomCard = theBottomCard
+//     // The following checks to see if the bottom card is located in the columns 7->10 (foundation)
+//     if (bottomCard[5] > 6 && bottomCard[5] < 11){
+//         // if -> (1) top card is an ace && top value - bottom value = 1
+//         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) return true;
+//         // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
+//         if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
+//             return true;
+//         } 
+//     } else return false;
+// }
 
 
-// checkAddTableau() -> Checks to see if the card can be placed in the tableau area (bottom area)
-// 
-function checkAddTableau(){
+// // checkAddTableau() -> Checks to see if the card can be placed in the tableau area (bottom area)
+// // 'can card be placed' ? true : false
+// function checkAddTableau(){
+//     let topCard = theTopCard;
+//     let bottomCard = theBottomCard
+//     if (bottomCard[5] < 7){
+//         // if -> (1) top card is a King && (2) top value - bottom value = -1
+//         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === -1) return true;
+//         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
+//         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) return true ;
+//     } else return false       
+// }
+
+// state information
+// CARD_LIST[i] = card;
+// card[0]= suit
+// card[1]= color
+// card[2]= up or down
+// card[3]= cardname
+// card[4]= value
+// card[5]= col position
+// card[6]= row position
+
+
+function check(){
     let topCard = theTopCard;
     let bottomCard = theBottomCard
     if (bottomCard[5] < 7){
+        console.log('A')
         // if -> (1) top card is a King && (2) top value - bottom value = -1
-        if (topCard[4] === 1 && topCard[4] - bottomCard[4] === -1) return true;
+        if (topCard[4] === 13 && topCard[4] - bottomCard[4] === -1) {
+            console.log('B')
+            return true};
         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
-        if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) return true ;
+        if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) {
+            console.log('C')
+            return true};
+    } else if (bottomCard[5] > 6 && bottomCard[5] < 11){
+        // if -> (1) top card is an ace && top value - bottom value = 1
+        if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) {
+            console.log('D')
+            return true};
+        // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
+        if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
+            console.log('E')
+            return true;
+        } 
     }
-    return false       
+    console.log('F')
+    return false;   
 }
+
+
 
 function checkAddEmpty(){
     if (cardOnBottom[0] === empty){
@@ -311,22 +349,46 @@ function checkAddEmpty(){
 }
 
 
+// flip(card) => flips card by changing position [2] of the array
+// function flip(card){
+//     return card[2] > 0 ? card.splice(2, 1, -1) : card.splice(2, 1, 1)
+// }
+
+// isFlippable(card) => returns true if the card can be flipped
+// meets the condition if
+// card is on top of stack, card[6] != 0, 
+function flip(card) {
+    let cardId
+    if (typeof card === 'array'){
+        cardId = card[3]
+    } else if (typeof card === 'string'){
+        cardId = card
+    }
+    startingTableau.forEach((column, colIndex) => {
+        column.forEach((cardArray, rowIndex) => {
+            if (cardId === cardArray[3] && cardArray[6] === column.length-1){
+                let status = parseInt(-cardArray[2])
+                cardArray.splice(2, 1, status)
+            }
+        })
+    })
+}
 
 /* --- find the card position and output results as a list that is ordered --- */
 /* --- takes the column number, and ouputs a list of cards--- */
-const findListOfCardsUnderneath = (searchColumn) => {
-    const arrayOfLists = []
-    for (const key in cardArray){
-        if (cardArray[key][5] === searchColumn){
-            arrayOfLists.push(cardArray[key])
-        }
-    }
-    // this returns the list sorted in order, with the top most card at the last index
-    arrayOfLists.sort(function(a, b) {
-        return a[5] - b[5]
-    })
-    return arrayOfLists
-}
+// const findListOfCardsUnderneath = (searchColumn) => {
+//     const arrayOfLists = []
+//     for (const key in cardArray){
+//         if (cardArray[key][5] === searchColumn){
+//             arrayOfLists.push(cardArray[key])
+//         }
+//     }
+//     // this returns the list sorted in order, with the top most card at the last index
+//     arrayOfLists.sort(function(a, b) {
+//         return a[5] - b[5]
+//     })
+//     return arrayOfLists
+// }
 
 // isEmptyStack() -> returns boolean if the stack is empty (true) or not (false). 
 function isEmptyStack(){
@@ -347,12 +409,11 @@ function deleteArray(array){
 // unfinished, untested
 // returns the card column and row as array [col, row]
 function findCardLocation(card){
-    //card is a string or array. 
     let cardId;
     let cardColRow = []
-    if (typeof card === array){
+    if (typeof card === 'array'){
         cardId = card[3]
-    } else if (typeof card === string){
+    } else if (typeof card === 'string'){
         cardId = card
     }
     startingTableau.forEach((column, colIndex) => {
@@ -387,6 +448,7 @@ function updateBottomCard(card){
         column.forEach((cardArray, rowIndex) => {
             if (card === cardArray[3]){
                 theBottomCard = startingTableau[colIndex][rowIndex].slice()
+                console.log(theBottomCard)
             }
         })
     })
@@ -429,6 +491,7 @@ function updateCards(array){
 function relocateCard(){
     let topCardColIdx = theTopCard[5]
     let botCardColIdx = theBottomCard[5]
+    if (theTopCard[6] === 0) return;
     let restack = startingTableau[parseInt(topCardColIdx)].pop()    
     startingTableau[parseInt(botCardColIdx)].push(restack)
 }
@@ -451,13 +514,15 @@ function getDisplayImage(card) {
         newImage.id = card[3]
         return newImage;
     } else if ('0' == card[2]){
-        newImage.src = CARD_IMAGES[card[3]]
+        const cardName = card[3].match(/[A-Z]{3}/gm)
+        newImage.src = CARD_IMAGES[cardName]
         newImage.alt = card[2]
         newImage.id = card[3]
         return newImage;
     }
 } 
 
+// removeDivs() => clears the board of all cards to reset
 function removeDivs() {
     startingTableau.forEach((column, colIndex) => {
         column.forEach((card, rowIndex) => {
@@ -471,7 +536,6 @@ function removeDivs() {
 // and sets that card in a div that is further appended to the corresponding column div. 
 // Works with getDisplayImage() to identify the correct image file. 
 function renderBoard() {
-
     // removes the initial image to render the board correctly.   
     startingTableau.forEach((column, colIndex) => {
         let columnElement = document.getElementById(`c${colIndex}`)
@@ -486,17 +550,13 @@ function renderBoard() {
 }
     
 
-// flipsCards() -> Ensures that cards in the tableau are 
-function flipsCards(array){
-}
 
 // shuffle(array) -> Randomizes an array, and returns a new random array. 
 function shuffle(array) {
     let newArray = [];
     for (let i = array.length-1; i > -1; i--){
         let n = Math.floor(Math.random()*i);
-        newArray.push(array.splice(n, 1)[0])
-    }
+        newArray.push(array.splice(n, 1)[0])}
     return newArray
 }
 
@@ -521,8 +581,7 @@ function renderInitialBoard(array) {
                 array[n].splice(5, 1, colIndex); 
                 array[n].splice(6, 1, rowIndex); 
                 startingTableau[colIndex].splice(rowIndex, 1, array[n]);
-            n--;
-        }
+            n--;}
         })
     })
 }
@@ -531,7 +590,6 @@ function renderInitialBoard(array) {
 function render(){
 
     renderBoard()
-    console.log(startingTableau)
 };
 
 
