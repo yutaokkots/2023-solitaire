@@ -9,21 +9,21 @@
 // card[6]= row position
 
 const BOARD_INIT = [
-[0, 0, 0, 'EMP0', 14, 0, 0],
-[0, 0, 0, 'EMP1', 14, 1, 0],
-[0, 0, 0, 'EMP2', 14, 2, 0],
-[0, 0, 0, 'EMP3', 14, 3, 0],
-[0, 0, 0, 'EMP4', 14, 4, 0],
-[0, 0, 0, 'EMP5', 14, 5, 0],
-[0, 0, 0, 'EMP6', 14, 6, 0],
-[0, 0, 0, 'ACE7',  0, 7, 0],
-[0, 0, 0, 'ACE8',  0, 8, 0],
-[0, 0, 0, 'ACE9',  0, 9, 0],
-[0, 0, 0, 'ACE10', 0, 10, 0],
-[0, 0, 0, 'EMP11', 0, 11, 0],
-[0, 0, 0, 'EMP12', 0, 12, 0]
+[0, 0, 0, 'EMP0',  14, 0,  0],
+[0, 0, 0, 'EMP1',  14, 1,  0],
+[0, 0, 0, 'EMP2',  14, 2,  0],
+[0, 0, 0, 'EMP3',  14, 3,  0],
+[0, 0, 0, 'EMP4',  14, 4,  0],
+[0, 0, 0, 'EMP5',  14, 5,  0],
+[0, 0, 0, 'EMP6',  14, 6,  0],
+[0, 0, 0, 'ACE7',  0,  7,  0],
+[0, 0, 0, 'ACE8',  0,  8,  0],
+[0, 0, 0, 'ACE9',  0,  9,  0],
+[0, 0, 0, 'ACE10', 0,  10, 0],
+[0, 0, 0, 'SEP',   15, 11, 0],
+[0, 0, 0, 'EMP12', 0,  12, 0],
+[0, 0, 0, 'SHF',   0,  13, 0]
 ]
-
 
 const CARD_LIST = [
     [1,     2, -1, 'S01',  1, 12, 0],
@@ -81,65 +81,67 @@ const CARD_LIST = [
     [1000, -2, -1, 'D11', 11, 12, 0],
     [1000, -2, -1, 'D12', 12, 12, 0],
     [1000, -2, -1, 'D13', 13, 12, 0]
-    ]
+]
 
-    const CARD_IMAGES = {
-        S01: 'images/single_cards/SPADE-1.svg',
-        S02: 'images/single_cards/SPADE-2.svg',
-        S03: 'images/single_cards/SPADE-3.svg',
-        S04: 'images/single_cards/SPADE-4.svg',
-        S05: 'images/single_cards/SPADE-5.svg',
-        S06: 'images/single_cards/SPADE-6.svg',
-        S07: 'images/single_cards/SPADE-7.svg',
-        S08: 'images/single_cards/SPADE-8.svg',
-        S09: 'images/single_cards/SPADE-9.svg',
-        S10: 'images/single_cards/SPADE-10.svg',
-        S11: 'images/single_cards/SPADE-11-JACK.svg',
-        S12: 'images/single_cards/SPADE-12-QUEEN.svg',
-        S13: 'images/single_cards/SPADE-13-KING.svg',
-        H01: 'images/single_cards/HEART-1.svg',
-        H02: 'images/single_cards/HEART-2.svg',
-        H03: 'images/single_cards/HEART-3.svg',
-        H04: 'images/single_cards/HEART-4.svg',
-        H05: 'images/single_cards/HEART-5.svg',
-        H06: 'images/single_cards/HEART-6.svg',
-        H07: 'images/single_cards/HEART-7.svg',
-        H08: 'images/single_cards/HEART-8.svg',
-        H09: 'images/single_cards/HEART-9.svg',
-        H10: 'images/single_cards/HEART-10.svg',
-        H11: 'images/single_cards/HEART-11-JACK.svg',
-        H12: 'images/single_cards/HEART-12-QUEEN.svg',
-        H13: 'images/single_cards/HEART-13-KING.svg',
-        C01: 'images/single_cards/CLUB-1.svg',
-        C02: 'images/single_cards/CLUB-2.svg',
-        C03: 'images/single_cards/CLUB-3.svg',
-        C04: 'images/single_cards/CLUB-4.svg',
-        C05: 'images/single_cards/CLUB-5.svg',
-        C06: 'images/single_cards/CLUB-6.svg',
-        C07: 'images/single_cards/CLUB-7.svg',
-        C08: 'images/single_cards/CLUB-8.svg',
-        C09: 'images/single_cards/CLUB-9.svg',
-        C10: 'images/single_cards/CLUB-10.svg',
-        C11: 'images/single_cards/CLUB-11-JACK.svg',
-        C12: 'images/single_cards/CLUB-12-QUEEN.svg',
-        C13: 'images/single_cards/CLUB-13-KING.svg',
-        D01: 'images/single_cards/DIAMOND-1.svg',
-        D02: 'images/single_cards/DIAMOND-2.svg',
-        D03: 'images/single_cards/DIAMOND-3.svg',
-        D04: 'images/single_cards/DIAMOND-4.svg',
-        D05: 'images/single_cards/DIAMOND-5.svg',
-        D06: 'images/single_cards/DIAMOND-6.svg',
-        D07: 'images/single_cards/DIAMOND-7.svg',
-        D08: 'images/single_cards/DIAMOND-8.svg',
-        D09: 'images/single_cards/DIAMOND-9.svg',
-        D10: 'images/single_cards/DIAMOND-10.svg',
-        D11: 'images/single_cards/DIAMOND-11-JACK.svg',
-        D12: 'images/single_cards/DIAMOND-12-QUEEN.svg',
-        D13: 'images/single_cards/DIAMOND-13-KING.svg',
-        BAK: 'images/single_cards/BACK-2.svg',
-        EMP: 'images/single_cards/EMPTY.svg',
-        ACE: 'images/single_cards/ACE.svg'
-    }
+const CARD_IMAGES = {
+    S01: 'images/single_cards/SPADE-1.svg',
+    S02: 'images/single_cards/SPADE-2.svg',
+    S03: 'images/single_cards/SPADE-3.svg',
+    S04: 'images/single_cards/SPADE-4.svg',
+    S05: 'images/single_cards/SPADE-5.svg',
+    S06: 'images/single_cards/SPADE-6.svg',
+    S07: 'images/single_cards/SPADE-7.svg',
+    S08: 'images/single_cards/SPADE-8.svg',
+    S09: 'images/single_cards/SPADE-9.svg',
+    S10: 'images/single_cards/SPADE-10.svg',
+    S11: 'images/single_cards/SPADE-11-JACK.svg',
+    S12: 'images/single_cards/SPADE-12-QUEEN.svg',
+    S13: 'images/single_cards/SPADE-13-KING.svg',
+    H01: 'images/single_cards/HEART-1.svg',
+    H02: 'images/single_cards/HEART-2.svg',
+    H03: 'images/single_cards/HEART-3.svg',
+    H04: 'images/single_cards/HEART-4.svg',
+    H05: 'images/single_cards/HEART-5.svg',
+    H06: 'images/single_cards/HEART-6.svg',
+    H07: 'images/single_cards/HEART-7.svg',
+    H08: 'images/single_cards/HEART-8.svg',
+    H09: 'images/single_cards/HEART-9.svg',
+    H10: 'images/single_cards/HEART-10.svg',
+    H11: 'images/single_cards/HEART-11-JACK.svg',
+    H12: 'images/single_cards/HEART-12-QUEEN.svg',
+    H13: 'images/single_cards/HEART-13-KING.svg',
+    C01: 'images/single_cards/CLUB-1.svg',
+    C02: 'images/single_cards/CLUB-2.svg',
+    C03: 'images/single_cards/CLUB-3.svg',
+    C04: 'images/single_cards/CLUB-4.svg',
+    C05: 'images/single_cards/CLUB-5.svg',
+    C06: 'images/single_cards/CLUB-6.svg',
+    C07: 'images/single_cards/CLUB-7.svg',
+    C08: 'images/single_cards/CLUB-8.svg',
+    C09: 'images/single_cards/CLUB-9.svg',
+    C10: 'images/single_cards/CLUB-10.svg',
+    C11: 'images/single_cards/CLUB-11-JACK.svg',
+    C12: 'images/single_cards/CLUB-12-QUEEN.svg',
+    C13: 'images/single_cards/CLUB-13-KING.svg',
+    D01: 'images/single_cards/DIAMOND-1.svg',
+    D02: 'images/single_cards/DIAMOND-2.svg',
+    D03: 'images/single_cards/DIAMOND-3.svg',
+    D04: 'images/single_cards/DIAMOND-4.svg',
+    D05: 'images/single_cards/DIAMOND-5.svg',
+    D06: 'images/single_cards/DIAMOND-6.svg',
+    D07: 'images/single_cards/DIAMOND-7.svg',
+    D08: 'images/single_cards/DIAMOND-8.svg',
+    D09: 'images/single_cards/DIAMOND-9.svg',
+    D10: 'images/single_cards/DIAMOND-10.svg',
+    D11: 'images/single_cards/DIAMOND-11-JACK.svg',
+    D12: 'images/single_cards/DIAMOND-12-QUEEN.svg',
+    D13: 'images/single_cards/DIAMOND-13-KING.svg',
+    BAK: 'images/single_cards/BACK-2.svg',
+    EMP: 'images/single_cards/EMPTY.svg',
+    ACE: 'images/single_cards/ACE.svg',
+    SHF: 'images/single_cards/SHUFFLE.svg',
+    SEP: 'images/single_cards/SEPARATOR.svg'
+}
 
 // -- initialization of variables -- //
 let startingTableau;
@@ -151,7 +153,6 @@ let cardOnBottom;
 let theTopCard;
 let theBottomCard;
 
-
 const mainElement = document.querySelector('main')
 
 /* ####################################### */
@@ -159,18 +160,14 @@ const mainElement = document.querySelector('main')
 /* ####################################### */
 
 mainElement.addEventListener('click', (evt) => {
-    console.log(evt.target.id)
-    if (evt.target.id === 'empty') return;
     let card = evt.target.id 
+    if (card === 'empty') return;
+    if (card === 'SHF'){
+        clickShuffle()
+    }
     flip(card)
 
-    //if cardLocation 
-    // //let isCardonTop = isCardTopAndDown(evt.target.id)
-    // //references array library through is CardTopAndDown; if card is on top, flip
-    // if (isCardTopAndDown(evt.target.id) === true){
-    //     flipCard(cardArray[evt.target.id])
-    // }
-
+    console.log(startingTableau)
     removeDivs()
     updateCards(startingTableau);
 
@@ -349,24 +346,19 @@ function checkAddEmpty(){
 }
 
 
-// flip(card) => flips card by changing position [2] of the array
-// function flip(card){
-//     return card[2] > 0 ? card.splice(2, 1, -1) : card.splice(2, 1, 1)
-// }
-
-// isFlippable(card) => returns true if the card can be flipped
-// meets the condition if
-// card is on top of stack, card[6] != 0, 
+// flip(card) => flips card by changing position [2] of the array, if:
+// card is on top of stack
+// card[6] != 0, 
 function flip(card) {
     let cardId
-    if (typeof card === 'array'){
+    if (typeof card === 'array') {
         cardId = card[3]
-    } else if (typeof card === 'string'){
+    } else if (typeof card === 'string') {
         cardId = card
     }
     startingTableau.forEach((column, colIndex) => {
         column.forEach((cardArray, rowIndex) => {
-            if (cardId === cardArray[3] && cardArray[6] === column.length-1){
+            if (cardId === cardArray[3] && cardArray[6] === column.length-1) {
                 let status = parseInt(-cardArray[2])
                 cardArray.splice(2, 1, status)
             }
@@ -398,6 +390,22 @@ function isEmptyStack(){
 /* ####################################### */
 /* ############## FUNCTIONS ############## */
 /* ####################################### */
+// [[EMP],[],[],[],[]]
+function clickShuffle(){
+    if (startingTableau[12].length < 2) return;
+    if (startingTableau[12].length < 4) {
+        while (startingTableau[12].length < 2) {
+            startingTableau[11].push(startingTableau[12].pop())
+        };
+    } else {
+        for (let n=3; n > 0; n--){
+            startingTableau[11].push(startingTableau[12].pop())
+        }
+    }
+
+}
+
+
 
 // deleteArray() -> deletes the entire contents of an array
 function deleteArray(array){
@@ -405,9 +413,8 @@ function deleteArray(array){
 }
 
 
-//function  (bottomCard, topCard) 
-// unfinished, untested
-// returns the card column and row as array [col, row]
+// findCardLocation(card) => returns the [col, row] information of the card as an array
+// currently not being used. 
 function findCardLocation(card){
     let cardId;
     let cardColRow = []
@@ -428,7 +435,9 @@ function findCardLocation(card){
 }
 
 
-// 'outputCard(card)' -> takes a string parameter, 'card', and returns the array of the card 
+// 'updateTopCard(card)' -> takes a string parameter, 'card' (e.g. 'H11' => Heart-11)
+//  and reassigns the global variable, 'theTopCard' with a slice of that card information. 
+// Why -> to assign the top card info to 'theTopCard' upon addEventListener(drop) activation
 function updateTopCard(card){
     deleteArray(theTopCard)
     startingTableau.forEach((column, colIndex) => {
@@ -440,8 +449,9 @@ function updateTopCard(card){
     })
 }
 
-
-// 'outputCard(card)' -> takes a string parameter, 'card', and returns the array of the card 
+// 'updateBottomCard(card)' -> takes a string parameter, 'card' (e.g. 'D12' => Diamond-12)
+//  and reassigns the global variable, 'theTopCard' with a slice of that card information. 
+// Why -> to assign the bottom card info to 'theBottomCard' upon addEventListener(drop) activation
 function updateBottomCard(card){
     deleteArray(theBottomCard)
     startingTableau.forEach((column, colIndex) => {
@@ -486,14 +496,25 @@ function updateCards(array){
     })
 }
 
-// relocateCard() -> updates the position information stored inside the cards after moving the card.
-// Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
+// relocateCard() -> updates the position information inside the startingTableau. 
+// Using pop() and push(), moves the card from where the user dragged the card, to where
+// ther user dropped the card. 
 function relocateCard(){
+    // Base-case: If the card is flipped down, or is a placeholder card, escape.
+    if (theTopCard[2] <= 0) return;
     let topCardColIdx = theTopCard[5]
+    let topCardRowIdx = theTopCard[6]
     let botCardColIdx = theBottomCard[5]
-    if (theTopCard[6] === 0) return;
-    let restack = startingTableau[parseInt(topCardColIdx)].pop()    
-    startingTableau[parseInt(botCardColIdx)].push(restack)
+    // A user drags a card in the middle of stack - 
+    // if: dragged card is not top card, splice
+    // else : pop and push the top card to the new location
+    if (theTopCard[6] !== startingTableau[parseInt(topCardColIdx)].length-1){
+        let restack = startingTableau[parseInt(topCardColIdx)].splice(topCardRowIdx, startingTableau[parseInt(topCardColIdx)].length - topCardColIdx)    
+        startingTableau[parseInt(botCardColIdx)].push(...restack)
+    } else{
+        let restack = startingTableau[parseInt(topCardColIdx)].pop()    
+        startingTableau[parseInt(botCardColIdx)].push(restack)
+    }
 }
 
 // getDisplayImage() -> The parameter is a card array. Identifies the type of card ('card[3]'),
@@ -612,7 +633,8 @@ function init() {
         [],
         [],
         [],
-        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        []
     ]  
     initalizeStartingTableau()
     renderInitialBoard(shuffledCards)
