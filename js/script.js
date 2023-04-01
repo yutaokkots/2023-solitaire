@@ -22,7 +22,7 @@ const BOARD_INIT = [
 [0, 0, 0, 'ACE10', 0,  10, 0],
 [0, 0, 0, 'SEP',   15, 11, 0],
 [0, 0, 0, 'EMP12', 0,  12, 0],
-[0, 0, 0, 'SHF',   0,  13, 0]
+[0, 0, 0, 'EMP13', 0,  13, 0]
 ]
 
 const CARD_LIST = [
@@ -162,17 +162,18 @@ const mainElement = document.querySelector('main')
 mainElement.addEventListener('click', (evt) => {
     let card = evt.target.id 
     if (card === 'empty') return;
-    if (card === 'SHF'){
+    if (evt.target.outerText === "Play"){
         clickShuffle()
     }
+    console.log(card)
+    console.log(findCardLocation(card)[0])
+    //if (findCardLocation(card)[0] > 11) return;
     flip(card)
 
-    console.log(startingTableau)
     removeDivs()
     updateCards(startingTableau);
 
     evt.target.parentNode.classList.remove("card-selection")
-  
     render();
 })
 
@@ -227,8 +228,6 @@ mainElement.addEventListener('drop', (evt) => {
     deactivateDragOver()
     if (evt.target.id === 'empty'){
         cardOnBottom.unshift(evt.target.id )
-        console.log(cardOnBottom)
-
         return;
     }
     cardOnBottom.unshift(evt.target.id)
@@ -241,14 +240,10 @@ mainElement.addEventListener('drop', (evt) => {
     removeDivs()
     updateCards(startingTableau);
 
-
-
     evt.target.parentNode.classList.remove("card-selection")
   
     render();
 });
-
-
 
 
 
@@ -392,19 +387,39 @@ function isEmptyStack(){
 /* ####################################### */
 // [[EMP],[],[],[],[]]
 function clickShuffle(){
-    if (startingTableau[12].length < 2) return;
+    // basecase: If there is only one card in col[12] (placeholder)
+    if (startingTableau[12].length < 2) {
+        console.log('this path')
+        if (startingTableau[13].length > 1){
+            startingTableau[12].push(...startingTableau[13].splice(1, startingTableau[13].length))
+        }
+        return;}
+
+    // if there is more than one card, transfer cards from 'deal' [11] deck to 'waste' deck [12]
+    if (startingTableau[11].length > 1){
+        let noCardsToMove = startingTableau[11].length - 1
+        startingTableau[13].push(...startingTableau[11].splice(1, noCardsToMove))
+    }
+
+    //
     if (startingTableau[12].length < 4) {
-        while (startingTableau[12].length < 2) {
-            startingTableau[11].push(startingTableau[12].pop())
-        };
+        startingTableau[11].push(startingTableau[12].pop())
     } else {
         for (let n=3; n > 0; n--){
             startingTableau[11].push(startingTableau[12].pop())
         }
     }
-
+    turnOverCards()
+    
 }
 
+// turnOverCards() -> Turns over the cards in the 'deal' and 'waste'
+function turnOverCards(){
+    startingTableau[12].forEach((card) => {
+        if (card[2] !== 0) card.splice(2, 1, -1)});
+    startingTableau[13].forEach((card) => {
+        if (card[2] !== 0) card.splice(2, 1, -1)})
+}
 
 
 // deleteArray() -> deletes the entire contents of an array
@@ -486,11 +501,9 @@ function updateCards(array){
         column.forEach((card, rowIndex) => {
             if (card[5] !== colIndex){
                 card.splice(5, 1, colIndex)
-                console.log("triggered")
             }
             if (card[6] !== rowIndex){
                 card.splice(6, 1, rowIndex)
-                console.log("triggered")
             }
         })
     })
@@ -506,7 +519,7 @@ function relocateCard(){
     let topCardRowIdx = theTopCard[6]
     let botCardColIdx = theBottomCard[5]
     // A user drags a card in the middle of stack - 
-    // if: dragged card is not top card, splice
+    // if: dragged card is not top card, splice out the number of cards from that card to top card
     // else : pop and push the top card to the new location
     if (theTopCard[6] !== startingTableau[parseInt(topCardColIdx)].length-1){
         let restack = startingTableau[parseInt(topCardColIdx)].splice(topCardRowIdx, startingTableau[parseInt(topCardColIdx)].length - topCardColIdx)    
@@ -569,13 +582,22 @@ function renderBoard() {
         })
     })
 }
-    
 
+// renderFlipTopCard() -> reads through 'startingTableau', and selectively makes top card flip up
+function renderFlipTopCard(){
+    startingTableau.forEach((column, colIndex) => {
+        if (column.length-1 > 0 ){
+                if (column[column.length-1][2] === -1 && column[column.length-1][5] < 12){
+                    column[column.length-1].splice(2, 1, 1)
+                }
+        }
+    })
+}
 
 // shuffle(array) -> Randomizes an array, and returns a new random array. 
 function shuffle(array) {
     let newArray = [];
-    for (let i = array.length-1; i > -1; i--){
+    for (let i = array.length; i > -1; i--){
         let n = Math.floor(Math.random()*i);
         newArray.push(array.splice(n, 1)[0])}
     return newArray
@@ -609,9 +631,10 @@ function renderInitialBoard(array) {
 
 // render() -> Renders the board.
 function render(){
-
+    renderFlipTopCard()
     renderBoard()
-};
+    console.log(startingTableau)
+};  
 
 
 function init() {

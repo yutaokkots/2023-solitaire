@@ -73,7 +73,6 @@ main {
     display:flex;
     justify-content: flex-end;
     cursor: pointer;
-
 }
 
 #buttonArea div:nth-last-child(1){

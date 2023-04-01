@@ -14,7 +14,7 @@ main {
     background-color: #617143;
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-template-rows: 20vh 30vh 60vh;
+    grid-template-rows: 20vh 10vh 30vh 60vh;
     grid-template-areas: 
     tl tc tr
     cl cc cr
@@ -22,6 +22,37 @@ main {
     color: #EDE9D5;
     font-family: 'Source Serif Pro', arial, serif;
 }
+
+/* erase tthis section after done*/
+.row1, .row2, .row3 {
+    border: solid red
+}
+/* above */
+
+#buttonArea {
+    height: 30px;
+    display:flex;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+#buttonArea div:nth-last-child(1){
+    background-color: rgba(69, 90, 96, 0.5);
+    width: 20vw;
+    height: 30px;
+    border-top-left-radius: 2rem;
+    border-top-right-radius: 0.5rem;
+    font-size: 0.8rem;
+}
+#buttonArea h4 {
+    margin-top: 0.3rem;
+    text-align: center;
+    color: gainsboro;
+}
+.button {
+    cursor: pointer;
+}
+
 
 /* div container that holds the cards */
 #test {
@@ -32,8 +63,6 @@ main {
 .card-selection {
 
 }
-
-
 
 /* allows the svg to stick to same size in whole document */
 img {
@@ -57,6 +86,8 @@ img {
 .tab div{
     width: var(--card-width);
 }
+
+
 /* allows the cards to stack */
 .tableau .stack div{
     height:0.5rem;
@@ -65,18 +96,33 @@ img {
     width: auto;
     background-color: var(--play-area-color);
 }
+
 .tableau .stack div:nth-child(2){
     height:0;
 }
+
 .foundation .stack div {
     height: 0;
 }
+.foundation .deal div, .foundation .waste div{
+    height:0.5rem;
+}
+.foundation .waste div{
+    height:0.02rem;
+}
 
+.foundation .deal div:first-child, .foundation .waste div:first-child{
+    height:0;
+}
+.foundation .deal div:nth-child(2), .foundation .waste div:nth-child(2){
+    height:0;
+}
 
 .marker{
+    border: solid red;
     height:0;
     padding-top: 0;
-    border-bottom: 0.15rem solid #EDE9D5;
+    border-top: 0.15rem solid #EDE9D5;
     border-radius: 0.2rem;
     width:100%;
 
