@@ -8,6 +8,23 @@
 // card[5]= col position
 // card[6]= row position
 
+const BOARD_INIT = [
+[0, 0, 0, 'EMP', 14, 0, 0],
+[0, 0, 0, 'EMP', 14, 1, 0],
+[0, 0, 0, 'EMP', 14, 2, 0],
+[0, 0, 0, 'EMP', 14, 3, 0],
+[0, 0, 0, 'EMP', 14, 4, 0],
+[0, 0, 0, 'EMP', 14, 5, 0],
+[0, 0, 0, 'EMP', 14, 6, 0],
+[0, 0, 0, 'ACE',  0, 7, 0],
+[0, 0, 0, 'ACE',  0, 8, 0],
+[0, 0, 0, 'ACE',  0, 9, 0],
+[0, 0, 0, 'ACE', 0, 10, 0],
+[0, 0, 0, 'EMP', 0, 11, 0],
+[0, 0, 0, 'EMP', 0, 12, 0]
+]
+
+
 const CARD_LIST = [
     [1,     2, -1, 'S01',  1, 12, 0],
     [1,     2, -1, 'S02',  2, 12, 0],
@@ -120,18 +137,27 @@ const CARD_LIST = [
         D12: 'images/single_cards/DIAMOND-12-QUEEN.svg',
         D13: 'images/single_cards/DIAMOND-13-KING.svg',
         BAK: 'images/single_cards/BACK-2.svg',
-        EMP: 'images/single_cards/EMPTY.svg'
+        EMP: 'images/single_cards/EMPTY.svg',
+        ACE: 'images/single_cards/ACE.svg'
     }
 
 // -- initialization of variables -- //
 let startingTableau;
 let shuffledCards;
 
+// global variables for top card and bottom card
+let cardAtPlay;
+let cardOnBottom;
+let theTopCard;
+let theBottomCard;
+
 
 const mainElement = document.querySelector('main')
 
 
-// -- event listeners -- //
+/* ####################################### */
+/* ########### EVENT LISTENERS ########### */
+/* ####################################### */
 
 mainElement.addEventListener('click', (evt) => {
 
@@ -147,6 +173,82 @@ mainElement.addEventListener('click', (evt) => {
     }
     render()
 })
+
+/* ########### DRAG START ########### */
+// dragstart -> 
+// (1) Add the dragged card into a global variable (array), 'cardAtPlay'; and
+// (2) deletes content of the global variable (array), 'cardOnBottom', (thereby resetting it).
+mainElement.addEventListener('dragstart', (evt) => {
+    let target = evt.target;
+    cardAtPlay.unshift(target.id)
+    deleteArray(cardOnBottom)
+})
+
+/* ########### DRAG ENTER ########### */
+// dragenter -> 
+// (1) Responds only if the 'evt.target.alt' = 1 (which is set by 'getDisplayImage()'); and
+// (2) When something is dragged into an area, the css is modified to show an outline of the drop area; and
+// (3) the event object is assigned to the global variable, 'cardOnBottom'.
+mainElement.addEventListener('dragenter', (evt) => {
+    if (evt.target.alt != 1) return;
+    if (evt.target.alt == undefined || evt.target.alt == null) return;
+    evt.target.parentNode.classList.add("card-selection");
+})
+
+/* ########### DRAG LEAVE ########### */
+// dragleave -> 
+// (1) When something is dragged out of area, the default activity of drag-over is prevented
+mainElement.addEventListener('dragleave', (evt) => {
+    if (evt.target.alt != 1) return;
+    if (evt.target.alt == undefined || evt.target.alt == null) return;
+    evt.target.parentNode.classList.remove("card-selection");
+    });  
+
+mainElement.addEventListener('dragover', (evt) => {
+        evt.preventDefault()
+})
+
+/* ########### DRAG OVER ########### */
+// call drag-over event and remove the default. This needs to occur when something is dropped
+const deactivateDragOver = () => {
+    mainElement.addEventListener('dragover', (evt) => {
+        cardOnBottom.unshift(evt.target.id)
+    })
+}
+
+/* ###########   DROP   ########### */
+// drop ->
+// (1) Adds the img id of the bottom image to the global variable, 'cardOnBottom',
+// dropped card event listener, removes the css of any outlined sections to remove the outline
+mainElement.addEventListener('drop', (evt) => {
+    // guards -> everything except div elements that contain data
+    deactivateDragOver()
+    if (evt.target.id === 'empty'){
+        cardOnBottom.unshift(evt.target.id )
+        console.log(cardOnBottom)
+
+        return;
+    }
+    cardOnBottom.unshift(evt.target.id)
+    updateBottomCard(cardOnBottom[0])
+    updateTopCard(cardAtPlay[0])
+
+    //moveCards()
+    spliceCards()
+
+    console.log(checkAddFoundation())
+    console.log(checkAddTableau())
+
+
+    evt.target.parentNode.classList.remove("card-selection")
+    //removeDivs()
+    render();
+});
+
+
+
+
+
 
 
 // -- functions-- //
@@ -170,39 +272,43 @@ init();
 
 // checks to see if the card can be dropped on foundation (aces)
 
-
-function checkAddFoundation(card) {
-    // let topCard = cardArray[cardAtPlay[0]];
-    // let foundationColNum = card.slice(5, card.length)
-    
+// checkAddFoundation() -> Returns true if the card can be dropped on the foundation area (top area)
+// 
+function checkAddFoundation() {
+    let topCard = theTopCard;
+    let bottomCard = theBottomCard
     // The following checks to see if the bottom card is located in the columns 7->10 (foundation)
     if (bottomCard[5] > 6 && bottomCard[5] < 11){
-        if (topCard[4] === 1){
+        // if -> (1) top card is an ace && top value - bottom value = 1
+        if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) return true;
+        // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
+        if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
             return true;
-        } 
-        if (bottomCard[0] === topCard[0] &&  topCard[4] - bottomCard[4] === 1){
-            return true;
-        } else {
-            false
-        }
-}}
-
-
-// checkAddTableau() -> Checks to see if the card can be placed in the tableau area. 
-function checkAddTableau(card){
-    let topCard = cardArray[cardAtPlay[0]];
-    let bottomCard = cardArray[card];
-    if (topCard[4] === 13){
-        if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
-            return true
+        } else return false;
     }
-    if (bottomCard[5] < 7){
-        //if the bottom card color and top card color together equal 0, then different colors
-        if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1){
-            return true
-        } 
-    }}   
 }
+
+
+// checkAddTableau() -> Checks to see if the card can be placed in the tableau area (bottom area)
+// 
+function checkAddTableau(){
+    let topCard = theTopCard;
+    let bottomCard = theBottomCard
+    if (bottomCard[5] < 7){
+        // if -> (1) top card is a King && (2) top value - bottom value = -1
+        if (topCard[4] === 1 && topCard[4] - bottomCard[4] === -1) return true;
+        // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
+        if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) return true ;
+    }
+    return false       
+}
+
+function checkAddEmpty(){
+    if (cardOnBottom[0] === empty){
+    }
+}
+
+
 
 /* --- find the card position and output results as a list that is ordered --- */
 /* --- takes the column number, and ouputs a list of cards--- */
@@ -220,9 +326,20 @@ const findListOfCardsUnderneath = (searchColumn) => {
     return arrayOfLists
 }
 
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
+// isEmptyStack() -> returns boolean if the stack is empty (true) or not (false). 
+function isEmptyStack(){
+
+}
+
+/* ####################################### */
+/* ############## FUNCTIONS ############## */
+/* ####################################### */
+
+// deleteArray() -> deletes the entire contents of an array
+function deleteArray(array){
+    array.splice(0, array.length)
+}
+
 
 //function  (bottomCard, topCard) 
 // unfinished, untested
@@ -247,29 +364,103 @@ function findCardLocation(card){
     })
 }
 
-//
-function moveCards(){
+
+// 'outputCard(card)' -> takes a string parameter, 'card', and returns the array of the card 
+function updateTopCard(card){
+    deleteArray(theTopCard)
+    startingTableau.forEach((column, colIndex) => {
+        column.forEach((cardArray, rowIndex) => {
+            if (card === cardArray[3]){
+                theTopCard = startingTableau[colIndex][rowIndex].slice()
+            }
+        })
+    })
 }
 
 
+// 'outputCard(card)' -> takes a string parameter, 'card', and returns the array of the card 
+function updateBottomCard(card){
+    deleteArray(theBottomCard)
+    startingTableau.forEach((column, colIndex) => {
+        column.forEach((cardArray, rowIndex) => {
+            if (card === cardArray[3]){
+                theBottomCard = startingTableau[colIndex][rowIndex].slice()
+            }
+        })
+    })
+}
 
 
+// //
+// function moveCards(){
+//     let topCard = theTopCard;
+//     let bottomCard = theBottomCard
+//     topCard.splice(5, 1, bottomCard[5])
+//     topCard.splice(6, 1, bottomCard[6]+1)
+//     console.log(topCard)
+//     console.log(bottomCard)
+//     console.log(startingTableau)
+// }
+// // [1, 2, 1, 'S07', 7, 3, 4] // top card
+// // [10, -2, 1, 'H08', 8, 5, 6] // bottom card
 
-// updateCards() -> updates the position information stored inside the cards after moving them.
+
+// updateCards() -> updates the position information stored inside the cards after moving the card.
 // Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
 function updateCards(array){
     array.forEach((column, colIndex) => {
         column.forEach((card, rowIndex) => {
             if (card[5] !== colIndex){
                 card.splice(5, 1, colIndex)
+                console.log("triggered")
             }
             if (card[6] !== rowIndex){
                 card.splice(6, 1, rowIndex)
+                console.log("triggered")
             }
         })
     })
 }
 
+// updateCards() -> updates the position information stored inside the cards after moving the card.
+// Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
+function spliceCards(){
+    let topCardColIdx = theTopCard[5]
+    let topCardRowIdx = theTopCard[6]
+    let botCardColIdx = theBottomCard[5]
+    let botCardRowIdx = theBottomCard[5]
+    let stackSize = startingTableau[topCardColIdx].length
+    let removeNum = stackSize - theTopCard[6]
+    console.log(theTopCard);
+    console.log(startingTableau[topCardColIdx]);
+    console.log(topCardRowIdx);
+    let restack = startingTableau[topCardColIdx].splice(topCardRowIdx+1, removeNum) 
+    console.log(restack)
+    startingTableau[botCardColIdx].push(restack)
+    
+    // topCard.splice(5, 1, bottomCard[5])
+    // column = bottomCard[5]
+    // row = bottomCard[6]+1
+    // topCard.splice(6, 1, bottomCard[6]+1)
+    // [1, 2, 1, 'S07', 7, 3, 4] // top card
+// [10, -2, 1, 'H08', 8, 5, 6] // bottom card
+
+    // array.forEach((column, colIndex) => {
+    //     column.forEach((card, rowIndex) => {
+    //         if (card[5] === bottomCard[5])
+
+
+            // if (card[5] !== colIndex){
+            //     //card.splice(5, 1, colIndex)
+            //     console.log("triggered")
+            // }
+            // if (card[6] !== rowIndex){
+            //     //card.splice(6, 1, rowIndex)
+            //     console.log("triggered")
+            // }
+    //     })
+    // })
+}
 
 // getDisplayImage() -> The parameter is a card array. Identifies the type of card ('card[3]'),
 // retrieves it from the CARD_IMAGES object, and returns an html <img> object.
@@ -283,18 +474,34 @@ function getDisplayImage(card) {
         newImage.alt = card[2]
         newImage.id = card[3]
         return newImage;
+    } else if ('1' == card[2]){
+        newImage.src = CARD_IMAGES[card[3]]
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        return newImage;
+    } else if ('0' == card[2]){
+        newImage.src = CARD_IMAGES[card[3]]
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        return newImage;
     }
-    newImage.src = CARD_IMAGES[card[3]]
-    newImage.alt = card[2]
-    newImage.id = card[3]
-    return newImage;
+} 
+
+function removeDivs() {
+    startingTableau.forEach((column, colIndex) => {
+        column.forEach((card, rowIndex) => {
+            let divElement = document.getElementById(`c${card[5]}r${card[6]}`)
+            divElement.remove()
+        })
+    })
 }
 
 // renderBoard() -> Reads through column and row information in all cards in 'startingTableau' array,
 // and sets that card in a div that is further appended to the corresponding column div. 
 // Works with getDisplayImage() to identify the correct image file. 
 function renderBoard() {
-    // removes the initial image to render the board correctly.     // do not remove!
+
+    // removes the initial image to render the board correctly.   
     startingTableau.forEach((column, colIndex) => {
         let columnElement = document.getElementById(`c${colIndex}`)
         column.forEach((card, rowIndex) => {
@@ -307,23 +514,6 @@ function renderBoard() {
     })
 }
     
-    // removeImage()
-
-    // for (let arrayInfo in cardArray) {
-    //     card = cardArray[arrayInfo]
-
-    //     let stackName = `c${card[5]}r${card[6]}`
-    //     let stackElement = document.getElementById(stackName);
-    //      // adds the images back into the div element  
-    //     stackElement.appendChild(getDisplayImage(card))
-
-    // // this function flips up any top card that is facing down
-    // for (let arrayInfo in cardArray) {
-    //     card = cardArray[arrayInfo]
-    // }
-
-
-
 
 // flipsCards() -> Ensures that cards in the tableau are 
 function flipsCards(array){
@@ -339,11 +529,21 @@ function shuffle(array) {
     return newArray
 }
 
+//initalizeStartingTableau() -> adds the empty cards into the 'startingTableau' array. 
+function initalizeStartingTableau(){
+    startingTableau.forEach((column, colIndex) => {
+        startingTableau[colIndex].unshift((BOARD_INIT.shift()))
+    })
+}
+
 // renderInitialBoard() -> Passes the initial deck through the 'startingTableau' array. 
 function renderInitialBoard(array) {
     let n = 51
     startingTableau.forEach((column, colIndex) => {
         column.forEach((row, rowIndex) => {
+            if (Array.isArray(row)){
+                //pass
+            } else{
             if (row > 0){
                 array[n].splice(2, 1, 1) 
             }
@@ -351,6 +551,7 @@ function renderInitialBoard(array) {
                 array[n].splice(6, 1, rowIndex); 
                 startingTableau[colIndex].splice(rowIndex, 1, array[n]);
             n--;
+        }
         })
     })
 }
@@ -363,6 +564,10 @@ function render(){
 
 
 function init(){
+    cardAtPlay =[]
+    cardOnBottom = []
+    theTopCard = []
+    theBottomCard = []
     shuffledCards = shuffle(CARD_LIST);
     startingTableau = [
         [1],
@@ -379,7 +584,7 @@ function init(){
         [],
         [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
     ]  
+    initalizeStartingTableau()
     renderInitialBoard(shuffledCards)
-    console.log(startingTableau)
     render();
 }
