@@ -154,7 +154,6 @@ let theBottomCard;
 
 const mainElement = document.querySelector('main')
 
-
 /* ####################################### */
 /* ########### EVENT LISTENERS ########### */
 /* ####################################### */
@@ -234,14 +233,17 @@ mainElement.addEventListener('drop', (evt) => {
     updateTopCard(cardAtPlay[0])
 
     //moveCards()
-    spliceCards()
+    
+    relocateCard()
+    removeDivs()
+    updateCards(startingTableau);
 
     console.log(checkAddFoundation())
     console.log(checkAddTableau())
 
 
     evt.target.parentNode.classList.remove("card-selection")
-    //removeDivs()
+  
     render();
 });
 
@@ -422,44 +424,13 @@ function updateCards(array){
     })
 }
 
-// updateCards() -> updates the position information stored inside the cards after moving the card.
+// relocateCard() -> updates the position information stored inside the cards after moving the card.
 // Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
-function spliceCards(){
+function relocateCard(){
     let topCardColIdx = theTopCard[5]
-    let topCardRowIdx = theTopCard[6]
     let botCardColIdx = theBottomCard[5]
-    let botCardRowIdx = theBottomCard[5]
-    let stackSize = startingTableau[topCardColIdx].length
-    let removeNum = stackSize - theTopCard[6]
-    console.log(theTopCard);
-    console.log(startingTableau[topCardColIdx]);
-    console.log(topCardRowIdx);
-    let restack = startingTableau[topCardColIdx].splice(topCardRowIdx+1, removeNum) 
-    console.log(restack)
-    startingTableau[botCardColIdx].push(restack)
-    
-    // topCard.splice(5, 1, bottomCard[5])
-    // column = bottomCard[5]
-    // row = bottomCard[6]+1
-    // topCard.splice(6, 1, bottomCard[6]+1)
-    // [1, 2, 1, 'S07', 7, 3, 4] // top card
-// [10, -2, 1, 'H08', 8, 5, 6] // bottom card
-
-    // array.forEach((column, colIndex) => {
-    //     column.forEach((card, rowIndex) => {
-    //         if (card[5] === bottomCard[5])
-
-
-            // if (card[5] !== colIndex){
-            //     //card.splice(5, 1, colIndex)
-            //     console.log("triggered")
-            // }
-            // if (card[6] !== rowIndex){
-            //     //card.splice(6, 1, rowIndex)
-            //     console.log("triggered")
-            // }
-    //     })
-    // })
+    let restack = startingTableau[parseInt(topCardColIdx)].pop()    
+    startingTableau[parseInt(botCardColIdx)].push(restack)
 }
 
 // getDisplayImage() -> The parameter is a card array. Identifies the type of card ('card[3]'),
@@ -558,12 +529,13 @@ function renderInitialBoard(array) {
 
 // render() -> Renders the board.
 function render(){
-    updateCards(startingTableau);
+
     renderBoard()
+    console.log(startingTableau)
 };
 
 
-function init(){
+function init() {
     cardAtPlay =[]
     cardOnBottom = []
     theTopCard = []
