@@ -1,5 +1,5 @@
 :root{
-    --card-width: 9vw;
+    --card-width: 10vw;
     --card-height: var(card-width)*1.4;
     --play-area-color :rgb(69, 90, 96); 
 }
@@ -28,7 +28,7 @@ main {
     
     display: grid;
     grid-template-columns: auto auto auto;
-    grid-template-rows: 20vh 10vh 30vh 60vh;
+    grid-template-rows: 20vh 10vh 24vh 60vh;
     grid-template-areas: 
     tl tc tr
     cl cc cr

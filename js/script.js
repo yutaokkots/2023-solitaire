@@ -426,11 +426,14 @@ function relocateCard(){
     // if: dragged card is not top card, splice out the number of cards from that card to top card
     // else : pop and push the top card to the new location
     if (theTopCard[6] !== startingTableau[parseInt(topCardColIdx)].length-1){
-        let restack = startingTableau[parseInt(topCardColIdx)].splice(topCardRowIdx, startingTableau[parseInt(topCardColIdx)].length - topCardColIdx)    
+        let restack = startingTableau[parseInt(topCardColIdx)].splice(topCardRowIdx, startingTableau[parseInt(topCardColIdx)].length - topCardRowIdx)    
+        console.log(restack)
         startingTableau[parseInt(botCardColIdx)].push(...restack)
+        console.log("AA - this pathway")
     } else{
         let restack = startingTableau[parseInt(topCardColIdx)].pop()    
         startingTableau[parseInt(botCardColIdx)].push(restack)
+        console.log("BB - this else pathway")
     }
 }
 
