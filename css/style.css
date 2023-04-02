@@ -1,17 +1,31 @@
 :root{
     --card-width: 9vw;
-    --card-height: var(card-width)*1.4
+    --card-height: var(card-width)*1.4;
+    --play-area-color :rgb(69, 90, 96); 
 }
 
 body{
     background-color: gainsboro;
     margin: 0;
     display: box-sizing;
+    justify-content: center;
+    font-family: 'Pacifico', Verdana, Geneva, Tahoma, sans-serif;
+    margin:0;
+    background-image: url("../images/nightsky.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: rgba(158, 152, 152, 50);
 }
+/****************** header *******************/
+
+/******************  main  *******************/
 
 main {
     display: box-sizing;
-    background-color: #617143;
+    
+    background-color: var(--play-area-color);
+    
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: 20vh 10vh 30vh 60vh;
@@ -22,6 +36,39 @@ main {
     color: #EDE9D5;
     font-family: 'Source Serif Pro', arial, serif;
 }
+
+
+#tableau {
+    display: grid;
+    width: auto;
+    grid-template-columns: repeat(7, auto);
+    background-color: var(--play-area-color);
+    grid-column-gap: 2vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    background:linear-gradient(rgb(69, 90, 96), gray);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+
+#titleDiv, #titleDivMain{
+    background-color: rgba(158, 152, 152, 0.3);
+    text-align:center;
+    color:white;
+    font-size: 2rem;
+    margin-bottom: -2.5rem;
+}
+
+#titleDivMain h1{
+    margin: 0rem;
+    background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    vertical-align:center;
+}
+
 
 /* erase tthis section after done*/
 .row1, .row2, .row3 {
@@ -54,6 +101,12 @@ main {
 }
 
 
+
+
+
+
+
+
 /* div container that holds the cards */
 #test {
     height:0rem;
@@ -71,6 +124,7 @@ img {
     height: var(--card-height);
 
 }
+
 
 /* allows the cards to stack */
 
@@ -96,6 +150,7 @@ img {
     width: auto;
     background-color: var(--play-area-color);
 }
+
 
 .tableau .stack div:nth-child(2){
     height:0;

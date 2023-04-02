@@ -585,6 +585,18 @@ function renderTableau() {
 }
 
 
+// // isEmptyStack() -> returns boolean if the stack is empty (true) or not (false). 
+// function isEmptyStack(){
+
+// }
+
+// function checkAddEmpty(){
+//     if (cardOnBottom[0] === empty){
+//     }
+// }
+
+
+
 // receives the array of card information, and returns an img tag containing information.
 function getDisplayImage(card) {
     if (card === undefined) {
@@ -702,3 +714,53 @@ function init(){
 
     render();
 }
+
+
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+// from previous version of the game:
+
+
+// checks to see if the card can be dropped on foundation (aces)
+
+// checkAddFoundation() -> Returns true if the card can be dropped on the foundation area (top area)
+
+// function checkAddFoundation() {
+//     let topCard = theTopCard;
+//     let bottomCard = theBottomCard
+//     // The following checks to see if the bottom card is located in the columns 7->10 (foundation)
+//     if (bottomCard[5] > 6 && bottomCard[5] < 11){
+//         // if -> (1) top card is an ace && top value - bottom value = 1
+//         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) return true;
+//         // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
+//         if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
+//             return true;
+//         } 
+//     } else return false;
+// }
+
+
+// // checkAddTableau() -> Checks to see if the card can be placed in the tableau area (bottom area)
+// // 'can card be placed' ? true : false
+// function checkAddTableau(){
+//     let topCard = theTopCard;
+//     let bottomCard = theBottomCard
+//     if (bottomCard[5] < 7){
+//         // if -> (1) top card is a King && (2) top value - bottom value = -1
+//         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === -1) return true;
+//         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
+//         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) return true ;
+//     } else return false       
+// }
+
+// state information
+// CARD_LIST[i] = card;
+// card[0]= suit
+// card[1]= color
+// card[2]= up or down
+// card[3]= cardname
+// card[4]= value
+// card[5]= col position
+// card[6]= row position

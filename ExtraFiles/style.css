@@ -4,8 +4,6 @@
 }
 
 body {
-
-
     display: box-sizing;
     justify-content: center;
     font-family: 'Pacifico', Verdana, Geneva, Tahoma, sans-serif;
@@ -24,7 +22,6 @@ nav {
 
 img {
     max-width: 100%;
-    position: 
 }
 
 /* combination of  img{max-width: 100%;} + #tableau-5{grid-template-rows: repeat(auto-fill, 3rem);}*/

@@ -1,12 +1,6 @@
-// state information
-// CARD_LIST[i] = card;
-// card[0]= suit
-// card[1]= color
-// card[2]= up or down
-// card[3]= cardname
-// card[4]= value
-// card[5]= col position
-// card[6]= row position
+/* ####################################### */
+/* ############# CONSTANTS ############### */
+/* ####################################### */
 
 const BOARD_INIT = [
 [0, 0, 0, 'EMP0',  14, 0,  0],
@@ -20,9 +14,9 @@ const BOARD_INIT = [
 [0, 0, 0, 'ACE8',  0,  8,  0],
 [0, 0, 0, 'ACE9',  0,  9,  0],
 [0, 0, 0, 'ACE10', 0,  10, 0],
-[0, 0, 0, 'SEP',   15, 11, 0],
-[0, 0, 0, 'EMP12', 0,  12, 0],
-[0, 0, 0, 'EMP13', 0,  13, 0]
+[0, 0, 0, 'SEP11',   15, 11, 0],
+[0, 0, 0, 'STK12',   0,  12, 0],
+[0, 0, 0, 'WST13', 0,  13, 0]
 ]
 
 const CARD_LIST = [
@@ -138,9 +132,11 @@ const CARD_IMAGES = {
     D13: 'images/single_cards/DIAMOND-13-KING.svg',
     BAK: 'images/single_cards/BACK-2.svg',
     EMP: 'images/single_cards/EMPTY.svg',
-    ACE: 'images/single_cards/ACE.svg',
+    ACE: 'images/single_cards/ACE-SPADE.svg',
     SHF: 'images/single_cards/SHUFFLE.svg',
-    SEP: 'images/single_cards/SEPARATOR.svg'
+    SEP: 'images/single_cards/SEPARATOR.svg',
+    STK: 'images/single_cards/STOCK.svg',
+    WST: 'images/single_cards/WASTE.svg',
 }
 
 // -- initialization of variables -- //
@@ -162,12 +158,14 @@ const mainElement = document.querySelector('main')
 mainElement.addEventListener('click', (evt) => {
     let card = evt.target.id 
     if (card === 'empty') return;
-    if (evt.target.outerText === "Play"){
+    console.log(evt)
+    if (card === "WST13" || card === "STK12" || evt.target.innerText === "Play"){
         clickShuffle()
     }
     console.log(card)
-    console.log(findCardLocation(card)[0])
-    //if (findCardLocation(card)[0] > 11) return;
+    let cardLocation = findCardLocation(card)
+    console.log(cardLocation)
+    if (findCardLocation(card) > 11) return;
     flip(card)
 
     removeDivs()
@@ -246,100 +244,52 @@ mainElement.addEventListener('drop', (evt) => {
 });
 
 
-
-
+/* ####################################### */
+/* ############## FUNCTIONS ############## */
+/* ####################################### */
 
 // -- functions-- //
 init();
 
+// checkWin() ->
+function checkWin(){
+    if ((startingTableau[7].length + startingTableau[7].length + startingTableau[7].length + startingTableau[7].length) === 58){
+    console.log("Win!")
+    }
+}
 
-
-
-
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-// from previous version of the game:
-
-
-// checks to see if the card can be dropped on foundation (aces)
-
-// checkAddFoundation() -> Returns true if the card can be dropped on the foundation area (top area)
-
-// function checkAddFoundation() {
-//     let topCard = theTopCard;
-//     let bottomCard = theBottomCard
-//     // The following checks to see if the bottom card is located in the columns 7->10 (foundation)
-//     if (bottomCard[5] > 6 && bottomCard[5] < 11){
-//         // if -> (1) top card is an ace && top value - bottom value = 1
-//         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) return true;
-//         // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
-//         if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
-//             return true;
-//         } 
-//     } else return false;
-// }
-
-
-// // checkAddTableau() -> Checks to see if the card can be placed in the tableau area (bottom area)
-// // 'can card be placed' ? true : false
-// function checkAddTableau(){
-//     let topCard = theTopCard;
-//     let bottomCard = theBottomCard
-//     if (bottomCard[5] < 7){
-//         // if -> (1) top card is a King && (2) top value - bottom value = -1
-//         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === -1) return true;
-//         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
-//         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) return true ;
-//     } else return false       
-// }
-
-// state information
-// CARD_LIST[i] = card;
-// card[0]= suit
-// card[1]= color
-// card[2]= up or down
-// card[3]= cardname
-// card[4]= value
-// card[5]= col position
-// card[6]= row position
-
-
+// check() -> checks to see if the card can be placed where it is placed. 
 function check(){
     let topCard = theTopCard;
     let bottomCard = theBottomCard
     if (bottomCard[5] < 7){
-        console.log('A')
+        console.log('A in tableau')
         // if -> (1) top card is a King && (2) top value - bottom value = -1
         if (topCard[4] === 13 && topCard[4] - bottomCard[4] === -1) {
-            console.log('B')
+            console.log('B in tableau and true (K)')
             return true};
         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) {
-            console.log('C')
+            console.log('C in tableau and true (values match)**')
+            // if the 'bottomCard' is in the middle of the stack, return false
+            if (findCardHasChildren()) return false;
             return true};
+        console.log('G- False tableau')
     } else if (bottomCard[5] > 6 && bottomCard[5] < 11){
         // if -> (1) top card is an ace && top value - bottom value = 1
         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) {
-            console.log('D')
+            console.log('D in foundation and true (A)')
             return true};
         // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
         if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
-            console.log('E')
+            console.log('E in tableau and true (values match)')
             return true;
         } 
+        console.log('G- False foundation')
     }
-    console.log('F')
+    console.log('F- false')
     return false;   
 }
-
-
-
-function checkAddEmpty(){
-    if (cardOnBottom[0] === empty){
-    }
-}
-
 
 // flip(card) => flips card by changing position [2] of the array, if:
 // card is on top of stack
@@ -361,59 +311,34 @@ function flip(card) {
     })
 }
 
-/* --- find the card position and output results as a list that is ordered --- */
-/* --- takes the column number, and ouputs a list of cards--- */
-// const findListOfCardsUnderneath = (searchColumn) => {
-//     const arrayOfLists = []
-//     for (const key in cardArray){
-//         if (cardArray[key][5] === searchColumn){
-//             arrayOfLists.push(cardArray[key])
-//         }
-//     }
-//     // this returns the list sorted in order, with the top most card at the last index
-//     arrayOfLists.sort(function(a, b) {
-//         return a[5] - b[5]
-//     })
-//     return arrayOfLists
-// }
 
-// isEmptyStack() -> returns boolean if the stack is empty (true) or not (false). 
-function isEmptyStack(){
 
-}
-
-/* ####################################### */
-/* ############## FUNCTIONS ############## */
-/* ####################################### */
-// [[EMP],[],[],[],[]]
 function clickShuffle(){
-    // basecase: If there is only one card in col[12] (placeholder)
+    // base-case: If there is only one card in col[12] (just the placeholder)
     if (startingTableau[12].length < 2) {
-        console.log('this path')
+        // base-case: and if the waste pile is empty, push, and return.  
         if (startingTableau[13].length > 1){
             startingTableau[12].push(...startingTableau[13].splice(1, startingTableau[13].length))
         }
         return;}
-
-    // if there is more than one card, transfer cards from 'deal' [11] deck to 'waste' deck [12]
+    // If there is more than one card in the deal deck, transfer cards from 'deal' [11] deck to 'waste' deck [12]
     if (startingTableau[11].length > 1){
         let noCardsToMove = startingTableau[11].length - 1
         startingTableau[13].push(...startingTableau[11].splice(1, noCardsToMove))
     }
-
-    //
+    // If there are 3 cards or less, just push them one-by-one
     if (startingTableau[12].length < 4) {
         startingTableau[11].push(startingTableau[12].pop())
+    // otherwise, puth three cards at a time, from 'stock' deck to 'deal' deck 
     } else {
         for (let n=3; n > 0; n--){
             startingTableau[11].push(startingTableau[12].pop())
         }
     }
     turnOverCards()
-    
 }
 
-// turnOverCards() -> Turns over the cards in the 'deal' and 'waste'
+// turnOverCards() -> Turns over the cards so cards are face-down in the 'deal' and 'waste'
 function turnOverCards(){
     startingTableau[12].forEach((card) => {
         if (card[2] !== 0) card.splice(2, 1, -1)});
@@ -421,38 +346,33 @@ function turnOverCards(){
         if (card[2] !== 0) card.splice(2, 1, -1)})
 }
 
-
 // deleteArray() -> deletes the entire contents of an array
 function deleteArray(array){
     array.splice(0, array.length)
 }
 
-
-// findCardLocation(card) => returns the [col, row] information of the card as an array
-// currently not being used. 
-function findCardLocation(card){
+// findCardLocation(card) => returns the column information of the card
+function findCardLocation(card){    
     let cardId;
-    let cardColRow = []
-    if (typeof card === 'array'){
-        cardId = card[3]
-    } else if (typeof card === 'string'){
-        cardId = card
-    }
+    let cardCol;
+    if (typeof card === 'array') cardId = card[3];
+    else if (typeof card === 'string') cardId = card;
     startingTableau.forEach((column, colIndex) => {
-        column.forEach((cardArray, rowIndex) => {
-            if (cardId === cardArray[3]){
-                cardColRow.push(cardArray[5])
-                cardColRow.push(cardArray[6])
-                return cardColRow;
-            }
-        })
+        column.forEach((array) => {if (array[3] === cardId) cardCol = colIndex;})
     })
+    return cardCol
 }
 
+// findCardHasChildren(card) => returns boolean, whether there are downstream cards associated with it. 
+function findCardHasChildren(){    
+    let cardColIdx = theBottomCard[5]
+    let cardRowIdx = theBottomCard[6]
+    return startingTableau[cardColIdx].length-1 === cardRowIdx ? false : true
+}
 
 // 'updateTopCard(card)' -> takes a string parameter, 'card' (e.g. 'H11' => Heart-11)
 //  and reassigns the global variable, 'theTopCard' with a slice of that card information. 
-// Why -> to assign the top card info to 'theTopCard' upon addEventListener(drop) activation
+// Why? -> to assign the top card info to 'theTopCard' upon addEventListener(drop) activation
 function updateTopCard(card){
     deleteArray(theTopCard)
     startingTableau.forEach((column, colIndex) => {
@@ -466,33 +386,17 @@ function updateTopCard(card){
 
 // 'updateBottomCard(card)' -> takes a string parameter, 'card' (e.g. 'D12' => Diamond-12)
 //  and reassigns the global variable, 'theTopCard' with a slice of that card information. 
-// Why -> to assign the bottom card info to 'theBottomCard' upon addEventListener(drop) activation
+// Why? -> to assign the bottom card info to 'theBottomCard' upon addEventListener(drop) activation
 function updateBottomCard(card){
     deleteArray(theBottomCard)
     startingTableau.forEach((column, colIndex) => {
         column.forEach((cardArray, rowIndex) => {
             if (card === cardArray[3]){
                 theBottomCard = startingTableau[colIndex][rowIndex].slice()
-                console.log(theBottomCard)
             }
         })
     })
 }
-
-
-// //
-// function moveCards(){
-//     let topCard = theTopCard;
-//     let bottomCard = theBottomCard
-//     topCard.splice(5, 1, bottomCard[5])
-//     topCard.splice(6, 1, bottomCard[6]+1)
-//     console.log(topCard)
-//     console.log(bottomCard)
-//     console.log(startingTableau)
-// }
-// // [1, 2, 1, 'S07', 7, 3, 4] // top card
-// // [10, -2, 1, 'H08', 8, 5, 6] // bottom card
-
 
 // updateCards() -> updates the position information stored inside the cards after moving the card.
 // Adjusts discrepencies between its current position and the card[5]->(column) or card[6]->(row) positions
@@ -634,6 +538,7 @@ function render(){
     renderFlipTopCard()
     renderBoard()
     console.log(startingTableau)
+    checkWin()
 };  
 
 
