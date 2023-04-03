@@ -108,7 +108,7 @@ main {
     font-size: 1.5rem;
 }
 #buttonArea h4 {
-
+    margin:2px;
     text-align: center;
     color: gainsboro;
 }
