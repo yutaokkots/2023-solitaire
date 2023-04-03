@@ -4,14 +4,14 @@
     --row3-height: var(--card-width)*2;
     --play-area-color :rgb(69, 90, 96); 
     --cols: 1fr 12fr 1fr;
-    --rows: 10vh 10vh minmax(100px, 3fr) 50vh;
+    --rows: 10vh 10vh 30vh 50vh;
 
-    
 }
+
+
 /* --rows: 4fr 1fr var(--row3-height) 11fr; */
 /* var(--row3-height) 60vh */
-body{
-    background-color: gainsboro;
+body {
     margin: 0;
     display: box-sizing;
     justify-content: center;
@@ -30,37 +30,47 @@ body{
 main {
     display: box-sizing;
     
-    background-color: var(--play-area-color);
-    
     display: grid;
     grid-template-columns: var(--cols);
     grid-template-rows: var(--rows);
     grid-template-areas: 
     tl tc tr
-    cl cc cr
+    c1l c1c c1r
+    c2l c2c c2r
     bl bc br; 
     color: #EDE9D5;
-    font-family: 'Source Serif Pro', arial, serif;
 }
 
-
-#tableau {
+.tableau {
     display: grid;
     width: auto;
     grid-template-columns: repeat(7, auto);
     background-color: var(--play-area-color);
-    grid-column-gap: 2vw;
+    grid-column-gap: 1.5vw;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0.5rem;
-    background:linear-gradient(rgb(69, 90, 96), gray);
+    background: linear-gradient(rgb(69, 90, 96), gray);
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+    z-index: -1;
 }
 
+.foundation {
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+
+    display: grid;
+    border-top-left-radius: 1.5rem;
+    width: auto;
+    grid-template-columns: repeat(7, auto);
+    background-color: var(--play-area-color);
+    grid-column-gap: 1.5vw;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 
 #titleDiv, #titleDivMain{
-    background-color: rgba(158, 152, 152, 0.3);
     text-align:center;
     color:white;
     font-size: 2rem;
@@ -77,28 +87,30 @@ main {
 
 
 /* erase tthis section after done*/
-.row1, .row2, .row3 {
+/* .row1, .row2, .row3 {
     border: solid red
-}
+} */
 /* above */
 
+
+
 #buttonArea {
-    height: 30px;
+    
     display:flex;
     justify-content: flex-end;
     cursor: pointer;
 }
 
 #buttonArea div:nth-last-child(1){
-    background-color: rgba(69, 90, 96, 0.5);
+    background-color: rgba(69, 90, 96);
     width: 20vw;
-    height: 30px;
+
     border-top-left-radius: 2rem;
     border-top-right-radius: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 #buttonArea h4 {
-    margin-top: 0.3rem;
+
     text-align: center;
     color: gainsboro;
 }
@@ -107,21 +119,6 @@ main {
 }
 
 
-
-
-
-
-
-
-/* div container that holds the cards */
-#test {
-    height:0rem;
-}
-
-
-.card-selection {
-
-}
 
 /* allows the svg to stick to same size in whole document */
 img {
@@ -132,12 +129,6 @@ img {
 
 /* allows the cards to stack */
 
-.tab{
-    display: grid;
-    grid-template-columns: repeat(7, auto);
-    grid-column-gap: 1vw;
-
-}
 
 /* .stack{} === .tab div{} */
 /* .marker{} ==== .stack-Div*/
@@ -148,8 +139,8 @@ img {
 
 /* allows the cards to stack */
 .tableau .stack div{
-    height:0.8rem;
-    border-top-left-radius: .5rem;
+    height:1rem;
+    border-top-left-radius: .6rem;
     border-top-right-radius: .5rem;
     width: auto;
     background-color: var(--play-area-color);
@@ -159,7 +150,6 @@ img {
 .tableau .stack div:nth-child(2){
     height:0;
 }
-
 .foundation .stack div {
     height: 0;
 }
@@ -177,15 +167,21 @@ img {
     height:0;
 }
 
-.marker{
-    border: solid red;
-    height:0;
-    padding-top: 0;
-    border-top: 0.15rem solid #EDE9D5;
-    border-radius: 0.2rem;
-    width:100%;
 
+
+.card-selection {
+    outline-offset: -0.5px;
+    border-radius: 0.5rem;
+    box-shadow: 1px 1px 7px 2px rgb(218, 218, 218);
 }
 
+.marker{
+    height:0;
+}
 
-
+/* 
+.tab{
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    grid-column-gap: 0.5vw;
+} */

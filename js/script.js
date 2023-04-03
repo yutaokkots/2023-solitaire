@@ -14,8 +14,8 @@ const BOARD_INIT = [
 [0, 0, 0, 'ACE8',  0,  8,  0],
 [0, 0, 0, 'ACE9',  0,  9,  0],
 [0, 0, 0, 'ACE10', 0,  10, 0],
-[0, 0, 0, 'SEP11',   15, 11, 0],
-[0, 0, 0, 'STK12',   0,  12, 0],
+[0, 0, 0, 'SEP11', 15, 11, 0],
+[0, 0, 0, 'STK12', 0,  12, 0],
 [0, 0, 0, 'WST13', 0,  13, 0]
 ]
 
@@ -139,6 +139,10 @@ const CARD_IMAGES = {
     WST: 'images/single_cards/WASTE.svg',
 }
 
+// [[1]total moves, [2]moves since moving card, [3]number of wins, [4]number of losses, [5]total score]
+const USER_SCORE = [0, 0, 0, 0, 0]
+
+
 // -- initialization of variables -- //
 let startingTableau;
 let shuffledCards;
@@ -148,6 +152,7 @@ let cardAtPlay;
 let cardOnBottom;
 let theTopCard;
 let theBottomCard;
+let userScore;
 
 const mainElement = document.querySelector('main')
 
@@ -159,19 +164,12 @@ mainElement.addEventListener('click', (evt) => {
     let card = evt.target.id 
     if (card === 'empty') return;
     console.log(evt)
-    if (card === "WST13" || card === "STK12" || evt.target.innerText === "Play"){
-        clickShuffle()
-    }
-    console.log(card)
-    let cardLocation = findCardLocation(card)
-    console.log(cardLocation)
+    if (card === "WST13" || card === "STK12" || evt.target.innerText === "Play") clickShuffle();
     if (findCardLocation(card) > 11) return;
     flip(card)
-
     removeDivs()
     updateCards(startingTableau);
-
-    evt.target.parentNode.classList.remove("card-selection")
+    evt.target.classList.remove("card-selection")
     render();
 })
 
@@ -183,6 +181,7 @@ mainElement.addEventListener('dragstart', (evt) => {
     let target = evt.target;
     cardAtPlay.unshift(target.id)
     deleteArray(cardOnBottom)
+    return false;
 })
 
 /* ########### DRAG ENTER ########### */
@@ -193,7 +192,7 @@ mainElement.addEventListener('dragstart', (evt) => {
 mainElement.addEventListener('dragenter', (evt) => {
     if (evt.target.alt != 1) return;
     if (evt.target.alt == undefined || evt.target.alt == null) return;
-    evt.target.parentNode.classList.add("card-selection");
+    evt.target.classList.add("card-selection");
 })
 
 /* ########### DRAG LEAVE ########### */
@@ -202,7 +201,7 @@ mainElement.addEventListener('dragenter', (evt) => {
 mainElement.addEventListener('dragleave', (evt) => {
     if (evt.target.alt != 1) return;
     if (evt.target.alt == undefined || evt.target.alt == null) return;
-    evt.target.parentNode.classList.remove("card-selection");
+    evt.target.classList.remove("card-selection");
     });  
 
 mainElement.addEventListener('dragover', (evt) => {
@@ -238,7 +237,7 @@ mainElement.addEventListener('drop', (evt) => {
     removeDivs()
     updateCards(startingTableau);
 
-    evt.target.parentNode.classList.remove("card-selection")
+    evt.target.classList.remove("card-selection")
   
     render();
 });
@@ -253,7 +252,7 @@ init();
 
 // checkWin() ->
 function checkWin(){
-    if ((startingTableau[7].length + startingTableau[7].length + startingTableau[7].length + startingTableau[7].length) === 58){
+    if ((startingTableau[7].length + startingTableau[7].length + startingTableau[7].length + startingTableau[7].length) === 56){
     console.log("Win!")
     }
 }
@@ -444,6 +443,7 @@ function getDisplayImage(card) {
     if (card === undefined) return;
     let newImage = document.createElement('img')
     newImage.className ="cardImg"
+    newImage.setAttribute("draggable",'true')
     if ('-1' == card[2]){
         newImage.src = CARD_IMAGES['BAK']
         newImage.alt = card[2]
@@ -551,6 +551,7 @@ function init() {
     theTopCard = []
     theBottomCard = []
     shuffledCards = shuffle(CARD_LIST);
+    userScore = USER_SCORE;
     startingTableau = [
         [1],
         [-1,1],
