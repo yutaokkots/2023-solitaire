@@ -94,7 +94,6 @@ function renderBoardTest() {
 }
 
 function testDisplay(card) {
-    console.log(card)
     if (card === undefined) return;
     let newImage = document.createElement('img')
     if ('-1' == card[2]){
@@ -117,20 +116,12 @@ function testDisplay(card) {
 } 
 
 function renderWin(){
-    
     removeDivs()
     startingTableau=CARD_WIN;
-    //updateCards(startingTableau)
-    console.log(startingTableau)
     checkWin()
     renderFlipTopCard()
     renderBoardTest()
-
 }
-
-
-
-
 
 /* ####################################### */
 /* ############# CONSTANTS ############### */
@@ -273,7 +264,6 @@ const CARD_IMAGES = {
     WST: 'images/single_cards/WASTE.svg',
 }
 
-
 const CARD_IMAGES_WIN = [
     {FIN0: 'images/single_cards/FIN-0.svg'},
     {FIN1: 'images/single_cards/FIN-1.svg'},
@@ -284,9 +274,12 @@ const CARD_IMAGES_WIN = [
     {FIN6: 'images/single_cards/FIN-6.svg'}
 ]
 
-// [[1]total moves, [2]moves since moving card, [3]number of wins, [4]number of losses, [5]total score]
-const USER_SCORE = [0, 0, 0, 0, 0]
+/* ####################################### */
+/* ############## VARIABLES ############## */
+/* ####################################### */
 
+// [[0]total moves, [1]clicks since moving card, [2]number of wins, [3]number of losses
+const USER_SCORE = [0, 0, 0, 0]
 
 // -- initialization of variables -- //
 let startingTableau;
@@ -297,24 +290,27 @@ let cardAtPlay;
 let cardOnBottom;
 let theTopCard;
 let theBottomCard;
-let userScore;
+let userScore = [...USER_SCORE];
+
 
 const mainElement = document.querySelector('main')
+
 
 /* ####################################### */
 /* ########### EVENT LISTENERS ########### */
 /* ####################################### */
 
+/* ###########  CLICK  ########### */
 mainElement.addEventListener('click', (evt) => {
     let card = evt.target.id 
     if (card === 'empty') return;
-    console.log(evt)
     if (card === "WST13" || card === "STK12" || evt.target.innerText === "Play") clickShuffle();
     if (findCardLocation(card) > 11) return;
-    flip(card)
+    updateUserClick() 
+    checkGiveUp()
+    evt.target.classList.remove("card-selection")
     removeDivs()
     updateCards(startingTableau);
-    evt.target.classList.remove("card-selection")
     render();
 })
 
@@ -375,18 +371,29 @@ mainElement.addEventListener('drop', (evt) => {
     cardOnBottom.unshift(evt.target.id)
     updateBottomCard(cardOnBottom[0])
     updateTopCard(cardAtPlay[0])
-
+    // check() is the main function that checks if a card can be placed, and returns boolean. 
+    // if the card can be placed, then the card is relocated within the 'startingTableau' array using 'relocateCard()'
     if (check()) {
         relocateCard()
+        updateUserMove()
     }
+    // change css 
+    evt.target.classList.remove("card-selection")
     removeDivs()
     updateCards(startingTableau);
-
-    evt.target.classList.remove("card-selection")
-  
     render();
 });
 
+// experimentation with touch addEventListener
+mainElement.addEventListener('touchstart', (evt) => {
+    console.log(evt.target.id)
+    evt.target.classList.add("card-selection-touch")
+})
+
+mainElement.addEventListener('touchend', (evt) => {
+    console.log(evt.target.id)
+    evt.target.classList.remove("card-selection-touch")
+})
 
 /* ####################################### */
 /* ############## FUNCTIONS ############## */
@@ -408,43 +415,62 @@ function checkWin(){
             columnElement.appendChild(cardDiv)
             n++
         })
+        // update userScore to record win
+        userScore[2] ++
         console.log("Win!")
     }
 }
+
+function checkGiveUp(){
+    if (userScore[1] > 15) {
+        console.log("give up?")
+    }
+}
+
+function updateUserMove() {
+    // update userScore to record move, and reset shuffle click
+    userScore[0]++ 
+    userScore[1] = 0
+    console.log(userScore)
+}
+
+function updateUserClick() {
+     // update userScore to record shuffle click
+    userScore[1]++ 
+    console.log(userScore)
+}
+
+
+// resetBoard(){
+
+//}
 
 // check() -> checks to see if the card can be placed where it is placed. 
 function check(){
     let topCard = theTopCard;
     let bottomCard = theBottomCard
     if (bottomCard[5] < 7){
-        console.log('A in tableau')
         // if -> (1) top card is a King && (2) top value - bottom value = -1
         if (topCard[4] === 13 && topCard[4] - bottomCard[4] === -1) {
-            console.log('B in tableau and true (K)')
             return true};
         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) {
-            console.log('C in tableau and true (values match)**')
             // if the 'bottomCard' is in the middle of the stack, return false
             if (findCardHasChildren()) return false;
             return true};
-        console.log('G- False tableau')
     } else if (bottomCard[5] > 6 && bottomCard[5] < 11){
         // if -> (1) top card is an ace && top value - bottom value = 1
         if (topCard[4] === 1 && topCard[4] - bottomCard[4] === 1) {
-            console.log('D in foundation and true (A)')
             return true};
         // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
         if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
-            console.log('E in tableau and true (values match)')
             return true;
         } 
-        console.log('G- False foundation')
     }
-    console.log('F- false')
     return false;   
 }
 
+// This function is currently not used in this version. 
 // flip(card) => flips card by changing position [2] of the array, if:
 // card is on top of stack
 // card[6] != 0, 
@@ -581,13 +607,10 @@ function relocateCard(){
     // else : pop and push the top card to the new location
     if (theTopCard[6] !== startingTableau[parseInt(topCardColIdx)].length-1){
         let restack = startingTableau[parseInt(topCardColIdx)].splice(topCardRowIdx, startingTableau[parseInt(topCardColIdx)].length - topCardRowIdx)    
-        console.log(restack)
         startingTableau[parseInt(botCardColIdx)].push(...restack)
-        console.log("AA - this pathway")
     } else{
         let restack = startingTableau[parseInt(topCardColIdx)].pop()    
         startingTableau[parseInt(botCardColIdx)].push(restack)
-        console.log("BB - this else pathway")
     }
 }
 
@@ -697,7 +720,6 @@ function renderInitialBoard(array) {
 function render(){
     renderFlipTopCard()
     renderBoard()
-    console.log(startingTableau)
     checkWin()
 };  
 
@@ -708,7 +730,6 @@ function init() {
     theTopCard = []
     theBottomCard = []
     shuffledCards = shuffle(CARD_LIST);
-    userScore = [...USER_SCORE];
     startingTableau = [
         [1],
         [-1,1],
