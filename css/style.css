@@ -4,8 +4,33 @@
     --row3-height: var(--card-width)*2;
     --play-area-color :rgb(69, 90, 96); 
     --cols: 1fr 12fr 1fr;
-    --rows: 10vh 10vh 30vh 50vh;
+    --rows: 10vh 10vh 25vh 55vh;
 
+}
+
+
+@media screen and (max-width: 400px) {
+
+    #titleDivMain h1 {
+        font-size: 1rem;
+        margin: 0rem;
+        background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        vertical-align:center;
+    }
+    }
+
+@media screen and (min-width: 375px) and (max-width: 600px) {
+
+    #titleDivMain h1 {
+        font-size: 3rem;
+        margin: 0rem;
+        background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        vertical-align:center;
+    }
 }
 
 
@@ -33,6 +58,7 @@ main {
     display: grid;
     grid-template-columns: var(--cols);
     grid-template-rows: var(--rows);
+
     grid-template-areas: 
     tl tc tr
     c1l c1c c1r
@@ -49,7 +75,7 @@ main {
     grid-column-gap: 1.5vw;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-top: 0.5rem;
+    padding-top: 0;
     background: linear-gradient(rgb(69, 90, 96), gray);
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
@@ -58,7 +84,7 @@ main {
 
 .foundation {
     padding-top: 1rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0;
     display: grid;
     border-top-left-radius: 1.5rem;
     width: auto;
@@ -77,6 +103,7 @@ main {
 }
 
 #titleDivMain h1{
+    font-size: 3.5rem;
     margin: 0rem;
     background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
     -webkit-text-fill-color: transparent;

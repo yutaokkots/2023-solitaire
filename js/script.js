@@ -1,4 +1,138 @@
 /* ####################################### */
+/* ############# Testing  ############### */
+/* ####################################### */
+
+const CARD_WIN = [        
+    [[0, 0, 0, 'EMP0',  14, 0,  0]],
+    [[0, 0, 0, 'EMP1',  14, 1,  0]],
+    [[0, 0, 0, 'EMP2',  14, 2,  0]],
+    [[0, 0, 0, 'EMP3',  14, 3,  0]],
+    [[0, 0, 0, 'EMP4',  14, 4,  0]],
+    [[0, 0, 0, 'EMP5',  14, 5,  0]],
+    [[0, 0, 0, 'EMP6',  14, 6,  0]],
+    [
+        [0,     0, 0, 'ACE7', 0, 7, 0 ],
+        [1,     2, 1, 'S01',  1, 7, 1 ],
+        [1,     2, 1, 'S02',  2, 7, 2 ],
+        [1,     2, 1, 'S03',  3, 7, 3 ],
+        [1,     2, 1, 'S04',  4, 7, 4 ],
+        [1,     2, 1, 'S05',  5, 7, 5 ],
+        [1,     2, 1, 'S06',  6, 7, 6 ],
+        [1,     2, 1, 'S07',  7, 7, 7 ],
+        [1,     2, 1, 'S08',  8, 7, 8 ],
+        [1,     2, 1, 'S09',  9, 7, 9 ],
+        [1,     2, 1, 'S10', 10, 7, 10],
+        [1,     2, 1, 'S11', 11, 7, 11],
+        [1,     2, 1, 'S12', 12, 7, 12],
+        [1,     2, 1, 'S13', 13, 7, 13]
+    ],
+    [
+        [0,     0, 0, 'ACE8', 0, 8, 0 ],
+        [10,   -2, 1, 'H01',  1, 8, 1 ],
+        [10,   -2, 1, 'H02',  2, 8, 2 ],
+        [10,   -2, 1, 'H03',  3, 8, 3 ],
+        [10,   -2, 1, 'H04',  4, 8, 4 ],
+        [10,   -2, 1, 'H05',  5, 8, 5 ],
+        [10,   -2, 1, 'H06',  6, 8, 6 ],
+        [10,   -2, 1, 'H07',  7, 8, 7 ],
+        [10,   -2, 1, 'H08',  8, 8, 8 ],
+        [10,   -2, 1, 'H09',  9, 8, 9 ],
+        [10,   -2, 1, 'H10', 10, 8, 10],
+        [10,   -2, 1, 'H11', 11, 8, 11],
+        [10,   -2, 1, 'H12', 12, 8, 12],
+        [10,   -2, 1, 'H13', 13, 8, 13]
+    ],
+    [
+        [0,     0, 0, 'ACE9', 0, 9, 0 ],
+        [100,   2, 1, 'C01',  1, 9, 1 ],
+        [100,   2, 1, 'C02',  2, 9, 2 ],
+        [100,   2, 1, 'C03',  3, 9, 3 ],
+        [100,   2, 1, 'C04',  4, 9, 4 ],
+        [100,   2, 1, 'C05',  5, 9, 5 ],
+        [100,   2, 1, 'C06',  6, 9, 6 ],
+        [100,   2, 1, 'C07',  7, 9, 7 ],
+        [100,   2, 1, 'C08',  8, 9, 8 ],
+        [100,   2, 1, 'C09',  9, 9, 9 ],
+        [100,   2, 1, 'C10', 10, 9, 10],
+        [100,   2, 1, 'C11', 11, 9, 11],
+        [100,   2, 1, 'C12', 12, 9, 12],
+        [100,   2, 1, 'C13', 13, 9, 13]
+    ],
+    [
+        [0,     0, 0, 'ACE10',0, 10, 0 ],
+        [1000, -2, 1, 'D01',  1, 10, 1 ],
+        [1000, -2, 1, 'D02',  2, 10, 2 ],
+        [1000, -2, 1, 'D03',  3, 10, 3 ],
+        [1000, -2, 1, 'D04',  4, 10, 4 ],
+        [1000, -2, 1, 'D05',  5, 10, 5 ],
+        [1000, -2, 1, 'D06',  6, 10, 6 ],
+        [1000, -2, 1, 'D07',  7, 10, 7 ],
+        [1000, -2, 1, 'D08',  8, 10, 8 ],
+        [1000, -2, 1, 'D09',  9, 10, 9 ],
+        [1000, -2, 1, 'D10', 10, 10, 10],
+        [1000, -2, 1, 'D11', 11, 10, 11],
+        [1000, -2, 1, 'D12', 12, 10, 12],
+        [1000, -2, 1, 'D13', 13, 10, 13]
+    ],
+    [[0, 0, 0, 'SEP11', 15, 11, 0]],
+    [[0, 0, 0, 'STK12', 0,  12, 0]],
+    [[0, 0, 0, 'WST13', 0,  13, 0]]
+]
+
+function renderBoardTest() {
+    // removes the initial image to render the board correctly.   
+    CARD_WIN.forEach((column, colIndex) => {
+        let columnElement = document.getElementById(`c${colIndex}`)
+        column.forEach((card, rowIndex) => {
+            let cardDiv = document.createElement('div')
+            let cardName = `c${card[5]}r${card[6]}`
+            cardDiv.setAttribute("id", `${cardName}`)
+            cardDiv.appendChild(testDisplay(card))
+            columnElement.appendChild(cardDiv)
+        })
+    })
+}
+
+function testDisplay(card) {
+    console.log(card)
+    if (card === undefined) return;
+    let newImage = document.createElement('img')
+    if ('-1' == card[2]){
+        newImage.src = CARD_IMAGES['BAK']
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        return newImage;
+    } else if ('1' == card[2]){
+        newImage.src = CARD_IMAGES[card[3]]
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        return newImage;
+    } else if ('0' == card[2]){
+        const cardName = card[3].match(/[A-Z]{3}/gm)
+        newImage.src = CARD_IMAGES[cardName]
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        return newImage;
+    }
+} 
+
+function renderWin(){
+    
+    removeDivs()
+    startingTableau=CARD_WIN;
+    //updateCards(startingTableau)
+    console.log(startingTableau)
+    checkWin()
+    renderFlipTopCard()
+    renderBoardTest()
+
+}
+
+
+
+
+
+/* ####################################### */
 /* ############# CONSTANTS ############### */
 /* ####################################### */
 
@@ -139,6 +273,17 @@ const CARD_IMAGES = {
     WST: 'images/single_cards/WASTE.svg',
 }
 
+
+const CARD_IMAGES_WIN = [
+    {FIN0: 'images/single_cards/FIN-0.svg'},
+    {FIN1: 'images/single_cards/FIN-1.svg'},
+    {FIN2: 'images/single_cards/FIN-2.svg'},
+    {FIN3: 'images/single_cards/FIN-3.svg'},
+    {FIN4: 'images/single_cards/FIN-4.svg'},
+    {FIN5: 'images/single_cards/FIN-5.svg'},
+    {FIN6: 'images/single_cards/FIN-6.svg'}
+]
+
 // [[1]total moves, [2]moves since moving card, [3]number of wins, [4]number of losses, [5]total score]
 const USER_SCORE = [0, 0, 0, 0, 0]
 
@@ -253,7 +398,17 @@ init();
 // checkWin() ->
 function checkWin(){
     if ((startingTableau[7].length + startingTableau[7].length + startingTableau[7].length + startingTableau[7].length) === 56){
-    console.log("Win!")
+        let n = 0
+        CARD_IMAGES_WIN.forEach((winCard, idx) => {
+            let newImage = document.createElement('img')
+            newImage.src = winCard[`FIN${idx}`]
+            let columnElement = document.getElementById(`c${n}`)
+            let cardDiv = document.createElement('div')
+            cardDiv.appendChild(newImage)
+            columnElement.appendChild(cardDiv)
+            n++
+        })
+        console.log("Win!")
     }
 }
 
@@ -536,6 +691,8 @@ function renderInitialBoard(array) {
     })
 }
 
+
+
 // render() -> Renders the board.
 function render(){
     renderFlipTopCard()
@@ -551,7 +708,7 @@ function init() {
     theTopCard = []
     theBottomCard = []
     shuffledCards = shuffle(CARD_LIST);
-    userScore = USER_SCORE;
+    userScore = [...USER_SCORE];
     startingTableau = [
         [1],
         [-1,1],
