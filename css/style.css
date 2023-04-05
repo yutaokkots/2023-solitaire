@@ -9,29 +9,6 @@
 }
 
 
-@media screen and (max-width: 400px) {
-
-    #titleDivMain h1 {
-        font-size: 1rem;
-        margin: 0rem;
-        background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        vertical-align:center;
-    }
-    }
-
-@media screen and (min-width: 375px) and (max-width: 600px) {
-
-    #titleDivMain h1 {
-        font-size: 3rem;
-        margin: 0rem;
-        background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        vertical-align:center;
-    }
-}
 
 
 /* --rows: 4fr 1fr var(--row3-height) 11fr; */
