@@ -115,6 +115,7 @@ function testDisplay(card) {
     }
 } 
 
+// renderWin() -> for testing purposes
 function renderWin(){
     removeDivs()
     startingTableau=CARD_WIN;
@@ -279,7 +280,7 @@ const CARD_IMAGES_WIN = [
 /* ####################################### */
 
 // [[0]total moves, [1]clicks since moving card, [2]number of wins, [3]number of losses
-const USER_SCORE = [0, 0, 0, 0]
+const USER_SCORE = [0, 0, 0, 0, false]
 
 // -- initialization of variables -- //
 let startingTableau;
@@ -400,39 +401,72 @@ init();
 
 // checkWin() ->
 function checkWin(){
-    if ((startingTableau[7].length + startingTableau[7].length + startingTableau[7].length + startingTableau[7].length) === 56){
-        let n = 0
-        CARD_IMAGES_WIN.forEach((winCard, idx) => {
-            let newImage = document.createElement('img')
-            newImage.src = winCard[`FIN${idx}`]
-            let columnElement = document.getElementById(`c${n}`)
-            let cardDiv = document.createElement('div')
-            cardDiv.appendChild(newImage)
-            columnElement.appendChild(cardDiv)
-            n++
-        })
-        // update userScore to record win
-        userScore[2] ++
+    if ((startingTableau[7].length + startingTableau[8].length + startingTableau[9].length + startingTableau[10].length) === 56){
+        if (userScore[4] === false){
+            let n = 0
+            CARD_IMAGES_WIN.forEach((winCard, idx) => {
+                let newImage = document.createElement('img')
+                newImage.src = winCard[`FIN${idx}`]
+                let columnElement = document.getElementById(`c${n}`)
+                let cardDiv = document.createElement('div')
+                cardDiv.appendChild(newImage)
+                columnElement.appendChild(cardDiv)
+                n++
+            })
+            // change userScore[4] state to true, indicating win
+            userScore.splice(4, 1, true)
+            
+            // update userScore to record win
+            userScore[2] ++
+        }
         console.log(startingTableau)
+        console.log(userScore)
         console.log("Win!")
+        checkRestart()
+        
     }
 }
 
 function checkGiveUp(){
     if (userScore[1] > 15) {
-        console.log("give up?")
+        let resetButton = document.getElementById('reset')
+        if (resetButton.hasChildNodes()){
+            let resetEl = document.getElementById('restart')
+            resetButton.removeChild(resetEl)
+        }
+        let resetPrompt = document.createElement('h4')
+        resetPrompt.id = 'restart'
+        resetPrompt.innerHTML='Give up?'
+        resetButton.appendChild(resetPrompt)
+    }
+}
+
+function checkRestart(){
+    if (userScore[4]===true) {
+        let resetButton = document.getElementById('reset')
+        if (resetButton.hasChildNodes()){
+            let resetEl = document.getElementById('restart')
+            resetButton.removeChild(resetEl)
+        }
+        let resetPrompt = document.createElement('h4')
+        resetPrompt.id = 'restart'
+        resetPrompt.innerHTML='Again?'
+        resetButton.appendChild(resetPrompt)
     }
 }
 
 function updateUserMove() {
     // update userScore to record move, and reset shuffle click
+
     userScore[0]++ 
     userScore[1] = 0
 }
 
 function updateUserClick() {
      // update userScore to record shuffle click
-    userScore[1]++ 
+    if (!userScore[4]){
+        userScore[1]++ 
+    }
 }
 
 // check() -> checks to see if the card can be placed where it is placed. 
@@ -721,6 +755,7 @@ function render(){
     renderFlipTopCard()
     renderBoard()
     checkWin()
+    console.log(userScore)
 };  
 
 function init() {
