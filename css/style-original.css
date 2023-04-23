@@ -29,15 +29,24 @@ body {
 main {
     display: box-sizing;
     
+    display: grid;
+    grid-template-columns: var(--cols);
+    grid-template-rows: var(--rows);
+
+    grid-template-areas: 
+    tl tc tr
+    c1l c1c c1r
+    c2l c2c c2r
+    bl bc br; 
     color: #EDE9D5;
 }
 
 .tableau {
-
+    display: grid;
     width: auto;
-
+    grid-template-columns: repeat(7, auto);
     background-color: var(--play-area-color);
-
+    grid-column-gap: 1.5vw;
     padding-left: 1rem;
     padding-right: 1rem;
     padding-top: 0;
@@ -50,12 +59,12 @@ main {
 .foundation {
     padding-top: 1rem;
     padding-bottom: 0;
-
+    display: grid;
     border-top-left-radius: 1.5rem;
     width: auto;
-
+    grid-template-columns: repeat(7, auto);
     background-color: var(--play-area-color);
-
+    grid-column-gap: 1.5vw;
     padding-left: 1rem;
     padding-right: 1rem;
 }
@@ -172,9 +181,3 @@ img {
     height:0;
 }
 
-/* 
-.tab{
-    display: grid;
-    grid-template-columns: repeat(7, auto);
-    grid-column-gap: 0.5vw;
-} */

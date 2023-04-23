@@ -128,20 +128,20 @@ function renderWin(){
 /* ####################################### */
 
 const BOARD_INIT = [
-[0, 0, 0, 'EMP0',  14, 0,  0],
-[0, 0, 0, 'EMP1',  14, 1,  0],
-[0, 0, 0, 'EMP2',  14, 2,  0],
-[0, 0, 0, 'EMP3',  14, 3,  0],
-[0, 0, 0, 'EMP4',  14, 4,  0],
-[0, 0, 0, 'EMP5',  14, 5,  0],
-[0, 0, 0, 'EMP6',  14, 6,  0],
-[0, 0, 0, 'ACE7',  0,  7,  0],
-[0, 0, 0, 'ACE8',  0,  8,  0],
-[0, 0, 0, 'ACE9',  0,  9,  0],
-[0, 0, 0, 'ACE10', 0,  10, 0],
-[0, 0, 0, 'SEP11', 15, 11, 0],
-[0, 0, 0, 'STK12', 0,  12, 0],
-[0, 0, 0, 'WST13', 0,  13, 0]
+    [0, 0, 0, 'EMP0',  14, 0,  0],
+    [0, 0, 0, 'EMP1',  14, 1,  0],
+    [0, 0, 0, 'EMP2',  14, 2,  0],
+    [0, 0, 0, 'EMP3',  14, 3,  0],
+    [0, 0, 0, 'EMP4',  14, 4,  0],
+    [0, 0, 0, 'EMP5',  14, 5,  0],
+    [0, 0, 0, 'EMP6',  14, 6,  0],
+    [0, 0, 0, 'ACE7',  0,  7,  0],
+    [0, 0, 0, 'ACE8',  0,  8,  0],
+    [0, 0, 0, 'ACE9',  0,  9,  0],
+    [0, 0, 0, 'ACE10', 0,  10, 0],
+    [0, 0, 0, 'SEP11', 15, 11, 0],
+    [0, 0, 0, 'STK12', 0,  12, 0],
+    [0, 0, 0, 'WST13', 0,  13, 0]
 ]
 
 const CARD_LIST = [
@@ -292,9 +292,7 @@ let theTopCard;
 let theBottomCard;
 let userScore = [...USER_SCORE];
 
-
 const mainElement = document.querySelector('main')
-
 
 /* ####################################### */
 /* ########### EVENT LISTENERS ########### */
@@ -386,12 +384,10 @@ mainElement.addEventListener('drop', (evt) => {
 
 // experimentation with touch addEventListener
 mainElement.addEventListener('touchstart', (evt) => {
-    console.log(evt.target.id)
     evt.target.classList.add("card-selection-touch")
 })
 
 mainElement.addEventListener('touchend', (evt) => {
-    console.log(evt.target.id)
     evt.target.classList.remove("card-selection-touch")
 })
 
@@ -431,19 +427,12 @@ function updateUserMove() {
     // update userScore to record move, and reset shuffle click
     userScore[0]++ 
     userScore[1] = 0
-    console.log(userScore)
 }
 
 function updateUserClick() {
      // update userScore to record shuffle click
     userScore[1]++ 
-    console.log(userScore)
 }
-
-
-// resetBoard(){
-
-//}
 
 // check() -> checks to see if the card can be placed where it is placed. 
 function check(){
@@ -490,8 +479,6 @@ function flip(card) {
         })
     })
 }
-
-
 
 function clickShuffle(){
     // base-case: If there is only one card in col[12] (just the placeholder)
@@ -631,6 +618,7 @@ function getDisplayImage(card) {
         newImage.src = CARD_IMAGES[card[3]]
         newImage.alt = card[2]
         newImage.id = card[3]
+        newImage.className = 'face-up'
         return newImage;
     } else if ('0' == card[2]){
         const cardName = card[3].match(/[A-Z]{3}/gm)
@@ -714,15 +702,12 @@ function renderInitialBoard(array) {
     })
 }
 
-
-
 // render() -> Renders the board.
 function render(){
     renderFlipTopCard()
     renderBoard()
     checkWin()
 };  
-
 
 function init() {
     cardAtPlay =[]

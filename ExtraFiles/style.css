@@ -85,10 +85,10 @@ main {
     text-align: center;
     color: gainsboro;
 }
+
 .button {
     cursor: pointer;
 }
-
 
 .foundationDiv {
     padding-top: 1rem;

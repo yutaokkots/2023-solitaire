@@ -1,9 +1,8 @@
 <h1 align="center"> Tr'ondëk </h1>
 <hr>
 
-
 This is Tr'ondëk, also known as Klondike or Solitaire. 
-The classic game was (or is in the process of being) recreated using HTML, CSS, and vanilla JavaScript over the course of a week (or more). 
+The classic game was recreated using HTML, CSS, and vanilla JavaScript over the course of a few weeks as my first complete project on Github. 
 <a href="https://yutaokkots.github.io/2023-solitaire/">You can play it here</a>, although it still has some work to be done. 
 
 The card game, Klondike, was said to have been named after the Tr'ondëk (The Klondike River), located in the Yukon Territory in North-Western Canada. 
@@ -69,7 +68,7 @@ The game still has many bugs, and is difficult to use. However, even as the week
 
 
 
-<h2>License</h2>
+<h2>References</h2>
 Vector Playing Card Library 
 VERSION 3.2 - RELEASED 6/27/2020
 
@@ -88,12 +87,12 @@ Colored version of alternate Joker by Chris Aguilar
 - [X] Initial conceptualization<br>
 - [X] Wireframe & sketches<br>
 - [X] Pseudocode<br>
-- [?] Working functions and DOM elements<br>
-- [ ] First draft MVP<br>
-- [ ] Testing and debugging<br>
-- [ ] CSS styling<br>
-- [ ] Final draft<br>
-- [ ] Final deployment on Github<br>
+- [X] Working functions and DOM elements<br>
+- [X] First draft MVP<br>
+- [X] Testing and debugging<br>
+- [X] CSS styling<br>
+- [X] Final draft<br>
+- [X] Final deployment on Github<br>
 - [ ] Optional additional versions:<br>
     - [ ] Language Support<br>
       - [ ] Japanese<br>
