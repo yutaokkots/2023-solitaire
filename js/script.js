@@ -413,6 +413,7 @@ function checkWin(){
         })
         // update userScore to record win
         userScore[2] ++
+        console.log(startingTableau)
         console.log("Win!")
     }
 }
@@ -445,7 +446,9 @@ function check(){
         // if -> (1) top + bottom card color = 0 && (2) top value - bottom value = -1
         if (bottomCard[1] + topCard[1] === 0 && topCard[4] - bottomCard[4] === -1) {
             // if the 'bottomCard' is in the middle of the stack, return false
-            if (findCardHasChildren()) return false;
+            if (findBottomCardHasChildren()) {
+                return false;
+                }
             return true};
     } else if (bottomCard[5] > 6 && bottomCard[5] < 11){
         // if -> (1) top card is an ace && top value - bottom value = 1
@@ -453,6 +456,10 @@ function check(){
             return true};
         // if -> (1) top card suite === bottom card suit && (2) top value - bottom value = 1
         if (bottomCard[0] === topCard[0] && topCard[4] - bottomCard[4] === 1){
+            // if the 'bottomCard' is in the middle of the stack, return false
+            if (findTopCardHasChildren()) {
+                return false;
+                }
             return true;
         } 
     }
@@ -530,10 +537,17 @@ function findCardLocation(card){
     return cardCol
 }
 
-// findCardHasChildren(card) => returns boolean, whether there are downstream cards associated with it. 
-function findCardHasChildren(){    
+// findBottomCardHasChildren(card) => returns boolean, whether there are downstream cards associated with it. 
+function findBottomCardHasChildren(){    
     let cardColIdx = theBottomCard[5]
     let cardRowIdx = theBottomCard[6]
+    return startingTableau[cardColIdx].length-1 === cardRowIdx ? false : true
+}
+
+// findTopCardHasChildren(card) => returns boolean, whether there are downstream cards associated with it. 
+function findTopCardHasChildren(){    
+    let cardColIdx = theTopCard[5]
+    let cardRowIdx = theTopCard[6]
     return startingTableau[cardColIdx].length-1 === cardRowIdx ? false : true
 }
 
