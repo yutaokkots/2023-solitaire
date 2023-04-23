@@ -1,26 +1,23 @@
 :root{
     --card-width: 10vw;
-    --card-height: var(--card-width)*1.4;
-    --row3-height: var(--card-width)*2;
+    --card-height: calc(var(--card-width)*1.4);
     --play-area-color :rgb(69, 90, 96); 
-    --cols: 1fr 12fr 1fr;
-    --rows: 10vh minmax(10vh, auto) minmax(7rem, auto) 55vh;
 
 }
 
-/* --rows: 4fr 1fr var(--row3-height) 11fr; */
-/* var(--row3-height) 60vh */
 body {
     margin: 0;
     display: box-sizing;
     justify-content: center;
     font-family: 'Pacifico', Verdana, Geneva, Tahoma, sans-serif;
-    margin:0;
+    margin-left: 2vw;
+    margin-right: 2vw;
     background-image: url("../images/nightsky.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: rgba(158, 152, 152, 50);
+
 }
 /****************** header *******************/
 
@@ -28,49 +25,57 @@ body {
 
 main {
     display: box-sizing;
-    
     color: #EDE9D5;
 }
 
-.tableau {
-
-    width: auto;
-
-    background-color: var(--play-area-color);
-
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0;
-    background: linear-gradient(rgb(69, 90, 96), gray);
-    border-bottom-left-radius: 0.5rem;
-    border-bottom-right-radius: 0.5rem;
+.board {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    align-content: start;
 
 }
 
 .foundation {
-    padding-top: 1rem;
-    padding-bottom: 0;
-
-    border-top-left-radius: 1.5rem;
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
     width: auto;
-
-    background-color: var(--play-area-color);
-
+    padding-top: 1rem;
     padding-left: 1rem;
     padding-right: 1rem;
+    border-top-left-radius: 1.5rem;
+    background-color: var(--play-area-color);
+    height:calc(var(--card-width) * 2);
 }
+
+.tableau {
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    width: auto;
+    height:calc(var(--card-width) * 4);
+    background-color: var(--play-area-color);
+    padding-top: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    background: linear-gradient(rgb(69, 90, 96), gray);
+}
+
 
 #titleDiv, #titleDivMain{
     text-align:center;
     color:white;
     font-size: 2rem;
-    margin-bottom: -2.5rem;
+
 }
 
 #titleDivMain h1{
     font-size: 2.2rem;
     justify-content: center;
-    margin: 0rem;
+    margin: 0;
     background: linear-gradient(180deg, white, rgb(159, 156, 156) 100%);
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
@@ -117,10 +122,6 @@ img {
     cursor: pointer;
 }
 
-/* allows the cards to stack */
-
-/* .stack{} === .tab div{} */
-/* .marker{} ==== .stack-Div*/
 .tab div{
     width: var(--card-width);
 }
@@ -128,10 +129,7 @@ img {
 /* allows the cards to stack */
 .tableau .stack div{
     height:0.8rem;
-    border-top-left-radius: .6rem;
-    border-top-right-radius: .5rem;
     width: auto;
-    background-color: var(--play-area-color);
 }
 
 .tableau .stack div:nth-child(2){
@@ -172,9 +170,4 @@ img {
     height:0;
 }
 
-/* 
-.tab{
-    display: grid;
-    grid-template-columns: repeat(7, auto);
-    grid-column-gap: 0.5vw;
-} */
+
