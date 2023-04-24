@@ -275,6 +275,23 @@ const CARD_IMAGES_WIN = [
     {FIN6: 'images/single_cards/FIN-6.svg'}
 ]
 
+const STARTING_TABLEAU = [
+    [1],
+    [-1,1],
+    [-1,-1,1],
+    [-1,-1,-1,1],
+    [-1,-1,-1,-1,1],
+    [-1,-1,-1,-1,-1,1],
+    [-1,-1,-1,-1,-1,-1,1],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+    []
+] 
+
 /* ####################################### */
 /* ############## VARIABLES ############## */
 /* ####################################### */
@@ -285,6 +302,7 @@ const USER_SCORE = [0, 0, 0, 0, false]
 // -- initialization of variables -- //
 let startingTableau;
 let shuffledCards;
+let initialBaseCards;
 
 // global variables for top card and bottom card
 let cardAtPlay;
@@ -460,7 +478,9 @@ function resetGame(){
     let currentLosses = userScore[3] 
     userScore = userScore[4] ? [0, 0, currentScore += 1, currentLosses, false] : [0, 0, currentScore, currentLosses += 1, false]
     console.log('userScore after ternary', userScore)
-    debugger
+    removeDivs()
+    initialBaseCards= [...BOARD_INIT]
+    startingTableau = [...STARTING_TABLEAU]
     init()
 }
 
@@ -468,7 +488,6 @@ function updateUserMove() {
     // update userScore to record move, and reset shuffle click
     userScore[0]++ 
     userScore[1] = 0
-
 }
 
 function removeGiveUpButton(){
@@ -735,7 +754,8 @@ function renderFlipTopCard(){
 // shuffle(array) -> Randomizes an array, and returns a new random array. 
 function shuffle(array) {
     let newArray = [];
-    for (let i = array.length; i > -1; i--){
+
+    for (let i = array.length; i > 0; i--){
         let n = Math.floor(Math.random()*i);
         newArray.push(array.splice(n, 1)[0])}
     return newArray
@@ -744,7 +764,7 @@ function shuffle(array) {
 //initalizeStartingTableau() -> adds the empty cards into the 'startingTableau' array. 
 function initalizeStartingTableau(){
     startingTableau.forEach((column, colIndex) => {
-        startingTableau[colIndex].unshift((BOARD_INIT.shift()))
+        startingTableau[colIndex].unshift((initialBaseCards.shift()))
     })
 }
 
@@ -754,15 +774,16 @@ function renderInitialBoard(array) {
     startingTableau.forEach((column, colIndex) => {
         column.forEach((row, rowIndex) => {
             if (Array.isArray(row)){
-                //pass
-            } else{
-            if (row > 0){
-                array[n].splice(2, 1, 1) 
+                //pass -> if the item is already an array (a background card), then pass                
+            } else {
+                if (row > 0){
+                    array[n].splice(2, 1, 1) 
+                }
+                    array[n].splice(5, 1, colIndex); 
+                    array[n].splice(6, 1, rowIndex); 
+                    startingTableau[colIndex].splice(rowIndex, 1, array[n]);
+                n--;
             }
-                array[n].splice(5, 1, colIndex); 
-                array[n].splice(6, 1, rowIndex); 
-                startingTableau[colIndex].splice(rowIndex, 1, array[n]);
-            n--;}
         })
     })
 }
@@ -780,26 +801,14 @@ function init() {
     cardOnBottom = []
     theTopCard = []
     theBottomCard = []
-    console.log(CARD_LIST)
-    shuffledCards = shuffle(CARD_LIST);
-    console.log(CARD_LIST)
-    startingTableau = [
-        [1],
-        [-1,1],
-        [-1,-1,1],
-        [-1,-1,-1,1],
-        [-1,-1,-1,-1,1],
-        [-1,-1,-1,-1,-1,1],
-        [-1,-1,-1,-1,-1,-1,1],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
-        []
-    ]  
+    let originalArrayCopy = [...CARD_LIST]
+    startingTableau = [...STARTING_TABLEAU]
+    initialBaseCards = [...BOARD_INIT]
+    shuffledCards = shuffle(originalArrayCopy);
+
+    removeGiveUpButton()
     initalizeStartingTableau()
     renderInitialBoard(shuffledCards)
+
     render();
 }
