@@ -302,14 +302,32 @@ const mainElement = document.querySelector('main')
 /* ###########  CLICK  ########### */
 mainElement.addEventListener('click', (evt) => {
     let card = evt.target.id 
-    if (card === 'empty') return;
-    if (card === "WST13" || card === "STK12" || evt.target.innerText === "Play") clickShuffle();
+
+    //if (card === 'empty') return;   <- remove?
+
+    if (evt.target.alt === 'reset'){
+        resetGame()
+    }
+
+    // if the evt.target.innerHTML (variable 'card') is 'Play, 
+    // then shuffle the card, and record the user's click at userScore[1]
+    if (evt.target.innerHTML === "Play") {
+        clickShuffle()
+        updateUserClick() 
+    }
+    // if the column of the clicked card is > 11, then ignore
     if (findCardLocation(card) > 11) return;
-    updateUserClick() 
-    checkGiveUp()
-    evt.target.classList.remove("card-selection")
+    // If the userScore[1] is greater than 15 clicks, then prompt the user to restart
+    checkReset()
+    
+    // evt.target.classList.remove("card-selection") <- remove?
+    
+    // (1) remove all divs from the board
     removeDivs()
+    // (2) matches the actual position of the card within startingtableau
+    // with the information inside the card
     updateCards(startingTableau);
+    // (3) re-renders the board
     render();
 })
 
@@ -375,6 +393,7 @@ mainElement.addEventListener('drop', (evt) => {
     if (check()) {
         relocateCard()
         updateUserMove()
+        removeGiveUpButton()
     }
     // change css 
     evt.target.classList.remove("card-selection")
@@ -415,20 +434,13 @@ function checkWin(){
             })
             // change userScore[4] state to true, indicating win
             userScore.splice(4, 1, true)
-            
-            // update userScore to record win
-            userScore[2] ++
         }
-        console.log(startingTableau)
-        console.log(userScore)
-        console.log("Win!")
-        checkRestart()
-        
+        checkReset()
     }
 }
 
-function checkGiveUp(){
-    if (userScore[1] > 15) {
+function checkReset(){
+    if (userScore[4]===true || userScore[1] > 15) {
         let resetButton = document.getElementById('reset')
         if (resetButton.hasChildNodes()){
             let resetEl = document.getElementById('restart')
@@ -436,30 +448,35 @@ function checkGiveUp(){
         }
         let resetPrompt = document.createElement('h4')
         resetPrompt.id = 'restart'
-        resetPrompt.innerHTML='Give up?'
+        resetPrompt.alt = 'reset'
+        if (userScore[4] === true) resetPrompt.innerHTML = 'Again?'
+        if (userScore[1] > 15) resetPrompt.innerHTML = 'Give up?'
         resetButton.appendChild(resetPrompt)
     }
 }
 
-function checkRestart(){
-    if (userScore[4]===true) {
-        let resetButton = document.getElementById('reset')
-        if (resetButton.hasChildNodes()){
-            let resetEl = document.getElementById('restart')
-            resetButton.removeChild(resetEl)
-        }
-        let resetPrompt = document.createElement('h4')
-        resetPrompt.id = 'restart'
-        resetPrompt.innerHTML='Again?'
-        resetButton.appendChild(resetPrompt)
-    }
+function resetGame(){
+    let currentScore = userScore[2]
+    let currentLosses = userScore[3] 
+    userScore = userScore[4] ? [0, 0, currentScore += 1, currentLosses, false] : [0, 0, currentScore, currentLosses += 1, false]
+    console.log('userScore after ternary', userScore)
+    debugger
+    init()
 }
 
 function updateUserMove() {
     // update userScore to record move, and reset shuffle click
-
     userScore[0]++ 
     userScore[1] = 0
+
+}
+
+function removeGiveUpButton(){
+    let resetButton = document.getElementById('reset')
+    if (resetButton.hasChildNodes()){
+        let resetEl = document.getElementById('restart')
+        resetButton.removeChild(resetEl)
+    }
 }
 
 function updateUserClick() {
@@ -763,7 +780,9 @@ function init() {
     cardOnBottom = []
     theTopCard = []
     theBottomCard = []
+    console.log(CARD_LIST)
     shuffledCards = shuffle(CARD_LIST);
+    console.log(CARD_LIST)
     startingTableau = [
         [1],
         [-1,1],
