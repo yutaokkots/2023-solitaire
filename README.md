@@ -7,24 +7,28 @@
 ## [play here -> Tr'ondek](https://yutaokkots.github.io/2023-solitaire/)
 
 This is Tr'ondëk, also known as Klondike or Solitaire.  
+
 The classic game was recreated using vanilla JavaScript, HTML, and CSS over the course of a several weeks as my first complete project on Github.  
 
-## by [Yuta Okkotsu](https://www.linkedin.com/in/yutaokkotsu/)
+## by [Yuta Okkotsu, PhD](https://www.linkedin.com/in/yutaokkotsu/)
 
 ## [art portolio here](https://www.oktsdesign.com)
 
 </div>
 
 The card game, Klondike, was said to have been named after the Tr'ondëk (The Klondike River), located in the Yukon Territory in North-Western Canada.  
+
 Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people.  
 
-I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>.  
+I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike when younuger.</a>.  
 
 <div align="center">
 
 # The Gameplay and Features
 
 </div>
+
+<img src="./README_files/trondek-2.png" width="80%"/>
 
 The point of the game is to play all of the stock cards (top-right), skillfully stack the cards in the tableau area (bottom), and organize the cards into the foundation area (top-left).  
 
@@ -34,8 +38,7 @@ In the foundation area, cards can only be stacked in ascending order with matchi
 
 The cards can be moved by drag-and-drop, and pressing the play button will distribute up to three playable cards from the stock. 
 
-
-<div align="center"> <img src="README_files/instructions.png" width='500'></div>
+<img src="./README_files/instructions.png" width="80%"/>
 
 <div align="center">
 
