@@ -4,14 +4,14 @@
 
 <img src="./README_files/trondek.png" width="80%"/>
 
-## by [Yuta Okkotsu](https://www.linkedin.com/in/yutaokkotsu/)
-
-## [art portolio here](https://www.oktsdesign.com)
+## [play here -> Tr'ondek](https://yutaokkots.github.io/2023-solitaire/)
 
 This is Tr'ondëk, also known as Klondike or Solitaire.  
 The classic game was recreated using vanilla JavaScript, HTML, and CSS over the course of a several weeks as my first complete project on Github.  
 
-## [play -> Tr'ondek](https://yutaokkots.github.io/2023-solitaire/)
+## by [Yuta Okkotsu](https://www.linkedin.com/in/yutaokkotsu/)
+
+## [art portolio here](https://www.oktsdesign.com)
 
 </div>
 
