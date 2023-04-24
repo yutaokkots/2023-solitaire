@@ -1,74 +1,48 @@
-<h1 align="center"> Tr'ondëk </h1>
-<hr>
+<div align="center">
 
-This is Tr'ondëk, also known as Klondike or Solitaire. 
-The classic game was recreated using HTML, CSS, and vanilla JavaScript over the course of a few weeks as my first complete project on Github. 
-<a href="https://yutaokkots.github.io/2023-solitaire/">You can play it here</a>, although it still has some work to be done. 
+# Tr'ondëk
 
-The card game, Klondike, was said to have been named after the Tr'ondëk (The Klondike River), located in the Yukon Territory in North-Western Canada. 
-Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people. 
+<img src="./README_files/trondek.png" width="80%"/>
 
-I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>. 
+## by [Yuta Okkotsu](https://www.linkedin.com/in/yutaokkotsu/)
 
-<div align="center"> <img src="README_files/mockup.png" width='500'></div>
-<h2>About</h2>
+## [art portolio here](https://www.oktsdesign.com)
 
-<hr>
-<h2>The Gameplay</h2>
-The current edition of the game includes a tableau area (bottom), and a foundation and stock area (top).
-The purpose of the game is to get rid of the cards. 
+This is Tr'ondëk, also known as Klondike or Solitaire.  
+The classic game was recreated using vanilla JavaScript, HTML, and CSS over the course of a several weeks as my first complete project on Github.  
+
+# [Tr'ondek](https://yutaokkots.github.io/2023-solitaire/)
+
+The card game, Klondike, was said to have been named after the Tr'ondëk (The Klondike River), located in the Yukon Territory in North-Western Canada.  
+Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people.  
+
+I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike at home</a>.  
+
+# The Gameplay and Features
+
+The point of the game is to play all of the stock cards (top-right), skillfully stack the cards in the tableau area (bottom), and organize the cards into the foundation area (top-left).  
+
+In the tableau area, cards can only be stacked in descending order with alternating suit colors, with a King able to be placed in an empty area. 
+
+In the foundation area, cards can only be stacked in ascending order with matching suits, starting with an ace. 
+
+The cards can be moved by drag-and-drop, and pressing the play button will distribute up to three playable cards from the stock. 
+
 
 <div align="center"> <img src="README_files/instructions.png" width='500'></div>
 
-With optimal gameplay (according to official, normal rules), during gameplay, cards in the tableau can only be placed in descending order and with alternating colors. The cards in the foundation area can only be added in ascending order, starting with the ace. Once a card is played in the tableau area, the card underneath can be revealed. 
 
-New stock cards can be issued from stock to be used.  
-However, in this version of the game, the shuffle button and play button are still stylistic, and are disabled. 
+# The Details
 
+The game features 53 face cards and back card illustrated by Chris Aguiular. Information about the licenses are located below.  
 
-<hr>
-<h2>The Process</h2>
-
-Although I do not have a currently working game to show a success, what I have gained is a deeper understanding of what not to do when taking on a difficult project. 
-
-1) Although it might be obvious to people who are smarter than me, it's important to have a good idea of the balance of what is learning and what is doing, before the start of the project.
-
-I was looking forward to working on this project because I knew I would be able to work on something I didn't understand. But the amount I didn't understand was much greater than I had anticipated. For example, I knew I had to use a good data structure that allows me to keep track of the moves of the card. 
-
-Initially, I designed a reference table like this to be able to keep track of where things should go and not go. 
-
-<div align="center"> <img src="README_files/table1.png" width='500'></div>
-
-But as I was trying to incoporate the lessons I learned in class to implement this table, I realized it was difficult to manage this data. 
-
-I tried to simplify the data sets using a smaller and more compact table. 
-
-<div align="center"> <img src="README_files/table2.png" width='500'></div>
-
-However, this is where I ran into challenges with balancing the writing of code to track the data and learning/refreshing HTML+CSS. 
-
-2) One of the other things I had wish I was smarter about, was keeping things very, very simple. Even the above reference tables are over-complicated and were difficult to use. 
-
-One of my favorite functions in this game, for example, is this:<br>
-<div align="center"> <img src="README_files/flipcard.png" width='500'></div>
-because this is what it looks like to call the function:<br>
-`flipCard(card)`
-
-My other favorite feature was learning about drag and drop. After working on this project, I know this is probably not best practices, but one of the ways that the user and the cards keep track of each other is through assigning data-ids (via dataSets) to the item (in this case, the images of the cards), and saving the information into a global variable (called 'cardAtPlay'). 
-
-<div align="center"> <img src="README_files/drag.png" width='600'></div>
-
-However, this is another example of making things a bit too complicated.
-
-<hr>
-
-The game still has many bugs, and is difficult to use. However, even as the week deadline has arrived, I plan to continue working on the game, although the next version will probably be a much more simple version.   
+The game includes original illustrations by me (Yuta Okkotsu), from the [Witch and the Shark series.](https://www.oktsdesign.com/witch-and-the-shark)   
 
 
+# References
 
+</div>
 
-
-<h2>References</h2>
 Vector Playing Card Library 
 VERSION 3.2 - RELEASED 6/27/2020
 
@@ -82,20 +56,15 @@ Alternate Joker by John Merrill
 john@delirus.net
 Colored version of alternate Joker by Chris Aguilar
 
+<div align="center">
 
-<h2>Roadmap</h2>
-- [X] Initial conceptualization<br>
-- [X] Wireframe & sketches<br>
-- [X] Pseudocode<br>
-- [X] Working functions and DOM elements<br>
-- [X] First draft MVP<br>
-- [X] Testing and debugging<br>
-- [X] CSS styling<br>
-- [X] Final draft<br>
-- [X] Final deployment on Github<br>
-- [ ] Optional additional versions:<br>
-    - [ ] Language Support<br>
-      - [ ] Japanese<br>
-      - [ ] Spanish<br>
-    - [ ] Styling<br>
-      - [ ] color theme styling choices<br>
+# Project Roadmap
+
+</div>
+
+Although the game is currently playable, an error occurs after winning a round.  
+
+Next steps for the game will include fixing this bug, and including a score-board displayed on the screen. 
+
+Additionally future updates will include adding saving the data on local storage on the client side, or database. 
+
