@@ -80,17 +80,19 @@ const CARD_WIN = [
 ]
 
 function renderBoardTest() {
-    // removes the initial image to render the board correctly.   
-    CARD_WIN.forEach((column, colIndex) => {
-        let columnElement = document.getElementById(`c${colIndex}`)
-        column.forEach((card, rowIndex) => {
-            let cardDiv = document.createElement('div')
-            let cardName = `c${card[5]}r${card[6]}`
-            cardDiv.setAttribute("id", `${cardName}`)
-            cardDiv.appendChild(testDisplay(card))
-            columnElement.appendChild(cardDiv)
-        })
-    })
+    // removes the initial image to render the board correctly. 
+    async function assignCards() {  
+        try{
+        for (let n=0; n<7; n++){
+            let fileName = `FIN${n}`
+            startingTableau[n].push([0, 0, 3, fileName, 0, n,  1],)
+            }
+        } catch(err) {
+            console.log(err)
+        }
+    }
+    assignCards()
+    renderBoard()
 }
 
 function testDisplay(card) {
@@ -145,63 +147,6 @@ const BOARD_INIT = [
     [0, 0, 0, 'WST13', 0,  13, 0]
 ]
 
-const CARD_LIST = [
-    [1,     2, -1, 'S01',  1, 12, 0],
-    [1,     2, -1, 'S02',  2, 12, 0],
-    [1,     2, -1, 'S03',  3, 12, 0],
-    [1,     2, -1, 'S04',  4, 12, 0],
-    [1,     2, -1, 'S05',  5, 12, 0],
-    [1,     2, -1, 'S06',  6, 12, 0],
-    [1,     2, -1, 'S07',  7, 12, 0],
-    [1,     2, -1, 'S08',  8, 12, 0],
-    [1,     2, -1, 'S09',  9, 12, 0],
-    [1,     2, -1, 'S10', 10, 12, 0],
-    [1,     2, -1, 'S11', 11, 12, 0],
-    [1,     2, -1, 'S12', 12, 12, 0],
-    [1,     2, -1, 'S13', 13, 12, 0],
-
-    [10,   -2, -1, 'H01',  1, 12, 0],
-    [10,   -2, -1, 'H02',  2, 12, 0],
-    [10,   -2, -1, 'H03',  3, 12, 0],
-    [10,   -2, -1, 'H04',  4, 12, 0],
-    [10,   -2, -1, 'H05',  5, 12, 0],
-    [10,   -2, -1, 'H06',  6, 12, 0],
-    [10,   -2, -1, 'H07',  7, 12, 0],
-    [10,   -2, -1, 'H08',  8, 12, 0],
-    [10,   -2, -1, 'H09',  9, 12, 0],
-    [10,   -2, -1, 'H10', 10, 12, 0],
-    [10,   -2, -1, 'H11', 11, 12, 0],
-    [10,   -2, -1, 'H12', 12, 12, 0],
-    [10,   -2, -1, 'H13', 13, 12, 0],  
-
-    [100,   2, -1, 'C01',  1, 12, 0],
-    [100,   2, -1, 'C02',  2, 12, 0],
-    [100,   2, -1, 'C03',  3, 12, 0],
-    [100,   2, -1, 'C04',  4, 12, 0],
-    [100,   2, -1, 'C05',  5, 12, 0],
-    [100,   2, -1, 'C06',  6, 12, 0],
-    [100,   2, -1, 'C07',  7, 12, 0],
-    [100,   2, -1, 'C08',  8, 12, 0],
-    [100,   2, -1, 'C09',  9, 12, 0],
-    [100,   2, -1, 'C10', 10, 12, 0],
-    [100,   2, -1, 'C11', 11, 12, 0],
-    [100,   2, -1, 'C12', 12, 12, 0],
-    [100,   2, -1, 'C13', 13, 12, 0],
-
-    [1000, -2, -1, 'D01',  1, 12, 0],
-    [1000, -2, -1, 'D02',  2, 12, 0],
-    [1000, -2, -1, 'D03',  3, 12, 0],
-    [1000, -2, -1, 'D04',  4, 12, 0],
-    [1000, -2, -1, 'D05',  5, 12, 0],
-    [1000, -2, -1, 'D06',  6, 12, 0],
-    [1000, -2, -1, 'D07',  7, 12, 0],
-    [1000, -2, -1, 'D08',  8, 12, 0],
-    [1000, -2, -1, 'D09',  9, 12, 0],
-    [1000, -2, -1, 'D10', 10, 12, 0],
-    [1000, -2, -1, 'D11', 11, 12, 0],
-    [1000, -2, -1, 'D12', 12, 12, 0],
-    [1000, -2, -1, 'D13', 13, 12, 0]
-]
 
 const CARD_IMAGES = {
     S01: 'images/single_cards/SPADE-1.svg',
@@ -265,32 +210,15 @@ const CARD_IMAGES = {
     WST: 'images/single_cards/WASTE.svg',
 }
 
-const CARD_IMAGES_WIN = [
-    {FIN0: 'images/single_cards/FIN-0.svg'},
-    {FIN1: 'images/single_cards/FIN-1.svg'},
-    {FIN2: 'images/single_cards/FIN-2.svg'},
-    {FIN3: 'images/single_cards/FIN-3.svg'},
-    {FIN4: 'images/single_cards/FIN-4.svg'},
-    {FIN5: 'images/single_cards/FIN-5.svg'},
-    {FIN6: 'images/single_cards/FIN-6.svg'}
-]
-
-const STARTING_TABLEAU = [
-    [1],
-    [-1,1],
-    [-1,-1,1],
-    [-1,-1,-1,1],
-    [-1,-1,-1,-1,1],
-    [-1,-1,-1,-1,-1,1],
-    [-1,-1,-1,-1,-1,-1,1],
-    [],
-    [],
-    [],
-    [],
-    [],
-    [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
-    []
-] 
+const CARD_IMAGES_WIN = {
+    FIN0: 'images/single_cards/FIN-0.svg',
+    FIN1: 'images/single_cards/FIN-1.svg',
+    FIN2: 'images/single_cards/FIN-2.svg',
+    FIN3: 'images/single_cards/FIN-3.svg',
+    FIN4: 'images/single_cards/FIN-4.svg',
+    FIN5: 'images/single_cards/FIN-5.svg',
+    FIN6: 'images/single_cards/FIN-6.svg'
+}
 
 /* ####################################### */
 /* ############## VARIABLES ############## */
@@ -321,12 +249,10 @@ const mainElement = document.querySelector('main')
 mainElement.addEventListener('click', (evt) => {
     let card = evt.target.id 
 
-    //if (card === 'empty') return;   <- remove?
-
     if (evt.target.alt === 'reset'){
+        removeDivs()
         resetGame()
     }
-
     // if the evt.target.innerHTML (variable 'card') is 'Play, 
     // then shuffle the card, and record the user's click at userScore[1]
     if (evt.target.innerHTML === "Play") {
@@ -337,9 +263,7 @@ mainElement.addEventListener('click', (evt) => {
     if (findCardLocation(card) > 11) return;
     // If the userScore[1] is greater than 15 clicks, then prompt the user to restart
     checkReset()
-    
-    // evt.target.classList.remove("card-selection") <- remove?
-    
+        
     // (1) remove all divs from the board
     removeDivs()
     // (2) matches the actual position of the card within startingtableau
@@ -441,18 +365,17 @@ function checkWin(){
     if ((startingTableau[7].length + startingTableau[8].length + startingTableau[9].length + startingTableau[10].length) === 56){
         if (userScore[4] === false){
             let n = 0
-            CARD_IMAGES_WIN.forEach((winCard, idx) => {
-                let newImage = document.createElement('img')
-                newImage.src = winCard[`FIN${idx}`]
-                let columnElement = document.getElementById(`c${n}`)
-                let cardDiv = document.createElement('div')
-                cardDiv.appendChild(newImage)
-                columnElement.appendChild(cardDiv)
-                n++
-            })
+            for (let n=0; n<7; n++){
+                let fileName = `FIN${n}`
+                startingTableau[n].splice(0, 1, [0, 0, 3, fileName, 0, n,  1],)
+            }
+            
+            renderBoard()
             // change userScore[4] state to true, indicating win
             userScore.splice(4, 1, true)
+
         }
+        removeDivs()
         checkReset()
     }
 }
@@ -468,7 +391,7 @@ function checkReset(){
         resetPrompt.id = 'restart'
         resetPrompt.alt = 'reset'
         if (userScore[4] === true) resetPrompt.innerHTML = 'Again?'
-        if (userScore[1] > 15) resetPrompt.innerHTML = 'Give up?'
+        else if (userScore[1] > 15) resetPrompt.innerHTML = 'Give up?'
         resetButton.appendChild(resetPrompt)
     }
 }
@@ -477,11 +400,8 @@ function resetGame(){
     let currentScore = userScore[2]
     let currentLosses = userScore[3] 
     userScore = userScore[4] ? [0, 0, currentScore += 1, currentLosses, false] : [0, 0, currentScore, currentLosses += 1, false]
-    console.log('userScore after ternary', userScore)
-    removeDivs()
-    initialBaseCards= [...BOARD_INIT]
-    startingTableau = [...STARTING_TABLEAU]
-    init()
+
+    return init()
 }
 
 function updateUserMove() {
@@ -710,6 +630,13 @@ function getDisplayImage(card) {
         newImage.alt = card[2]
         newImage.id = card[3]
         return newImage;
+    } else if ('3' == card[2]){
+        newImage.setAttribute("draggable",'false')
+        const cardName = card[3]
+        newImage.src = CARD_IMAGES_WIN[cardName]
+        newImage.alt = card[2]
+        newImage.id = card[3]
+        return newImage;
     }
 } 
 
@@ -754,7 +681,6 @@ function renderFlipTopCard(){
 // shuffle(array) -> Randomizes an array, and returns a new random array. 
 function shuffle(array) {
     let newArray = [];
-
     for (let i = array.length; i > 0; i--){
         let n = Math.floor(Math.random()*i);
         newArray.push(array.splice(n, 1)[0])}
@@ -793,22 +719,95 @@ function render(){
     renderFlipTopCard()
     renderBoard()
     checkWin()
-    console.log(userScore)
 };  
 
 function init() {
+    
     cardAtPlay =[]
     cardOnBottom = []
     theTopCard = []
     theBottomCard = []
-    let originalArrayCopy = [...CARD_LIST]
-    startingTableau = [...STARTING_TABLEAU]
-    initialBaseCards = [...BOARD_INIT]
-    shuffledCards = shuffle(originalArrayCopy);
+    
+    const cardList = [
+        [1,     2, -1, 'S01',  1, 12, 0],
+        [1,     2, -1, 'S02',  2, 12, 0],
+        [1,     2, -1, 'S03',  3, 12, 0],
+        [1,     2, -1, 'S04',  4, 12, 0],
+        [1,     2, -1, 'S05',  5, 12, 0],
+        [1,     2, -1, 'S06',  6, 12, 0],
+        [1,     2, -1, 'S07',  7, 12, 0],
+        [1,     2, -1, 'S08',  8, 12, 0],
+        [1,     2, -1, 'S09',  9, 12, 0],
+        [1,     2, -1, 'S10', 10, 12, 0],
+        [1,     2, -1, 'S11', 11, 12, 0],
+        [1,     2, -1, 'S12', 12, 12, 0],
+        [1,     2, -1, 'S13', 13, 12, 0],
+    
+        [10,   -2, -1, 'H01',  1, 12, 0],
+        [10,   -2, -1, 'H02',  2, 12, 0],
+        [10,   -2, -1, 'H03',  3, 12, 0],
+        [10,   -2, -1, 'H04',  4, 12, 0],
+        [10,   -2, -1, 'H05',  5, 12, 0],
+        [10,   -2, -1, 'H06',  6, 12, 0],
+        [10,   -2, -1, 'H07',  7, 12, 0],
+        [10,   -2, -1, 'H08',  8, 12, 0],
+        [10,   -2, -1, 'H09',  9, 12, 0],
+        [10,   -2, -1, 'H10', 10, 12, 0],
+        [10,   -2, -1, 'H11', 11, 12, 0],
+        [10,   -2, -1, 'H12', 12, 12, 0],
+        [10,   -2, -1, 'H13', 13, 12, 0],  
+    
+        [100,   2, -1, 'C01',  1, 12, 0],
+        [100,   2, -1, 'C02',  2, 12, 0],
+        [100,   2, -1, 'C03',  3, 12, 0],
+        [100,   2, -1, 'C04',  4, 12, 0],
+        [100,   2, -1, 'C05',  5, 12, 0],
+        [100,   2, -1, 'C06',  6, 12, 0],
+        [100,   2, -1, 'C07',  7, 12, 0],
+        [100,   2, -1, 'C08',  8, 12, 0],
+        [100,   2, -1, 'C09',  9, 12, 0],
+        [100,   2, -1, 'C10', 10, 12, 0],
+        [100,   2, -1, 'C11', 11, 12, 0],
+        [100,   2, -1, 'C12', 12, 12, 0],
+        [100,   2, -1, 'C13', 13, 12, 0],
+    
+        [1000, -2, -1, 'D01',  1, 12, 0],
+        [1000, -2, -1, 'D02',  2, 12, 0],
+        [1000, -2, -1, 'D03',  3, 12, 0],
+        [1000, -2, -1, 'D04',  4, 12, 0],
+        [1000, -2, -1, 'D05',  5, 12, 0],
+        [1000, -2, -1, 'D06',  6, 12, 0],
+        [1000, -2, -1, 'D07',  7, 12, 0],
+        [1000, -2, -1, 'D08',  8, 12, 0],
+        [1000, -2, -1, 'D09',  9, 12, 0],
+        [1000, -2, -1, 'D10', 10, 12, 0],
+        [1000, -2, -1, 'D11', 11, 12, 0],
+        [1000, -2, -1, 'D12', 12, 12, 0],
+        [1000, -2, -1, 'D13', 13, 12, 0]
+    ] 
+
+    startingTableau = [
+        [1],
+        [-1,1],
+        [-1,-1,1],
+        [-1,-1,-1,1],
+        [-1,-1,-1,-1,1],
+        [-1,-1,-1,-1,-1,1],
+        [-1,-1,-1,-1,-1,-1,1],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1],
+        []
+    ] 
+    initialBaseCards = BOARD_INIT.map((value) => value)
+    shuffledCards = shuffle(cardList);
 
     removeGiveUpButton()
     initalizeStartingTableau()
     renderInitialBoard(shuffledCards)
-
+    console.log(userScore)
     render();
 }
