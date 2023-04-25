@@ -20,7 +20,7 @@ The card game, Klondike, was said to have been named after the Tr'ondëk (The Kl
 
 Tr'ondëk means "hammer-rock river" in the Hän language, which is spoken by the First Nation Tr'ondëk Hwëch'in people.  
 
-I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike when younuger.</a>.  
+I was inspired to work on this game because of the time I had spent <a href = "https://classic-mac.fandom.com/wiki/Klondike">playing Klondike when younger.</a>.  
 
 <div align="center">
 
